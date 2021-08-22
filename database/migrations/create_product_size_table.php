@@ -13,7 +13,7 @@ class CreateProductSizeTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_sizes', function (Blueprint $table) {
+        Schema::create('product_size', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
             $table->foreignId('size_id');
@@ -31,6 +31,6 @@ class CreateProductSizeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product_sizes');
+        Schema::drop('product_size');
     }
 }
