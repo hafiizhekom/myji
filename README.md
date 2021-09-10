@@ -1,4 +1,4 @@
-<p align="center"><img src="http://shopmyji.com/assets/images/logo_banner.png" width="400"></p>
+<p align="center"><img src="http://shopmyji.com/assets/images/logo_banner.png" width="50"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
