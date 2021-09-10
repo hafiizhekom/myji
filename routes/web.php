@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/site');
+    // return "Index";
+});
+
+// Route::get('site/',function(){
+// //     return redirect('/site');
+// // });
+
+Route::group(['prefix' => 'site'], function(){
+    Route::get('/', 'SiteController@index');
+    Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
+    Route::get('/how-to-order', 'SiteController@howToOrder');
+    Route::get('/faq', 'SiteController@faq');
+    Route::get('/size-recomendation', 'SiteController@sizeRecomendation');
+    Route::get('/feedback', 'SiteController@feedback');
+    Route::get('/{slug}', 'SiteController@productDetail');
 });

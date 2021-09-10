@@ -18,8 +18,8 @@ class CreatePromosTable extends Migration
             $table->string('promo_name');
             $table->float('fixed_amount', 8, 2);
             $table->float('percentage_amount', 8, 2);
-            $table->timestampTz('start_time');
-            $table->timestampTz('end_time');
+            $table->timestamp('start_time')->default(\DB::raw('CURRENT_TIMESTAMP'));;
+            $table->timestamp('end_time')->default(\DB::raw('CURRENT_TIMESTAMP'));;
             $table->boolean('active');
             $table->timestamps();
         });

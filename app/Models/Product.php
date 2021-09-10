@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function sizes()
+
+    protected $table = 'product';
+    protected $fillable = ['product_code', 'product_name', 'view'];
+
+    public function detail()
     {
-        return $this->belongsToMany(Size::class, 'product_size', 'product_id', 'size_id');
+        return $this->hasOne('App\Models\ProductDetail');
     }
 }
