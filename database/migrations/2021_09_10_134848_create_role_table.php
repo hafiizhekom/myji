@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChannelsTable extends Migration
+class CreateRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('channels', function (Blueprint $table) {
-            $table->id();
-            $table->string('channel_name');
-            $table->float('fixed_fee', 8, 2);
-            $table->float('percentage_fee', 8, 2);
-            $table->boolean('active');
+        Schema::create('role', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('role_name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('channels');
+        Schema::dropIfExists('role');
     }
 }

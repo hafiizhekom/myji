@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePromoDetailTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePromoDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('promo_product_size', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('promo_id');
-            $table->foreignId('product_size_id');
-            $table->boolean('active');
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('role_id');
+            $table->string('permission');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreatePromoDetailTable extends Migration
      */
     public function down()
     {
-        Schema::drop('promo_details');
+        Schema::dropIfExists('permissions');
     }
 }

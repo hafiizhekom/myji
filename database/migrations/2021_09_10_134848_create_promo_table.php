@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePromosTable extends Migration
+class CreatePromoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePromosTable extends Migration
      */
     public function up()
     {
-        Schema::create('promos', function (Blueprint $table) {
-            $table->id();
+        Schema::create('promo', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('promo_name');
-            $table->float('fixed_amount', 8, 2);
-            $table->float('percentage_amount', 8, 2);
-            $table->timestamp('start_time')->default(\DB::raw('CURRENT_TIMESTAMP'));;
-            $table->timestamp('end_time')->default(\DB::raw('CURRENT_TIMESTAMP'));;
+            $table->double('fixed_amount', 8, 2);
+            $table->double('percentage_amount', 8, 2);
+            $table->timestamp('start_time')->useCurrent();
+            $table->timestamp('end_time')->useCurrent();
             $table->boolean('active');
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreatePromosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('promos');
+        Schema::dropIfExists('promo');
     }
 }
