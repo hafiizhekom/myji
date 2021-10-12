@@ -5,9 +5,9 @@
 <form class="form" method="get" action="{{route('production.actual.search')}}">
     <div class="form-group">
         <label>PO Code</label>
-        <select class="form-control" name="id" placeholder="PO Code" required>
+        <select class="form-control" name="po_code" placeholder="PO Code" required>
             @foreach($data['production'] as $key=>$value)
-                <option value="{{$value->id}}">{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</option>
+                <option value="{{$value->purchasing->po_code}}">{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</option>
             @endforeach
         </select>
     </div>
@@ -26,7 +26,6 @@
         <script>
             $(document).on('change', '#productionDetail', function(e){
                 e.preventDefault();
-                alert("asd");
                 window.location = 'actual/detail/'+$(this).find('option:selected').val();
             });
         </script>

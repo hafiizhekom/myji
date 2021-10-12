@@ -12,7 +12,7 @@ class ProductionActualController extends Controller
 
     public function index(){ 
 
-        $production = Production::whereNotNull('actual')->get();
+        $production = Production::whereNotNull('actual')->get()->unique('purchasing_id');
         $production_request = Production::whereNull('actual')->get()->unique('purchasing_id');
         
         $data = [
@@ -40,9 +40,11 @@ class ProductionActualController extends Controller
     }
 
     public function search(){
-        $id = request('id');
+        $po_code = request('po_code');
+
+        $purchasing = Purchasing::where('po_code',$po_code)->first();
         
-        $production = Production::whereNotNull('actual')->where('id',$id)->get();
+        $production = Production::whereNotNull('actual')->where('purchasing_id',$purchasing->id)->get();
         $production_request = Production::whereNull('actual')->get();
         
         $data = [
