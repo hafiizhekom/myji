@@ -8,9 +8,10 @@ class Size extends Model
 {
 
     protected $table = 'size';
+    protected $fillable = ['size_code','size_name'];
 
-    public function products()
+    public function productDetail()
     {
-        return $this->belongsToMany(Product::class, 'product_size', 'size_id', 'product_id');
+        return $this->hasMany('App\Models\ProductDetail');
     }
 }

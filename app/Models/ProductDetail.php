@@ -8,7 +8,7 @@ class ProductDetail extends Model
 {
 
     protected $table = 'product_detail';
-    protected $fillable = ['product_id', 'size_id', 'color_id', 'price', 'yard_per_piece', 'design_image_path'];
+    protected $fillable = ['product_id', 'size_id', 'color_id', 'category_id', 'price', 'yard_per_piece', 'design_image_path'];
 
     public function product()
     {
@@ -25,8 +25,13 @@ class ProductDetail extends Model
         return $this->belongsTo('App\Models\Color', 'color_id');
     }
 
-    public function volume()
+    public function category()
     {
-        return $this->belongsTo('App\Models\Volume', 'volume_id');
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
+
+    public function production()
+    {
+        return $this->hasMany('App\Models\Production');
     }
 }
