@@ -12,7 +12,7 @@ class ProductionDefectController extends Controller
 
     public function index(){
 
-        $production = Production::whereNotNull('defect')->get();
+        $production = Production::all()->unique('purchasing_id');
         $production_request = Production::whereNull('defect')->whereNotNull('actual')->get();
 
         $data = [
@@ -26,14 +26,15 @@ class ProductionDefectController extends Controller
     }
 
     public function search(){
-        $id = request('id');
+        $po_code = request('po_code');
 
-        $production = Production::whereNotNull('defect')->where('id',$id)->get();
-        $production_request = Production::whereNull('defect')->whereNotNull('actual')->get();
+        $purchasing = Purchasing::where('po_code',$po_code)->first();
         
+        $production = Production::whereNotNull('actual')->where('purchasing_id',$purchasing->id)->get();
+
         $data = [
             'production' => $production,
-            'production_request' => $production_request
+            'purchasing' => $purchasing
         ];
         return view(
             'admin.production.defect_search'
@@ -41,34 +42,28 @@ class ProductionDefectController extends Controller
         );
     }
 
-    public function add()
-    {
-        $cabang = Production::findOrFail(request('production_id'));
-    	$data = [
-            'defect'=>request('defect')
-        ];
-        $cabang->update($data);
-        return redirect()->route('production.defect');
-    }
-
     public function edit($id)
     {
-        $cabang = Production::findOrFail($id);
+        $production = Production::findOrFail($id);
         $data = [
             'defect'=>request('defect')
         ];
         
-        $cabang->update($data);
-        return redirect()->route('production.defect');
+        $production->update($data);
+        
+        return redirect()->route('production.defect.search',  ['po_code'=>$production->purchasing->po_code]);
     }
 
 
     public function delete($id, Request $request)
     {
-        $cabang = Production::findOrFail($id);
-        $cabang->delete();
+        $production = Production::findOrFail($id);
+        $data = [
+            'defect'=> null
+        ];
+        $production->update($data);
 
-        return redirect()->route('production');
+        return redirect()->route('production.defect.search',  ['po_code'=>$production->purchasing->po_code]);
     }
 }
 

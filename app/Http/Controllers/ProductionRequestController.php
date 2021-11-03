@@ -12,12 +12,6 @@ class ProductionRequestController extends Controller
     public function index(){ 
 
         $production = Production::all()->unique('purchasing_id');
-        // $production_avail = [];
-        // foreach($purchasing as $item){
-        //     if(!$item->production){
-        //         array_push($purchasing_avail, $item->po_code);
-        //     }
-        // }
 
         $purchasing = Purchasing::all();
         $purchasing_avail = [];
@@ -67,6 +61,20 @@ class ProductionRequestController extends Controller
         );
     }
 
+    public function append()
+    {
+        $data = [
+            'purchasing_id'=>request('purchasing_id'), 
+            'product_detail_id'=>request('product_detail_id'),
+            'request'=>request('request')
+        ];
+        $simpan = Production::create($data);
+
+        $purchasing = Purchasing::where('id', request('purchasing_id'))->first();
+ 	
+        return redirect()->route('production.request.search', ['po_code'=>$purchasing->po_code]);
+    }
+
     public function add()
     {
 
@@ -86,13 +94,13 @@ class ProductionRequestController extends Controller
 
     public function edit($id)
     {
-        $cabang = Production::findOrFail($id);
+        $production = Production::findOrFail($id);
         $data = [
             'request'=>request('request')
         ];
         
-        $cabang->update($data);
-        return redirect()->route('production.request.search',['id'=>$id]);
+        $production->update($data);
+        return redirect()->route('production.request.search',['po_code'=>$production->purchasing->po_code]);
     }
 
 

@@ -12,8 +12,9 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="name" data-sortable="true">Testimony Name</th>
-            <th data-field="code" data-sortable="true">Testimony Code</th>            
+            <th data-field="name" data-sortable="true">Title</th>
+            <th data-field="image" data-sortable="true">Image</th>         
+            <th data-field="content" data-sortable="true">Content</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -21,8 +22,9 @@
             @foreach ($data['testimony'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->testimony_name}}</td>
-                    <td>{{$value->testimony_code}}</td>
+                    <td>{{$value->title}}</td>
+                    <td>{{$value->image}}</td>
+                    <td>{{$value->content}}</td>
                     <td></td>
                 </tr>
             @endforeach

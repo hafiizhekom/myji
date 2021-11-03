@@ -1,35 +1,32 @@
 @extends('layouts.application_admin')
-@section('pagetitle', 'Production Defect')
+@section('pagetitle', 'Refund')
 @section('content')
-
-    <div id="toolbar">
-        <h5>{{$data['purchasing']->po_code}} - {{$data['purchasing']->item}} {{$data['purchasing']->unit}}</h5>
-    </div>
 
     <table data-toggle="table"
     data-search="true"
-    data-toolbar="#toolbar"
-    data-filter-control="true">
+    data-toolbar="#toolbar">
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="product" data-sortable="true">Product</th>
-            <th data-field="request" data-sortable="true">Defect</th>
+            <th data-field="customer" data-sortable="true">Customer</th>
+            <th data-field="order" data-sortable="true">Order</th>
+            <th data-field="orderdetail" data-sortable="true">Order Detail</th>
+            <th data-field="type" data-sortable="true">Type</th>
+            <th data-field="stock_flow" data-sortable="true">Stock Flow</th>
+            <th data-field="reason" data-sortable="true">Reason</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
         <tbody>
-            @foreach ($data['production'] as $key=>$value)
+            @foreach($data['refund'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}} {{$value->productDetail->color->color_name}}</td>
-                    <td>
-                        @if($value->defect)    
-                            {{$value->defect}}
-                        @else
-                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit-{{$value->id}}" type="submit">Set Defect</button>
-                        @endif
-                    </td>
+                    <td>{{$value->orderDetail->order->customer->first_name}} {{$value->orderDetail->order->customer->last_name}}</td>
+                    <td>#{{$value->orderDetail->order->id}} {{$value->orderDetail->order->channel->channel_name}}: {{$value->orderDetail->order->total_price}}</td>
+                    <td>{{$value->orderDetail->productDetail->product->product_name}} {{$value->orderDetail->productDetail->size->size_name}} {{$value->orderDetail->productDetail->color->color_name}} {{$value->orderDetail->productDetail->category->category_name}} ({{$value->orderDetail->quantity}}x{{$value->orderDetail->price}})</td>
+                    <td>{{$value->type}}</td>
+                    <td>{{$value->stock_flow}}</td>
+                    <td>{{$value->reason}}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -39,6 +36,16 @@
 
 @section('additionalJs')
         <script>
+
+            $(function() {
+                $('input[name="refund_date"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+            });
+
             function TableActions (value, row, index) {
                 return [
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
@@ -50,36 +57,31 @@
                 ].join('');
             }
         </script>
-
    
 @endsection
 
 @section('modals')
     
+
     <!-- Modal Edit-->
-    @foreach ($data['production'] as $key=>$value)
+    @foreach ($data['refund'] as $key=>$value)
     <div class="modal fade" id="edit-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('production.defect.edit', $value->id)}}" method="post">
+            <form class="form" action="{{route('refund.edit', $value->id)}}" method="post">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                @if($value->actual)
-                Edit
-                @else
-                Set
-                @endif
-                 Production Defect {{$value->purchasing->po_code}} - {{$value->purchasing->item}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Refund {{$value->refund_name}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Defect</label>
-                        <input type="number" class="form-control" min="0" name="defect" placeholder="Defect" value="{{$value->defect}}" required>
+                        <label>Reason</label>
+                        <textarea class="form-control" name="reason" placeholder="Reason">{{$value->reason}}</textarea>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
@@ -91,18 +93,18 @@
     @endforeach
 
     <!-- Modal Delete-->
-    @foreach ($data['production'] as $key=>$value)
+    @foreach ($data['refund'] as $key=>$value)
     <div class="modal fade" id="delete-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->production_name}}?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->refund_name}}?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('production.defect.delete', $value->id)}}" method="post">
+                <form class="form" action="{{route('refund.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
                     <div class="btn-group" style="width: 100%;">

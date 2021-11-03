@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{asset('/assets/adminlte/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <img src="{{asset('/assets/images/favicons/favicon-32x32.png')}}" alt="MYJI" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">MYJI Admin Panel</span>
     </a>
 
     <!-- Sidebar -->
@@ -14,18 +14,6 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
         </div>
       </div>
 
@@ -44,7 +32,7 @@
           </li>
           <li class="nav-item">
             <a href="{{route('faq')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-question-circle"></i>
               <p>
                 FAQ
               </p>
@@ -52,7 +40,7 @@
           </li>
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-images"></i>
               <p>
                 Slider
               </p>
@@ -60,7 +48,7 @@
           </li>
           <li class="nav-item">
             <a href="{{route('testimony')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-comments"></i>
               <p>
                 Testimony
               </p>
@@ -69,7 +57,7 @@
           <li class="nav-header">MASTER</li>
           <li class="nav-item">
             <a href="{{route('channel')}}" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fab fa-whatsapp"></i>
               <p>
                 Channel
               </p>
@@ -77,7 +65,7 @@
           </li>
           <li class="nav-item">
             <a href="{{route('size')}}" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fas fa-expand-alt"></i>
               <p>
                 Size
               </p>
@@ -85,7 +73,7 @@
           </li>
           <li class="nav-item">
             <a href="{{route('category')}}" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fas fa-tags"></i>
               <p>
                 Category
               </p>
@@ -93,7 +81,7 @@
           </li>
           <li class="nav-item">
             <a href="{{route('color')}}" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fas fa-palette"></i>
               <p>
                 Color
               </p>
@@ -101,48 +89,61 @@
           </li>
           <li class="nav-item">
             <a href="{{route('product')}}" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fas fa-tshirt"></i>
               <p>
                 Product
               </p>
             </a>
           </li>
+          <li class="nav-header">ORDER</li>
+          <li class="nav-item">
+            <a href="{{route('order')}}" class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>Order</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('refund')}}" class="nav-link">
+              <i class="nav-icon fas fa-exchange-alt"></i>
+              <p>Refund</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('promo')}}" class="nav-link">
+              <i class="nav-icon fas fa-percent"></i>
+              <p>Promo</p>
+            </a>
+          </li>
           <li class="nav-header">PRODUCTION</li>
           <li class="nav-item">
             <a href="{{route('purchasing')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <i class="nav-icon fas fa-truck"></i>
               <p>Purchasing</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('production.request')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <i class="nav-icon fas fa-clipboard-list"></i>
               <p>Production Request</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('production.actual')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <i class="nav-icon fas fa-dolly-flatbed"></i>
               <p>Production Actual</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('production.defect')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <i class="nav-icon fas fa-store-alt-slash"></i>
               <p>Production Defect</p>
             </a>
           </li>
-          <li class="nav-header">AUTHENTICATION</li>
+          <li class="nav-header">REPORT</li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>User</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>Role</p>
+            <a href="{{route('report.stock')}}" class="nav-link">
+              <i class="fas fa-warehouse"></i>
+              <p>Stock</p>
             </a>
           </li>
         </ul>

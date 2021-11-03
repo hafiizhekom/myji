@@ -8,7 +8,7 @@ class ProductDetail extends Model
 {
 
     protected $table = 'product_detail';
-    protected $fillable = ['product_id', 'size_id', 'color_id', 'category_id', 'price', 'yard_per_piece', 'design_image_path'];
+    protected $fillable = ['product_id', 'size_id', 'color_id', 'category_id', 'price', 'yard_per_piece', 'design_image_path', 'shopee_link', 'whatsapp_link'];
 
     public function product()
     {
@@ -33,5 +33,10 @@ class ProductDetail extends Model
     public function production()
     {
         return $this->hasMany('App\Models\Production');
+    }
+
+    public function promoDetail()
+    {
+        return $this->hasMany('App\Models\PromoDetail');
     }
 }

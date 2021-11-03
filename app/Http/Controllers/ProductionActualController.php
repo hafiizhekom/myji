@@ -5,36 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Production;
 use App\Models\Purchasing;
-use App\Models\ProductDetail;
+use App\Models\ProductDetail; 
  
 class ProductionActualController extends Controller 
 {
 
     public function index(){ 
 
-        $production = Production::whereNotNull('actual')->get()->unique('purchasing_id');
+        $production = Production::all()->unique('purchasing_id');
         $production_request = Production::whereNull('actual')->get()->unique('purchasing_id');
         
         $data = [
             'production' => $production,
-            'production_request' => $production_request
+            'production_request' => $production_request 
         ];
         return view(
             'admin.production.actual'
-            ,['data'=>$data]
-        );
-    }
-
-    public function detail($id){ 
-
-        $production = Production::where('purchasing_id', $id)->get();
-        
-        $data = [
-            'production' => $production,
-            // 'production_request' => $production_request
-        ];
-        return view(
-            'admin.production.actual_detail'
             ,['data'=>$data]
         );
     }
@@ -44,12 +30,11 @@ class ProductionActualController extends Controller
 
         $purchasing = Purchasing::where('po_code',$po_code)->first();
         
-        $production = Production::whereNotNull('actual')->where('purchasing_id',$purchasing->id)->get();
-        $production_request = Production::whereNull('actual')->get();
+        $production = Production::where('purchasing_id',$purchasing->id)->get();
         
         $data = [
             'production' => $production,
-            'production_request' => $production_request
+            'purchasing' => $purchasing
         ];
         return view(
             'admin.production.actual_search'
@@ -57,42 +42,35 @@ class ProductionActualController extends Controller
         );
     }
 
-    public function add()
-    {
-
-        foreach(request('production_id') as $key => $value){
-            $cabang = Production::findOrFail($value);
-            $data = [
-                'actual'=>request('actual-'.$value)
-            ];
-            $cabang->update($data);
-        }
-
-        
-        $purchasing = Purchasing::where('id', request('purchasing_id'))->first();
-
-        
-        return redirect()->route('production.actual.search',  ['po_code'=>$purchasing->po_code]);
-    }
 
     public function edit($id)
     {
-        $cabang = Production::findOrFail($id);
+        
+        $production = Production::findOrFail($id);
         $data = [
             'actual'=>request('actual')
         ];
         
-        $cabang->update($data);
-        return redirect()->route('production.actual');
+        $production->update($data);
+
+        
+        return redirect()->route('production.actual.search',  ['po_code'=>$production->purchasing->po_code]);
     }
 
 
     public function delete($id, Request $request)
     {
-        $cabang = Production::findOrFail($id);
-        $cabang->delete();
+        
+        $production = Production::findOrFail($id);
 
-        return redirect()->route('production');
+        
+        $data = [
+            'actual'=> null
+        ];
+        $production->update($data);
+
+
+        return redirect()->route('production.actual.search',  ['po_code'=>$production->purchasing->po_code]);
     }
 }
 

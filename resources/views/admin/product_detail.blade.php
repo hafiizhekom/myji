@@ -20,6 +20,8 @@
             <th data-field="product_price" data-sortable="true">Price</th>
             <th data-field="product_yard" data-sortable="true">Yard/Piece</th>
             <th data-field="product_image" data-sortable="true" data-visible="false">Image</th>
+            <th data-field="whatsapp_link" data-sortable="true">Whatsapp Link</th>
+            <th data-field="shopee_link" data-sortable="true">Shopee Link</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -57,6 +59,22 @@
                     <td>
                         {{asset('/storage/products/'.$value->design_image_path)}}
                     </td>
+                    <td>
+                        @if($value->whatsapp_link)
+                            {{$value->whatsapp_link}}
+                            <a href="{{$value->whatsapp_link}}"><i class="fas fa-link"></i></a>
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>
+                        @if($value->whatsapp_link)
+                            {{$value->shopee_link}}
+                            <a href="{{$value->shopee_link}}"><i class="fas fa-link"></i></a>
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -68,7 +86,7 @@
         <script>
             function detailFormatter(index, row) {
                 var html = []
-                html.push('<div class="container">')
+                html.push('<div class="container-fluid">')
                     html.push('<div class="row">')
                         html.push('<div class="col-4 pr-2">')
                             html.push('<img width="100%" src="' + row.product_image + '">')
@@ -154,6 +172,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Whatsapp Link</label>
+                        <input type="text" class="form-control" name="whatsapp_link" placeholder="Whatsapp Link" value="" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Shopee Link</label>
+                        <input type="text" class="form-control" name="shopee_link" placeholder="Shopee Link" value="" required>
+                    </div>
+
+                    <div class="form-group">
                         <label>Image Product</label><br>
                         <input type="file" accept="image/*" name="image" required>
                     </div>
@@ -228,6 +256,16 @@
                     <div class="form-group">
                         <label>Yard / Piece</label>
                         <input type="number" min="0" class="form-control" name="yard_per_piece" placeholder="Yard per Piece" value="{{$value->yard_per_piece}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Whatsapp Link</label>
+                        <input type="text" class="form-control" name="whatsapp_link" placeholder="Whatsapp Link" value="{{$value->whatsapp_link}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Shopee Link</label>
+                        <input type="text" class="form-control" name="shopee_link" placeholder="Shopee Link" value="{{$value->shopee_link}}" required>
                     </div>
 
                     <div class="form-group">

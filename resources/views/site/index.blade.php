@@ -19,7 +19,7 @@
                 @else
                 <div class="carousel-item h-100">
                 @endif
-                <img class="h-100 object-cover" src="{{asset('/storage/'.$slider->image)}}" alt="{{$slider->title}}">
+                <img class="h-100 object-cover" src="{{asset('/assets/images/slider/'.$slider->image)}}" alt="{{$slider->title}}">
                 </div>
             @endforeach
             </div>
@@ -155,7 +155,7 @@
                     @endphp
                     <div class="col-md  ">
                         <div class="card mb-3 product-card-alt"> 
-                            <img src="{{asset('storage/'.$item->detail->design_image_path)}}" width="100px" class="card-img-top mx-auto" style='max-width:350px' alt="{{$item->product_name}}">
+                            <img src="{{asset('storage/products/'.$item->detail->design_image_path)}}" width="100px" class="card-img-top mx-auto" style='max-width:350px' alt="{{$item->product_name}}">
                             <div class="card-body">
                                 <p class="card-text text-center product-card-product-title">{{$item->product_name}}</p>
                                 <p class="card-text text-center product-card-product-price">{{rupiah($item->detail->price)}}</p>
@@ -197,7 +197,7 @@
                         <div class="card-testimony">
                             <div class="card-testimony__scrollbar">
                                 @foreach($data['testimonies'] as $i=> $testi)
-                                    <img src="{{asset('/storage/'.$testi->image)}}" alt="{{$slider->title}}">
+                                    <img src="{{asset('/storage/testimonies/'.$testi->image)}}" alt="{{$slider->title}}">
                                 @endforeach
                             </div>
                         </div>

@@ -14,15 +14,15 @@
                         <div class="sidebar-item mb-4">
                             <div class="row mb-3">
                                 <div class="col-12">
-                                    <h3 class="sidebar-content-title">Volume</h3>
+                                    <h3 class="sidebar-content-title">Category</h3>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <ul class="sidebar-content-list">
 
-                                    @foreach($data['volumes'] as $i=>$v)
-                                        <li><a href="{{route('catalogue', ['vol'=>$v->volume_code])}}">{{$v->volume_name}}</a></li>
+                                    @foreach($data['category'] as $i=>$c)
+                                        <li><a href="{{route('catalogue', ['vol'=>$v->category_code])}}">{{$c->category_name}}</a></li>
                                     @endforeach
                                     </ul>
                                 </div>
@@ -45,6 +45,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div> --}}
@@ -53,16 +54,16 @@
                 <div class="sidebar-item mb-4">
                     <div class="row mb-3">
                         <div class="col-12">
-                            <h3 class="sidebar-content-title">Volume</h3>
+                            <h3 class="sidebar-content-title">Category</h3>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <ul class="sidebar-content-list">
 
-                                @foreach($data['volumes'] as $i=>$v)
+                                @foreach($data['category'] as $i=>$v)
 
-                                    <li><a href="{{route('catalogue', ['vol'=>$v->volume_code])}}">{{$v->volume_name}}</a></li>
+                                    <li><a href="{{route('catalogue', ['vol'=>$v->category_code])}}">{{$v->category_name}}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -77,9 +78,26 @@
                     <div class="row">
                         <div class="col-12">
                             <ul class="sidebar-content-list">
-                            @foreach($data['colors'] as $i=>$c)
+                            @foreach($data['color'] as $i=>$c)
 
                                 <li><a href="{{route('catalogue', ['color'=>$c->color_code])}}">{{$c->color_name}}</a></li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-item mb-4">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h3 class="sidebar-content-title">Size</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="sidebar-content-list">
+                            @foreach($data['size'] as $i=>$s)
+
+                                <li><a href="{{route('catalogue', ['size'=>$c->size_code])}}">{{$s->size_name}}</a></li>
                             @endforeach
                             </ul>
                         </div>
@@ -90,17 +108,17 @@
             <div class="col-lg-9 col-md-12">
                 <div class="row">
 
-                @foreach($data['product_details'] as $i=>$item)
+                @foreach($data['product_detail'] as $i=>$item)
                     @php
                     $images = json_decode($item->images, true);
                     @endphp
 
                     <div class="col-6 col-md-3 mb-4">
                         <div class="card mb-3 product-card-alt">
-                            <img src="{{asset('storage/'.$item->design_image_path)}}" width="100px" class="card-img-top" alt="{{$item->product_name}}">
+                            <img src="{{asset('storage/products/'.$item->design_image_path)}}" width="100px" class="card-img-top" alt="{{$item->product_name}}">
                             <div class="card-body">
-                                <a href="{{url('/site')}}/{{$item->slug}}">
-                                    <p class="card-text text-center product-card-product-title">{{$item->product->product_name}}</p>
+                                <a href="{{url('/site')}}/product/{{$item->id}}">
+                                    <p class="card-text text-center product-card-product-title">{{$item->product->product_name}} {{$item->product->detail->color->color_name}} {{w$item->product->detail->size->size_name}} {{$item->product->detail->category->category_name}}</p>
                                 </a>
                                 <p class="card-text text-center product-card-product-price">{{rupiah($item->price)}}</p>
                             
@@ -113,7 +131,7 @@
                 </div>
                 <!-- Pagination -->
 
-        {{$data['product_details']->links()}}
+        {{$data['product_detail']->links()}}
 
                 <!-- End Pagination -->
             </div>

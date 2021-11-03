@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>MYJI | @yield('pagetitle') @hasSection('subpagetitle') | @yield('subpagetitle') @endif</title>
  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -55,7 +55,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">@yield('pagetitle')</h1>
+            <h1 class="m-0"><b>@yield('pagetitle')</b> 
+              @hasSection('subpagetitle')
+                - <small>@yield('subpagetitle')</small>
+              @endif
+              
+            </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

@@ -34,12 +34,45 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/faq', 'SiteController@faq');
     Route::get('/size-recomendation', 'SiteController@sizeRecomendation');
     Route::get('/feedback', 'SiteController@feedback');
-    Route::get('/{slug}', 'SiteController@productDetail');
+    Route::get('/product/{id}', 'SiteController@productDetail');
 });
 
 
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/', 'DashboardController@index');
+
+    Route::get('/report/stock', 'ReportController@stock')->name('report.stock');
+    Route::get('/report/stock/{id}', 'ReportController@stock_flow')->name('report.stock_flow');
+
+    Route::get('/promo', 'PromoController@index')->name('promo');
+    Route::post('/promo/add', 'PromoController@add')->name('promo.add');
+    Route::post('/promo/edit/{id}', 'PromoController@edit')->name('promo.edit');
+    Route::delete('/promo/delete/{id}', 'PromoController@delete')->name('promo.delete');
+
+    Route::get('/promo/detail/{id}', 'PromoDetailController@index')->name('promo_detail');
+    Route::post('/promo/detail/{id}/add', 'PromoDetailController@add')->name('promo_detail.add');
+    Route::post('/promo/detail/{id}/edit/{iddetail}', 'PromoDetailController@edit')->name('promo_detail.edit');
+    Route::delete('/promo/detail/{id}/delete/{iddetail}', 'PromoDetailController@delete')->name('promo_detail.delete');
+
+    Route::get('/refund', 'RefundController@index')->name('refund');
+    Route::post('/refund/add', 'RefundController@add')->name('refund.add');
+    Route::post('/refund/edit/{id}', 'RefundController@edit')->name('refund.edit');
+    Route::delete('/refund/delete/{id}', 'RefundController@delete')->name('refund.delete');
+
+    Route::get('/order', 'OrderController@index')->name('order');
+    Route::post('/order/add', 'OrderController@add')->name('order.add');
+    Route::post('/order/edit/{id}', 'OrderController@edit')->name('order.edit');
+    Route::delete('/order/delete/{id}', 'OrderController@delete')->name('order.delete');
+
+    Route::get('/order/detail/{id}', 'OrderDetailController@index')->name('order_detail');
+    Route::post('/order/detail/{id}/add', 'OrderDetailController@add')->name('order_detail.add');
+    Route::post('/order/detail/{id}/edit/{iddetail}', 'OrderDetailController@edit')->name('order_detail.edit');
+    Route::delete('/order/detail/{id}/delete/{iddetail}', 'OrderDetailController@delete')->name('order_detail.delete');
+
+    Route::get('/customer', 'CustomerController@index')->name('customer');
+    Route::post('/customer/add', 'CustomerController@add')->name('customer.add');
+    Route::post('/customer/edit/{id}', 'CustomerController@edit')->name('customer.edit');
+    Route::delete('/customer/delete/{id}', 'CustomerController@delete')->name('customer.delete');
 
     Route::get('/faq', 'FaqController@index')->name('faq');
     Route::post('/faq/add', 'FaqController@add')->name('faq.add');
@@ -84,19 +117,17 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('/production/request', 'ProductionRequestController@index')->name('production.request');
     Route::get('/production/request/search', 'ProductionRequestController@search')->name('production.request.search');
     Route::post('/production/request/add', 'ProductionRequestController@add')->name('production.request.add');
+    Route::post('/production/request/append', 'ProductionRequestController@append')->name('production.request.append');
     Route::post('/production/request/edit/{id}', 'ProductionRequestController@edit')->name('production.request.edit');
     Route::delete('/production/request/delete/{id}', 'ProductionRequestController@delete')->name('production.request.delete');
 
     Route::get('/production/actual', 'ProductionActualController@index')->name('production.actual');
-    Route::get('/production/actual/detail/{id}', 'ProductionActualController@detail')->name('production.actual.detail');
     Route::get('/production/actual/search', 'ProductionActualController@search')->name('production.actual.search');
-    Route::post('/production/actual/add', 'ProductionActualController@add')->name('production.actual.add');
     Route::post('/production/actual/edit/{id}', 'ProductionActualController@edit')->name('production.actual.edit');
     Route::delete('/production/actual/delete/{id}', 'ProductionActualController@delete')->name('production.actual.delete');
 
     Route::get('/production/defect', 'ProductionDefectController@index')->name('production.defect');
     Route::get('/production/defect/search', 'ProductionDefectController@search')->name('production.defect.search');
-    Route::post('/production/defect/add', 'ProductionDefectController@add')->name('production.defect.add');
     Route::post('/production/defect/edit/{id}', 'ProductionDefectController@edit')->name('production.defect.edit');
     Route::delete('/production/defect/delete/{id}', 'ProductionDefectController@delete')->name('production.defect.delete');
 

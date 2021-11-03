@@ -1,10 +1,9 @@
 @extends('layouts.application_admin')
 @section('pagetitle', 'Production Actual')
+@section('subpagetitle', $data["purchasing"]->po_code.' '.$data["purchasing"]->item.''.$data["purchasing"]->unit)
 @section('content')
 
-    <div id="toolbar">
-        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
-    </div>
+    
 
     <table data-toggle="table"
     data-search="true"
@@ -13,8 +12,7 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="po_code" data-sortable="true" data-filter-control="select">PO Code</th>
-            <th data-field="product" data-sortable="true" data-filter-control="select">Product</th>
+            <th data-field="product" data-sortable="true">Product</th>
             <th data-field="request" data-sortable="true">Actual</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
@@ -23,9 +21,14 @@
             @foreach ($data['production'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</td>
                     <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}} {{$value->productDetail->color->color_name}}</td>
-                    <td>{{$value->actual}}</td>
+                    <td>
+                        @if($value->actual)    
+                            {{$value->actual}}
+                        @else
+                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit-{{$value->id}}" type="submit">Set Actual</button>
+                        @endif
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -51,50 +54,23 @@
 @endsection
 
 @section('modals')
-    <!-- Modal Add-->
-    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form" action="{{route('production.actual.add')}}" method="post">
-                @csrf
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Production Actual</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>PO Code Production Request</label>
-                        <select class="form-control" name="production_id" placeholder="PO Code Production Request">
-                            @foreach($data['production_request'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->unit}}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
-                    <div class="form-group">
-                        <label>Actual</label>
-                        <input type="number" class="form-control" min="0" name="actual" placeholder="Actual" value="0" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <button class="btn btn-primary btn-block" type="submit">Add New Production Actual</button>
-                </div>
-            </form>
-        </div>
-        </div>
-    </div>
-
-    <!-- Modal Edit-->
-    @foreach ($data['production'] as $key=>$value)
+    <!-- Modal Edit/Append-->
+    @foreach($data['production'] as $key=>$value)
+    
     <div class="modal fade" id="edit-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form class="form" action="{{route('production.actual.edit', $value->id)}}" method="post">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Production Actual {{$value->purchasing->po_code}} - {{$value->purchasing->item}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">
+                @if($value->actual)
+                Edit
+                @else
+                Set
+                @endif
+                 Production Actual {{$value->purchasing->po_code}} - {{$value->purchasing->item}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -126,7 +102,7 @@
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('production.request.delete', $value->id)}}" method="post">
+                <form class="form" action="{{route('production.actual.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
                     <div class="btn-group" style="width: 100%;">

@@ -44,7 +44,9 @@ class ProductDetailController extends Controller
             'color_id'=>request('color'),
             'category_id'=>request('category'),
             'price'=>request('price'),
-            'yard_per_piece'=>request('yard_per_piece')
+            'yard_per_piece'=>request('yard_per_piece'),
+            'whatsapp_link'=>request('whatsapp_link'),
+            'shopee_link'=>request('shopee_link'),
         ];
         $saveProductDetail = ProductDetail::create($dataDetail);
 
@@ -64,6 +66,7 @@ class ProductDetailController extends Controller
 
     public function edit($id, $iddetail)
     {
+        
         $product = Product::find($id);
         if(Request::has('image')){
             $image = request('image');
@@ -78,7 +81,9 @@ class ProductDetailController extends Controller
                 'category_id'=>request('category'),
                 'price'=>request('price'),
                 'yard_per_piece'=>request('yard_per_piece'),
-                'design_image_path'=>$newNameImage
+                'design_image_path'=>$newNameImage,
+                'whatsapp_link'=>request('whatsapp_link'),
+                'shopee_link'=>request('shopee_link'),
             ];
         }else{
             $dataDetail = [
@@ -87,13 +92,18 @@ class ProductDetailController extends Controller
                 'color_id'=>request('color'),
                 'category_id'=>request('category'),
                 'price'=>request('price'),
-                'yard_per_piece'=>request('yard_per_piece')
+                'yard_per_piece'=>request('yard_per_piece'),
+                'whatsapp_link'=>request('whatsapp_link'),
+                'shopee_link'=>request('shopee_link'),
             ];
         }
+        
 
-        $cabang = ProductDetail::findOrFail($id);
+        $productDetail = ProductDetail::findOrFail($iddetail);
+        
        
-        $cabang->update($dataDetail);
+        $productDetail->update($dataDetail);
+        
         return redirect()->route('product_detail', $id);
     }
 

@@ -9,7 +9,7 @@ use App\Models\ProductDetail;
 use App\Models\Testimony;
 use App\Models\Color;
 use App\Models\Size;
-use App\Models\Volume;
+use App\Models\Category;
 use App\Models\Faq;
  
 class SiteController extends Controller
@@ -34,11 +34,12 @@ class SiteController extends Controller
         Request $r
         ){
         $colorParam = $r->color ? $r->color : 'all';
-        $volumeParam = $r->vol ? $r->vol : 'all';
+        $categoryParam = $r->category ? $r->category : 'all';
         
         
-        $colors = Color::all();
-        $volumes = Volume::all();
+        $color = Color::all();
+        $category = Category::all();
+        $size = Size::all();
 
         $product_detail = ProductDetail::orderBy('created_at', 'DESC');
 
@@ -49,9 +50,9 @@ class SiteController extends Controller
             });  
         }
 
-        if($r->vol){
-            $product_detail = $product_detail->whereHas('volume', function($q) use($r){
-                $q->where('volume_code', $r->vol);
+        if($r->category){
+            $product_detail = $product_detail->whereHas('category', function($q) use($r){
+                $q->where('category_code', $r->vol);
             });  
         }
 
@@ -59,9 +60,10 @@ class SiteController extends Controller
         $product_detail = $product_detail->paginate(9);
 
         $data = [
-            'colors' => $colors,
-            'volumes' => $volumes,
-            'product_details' => $product_detail
+            'color' => $color,
+            'category' => $category,
+            'size' => $size,
+            'product_detail' => $product_detail
         ];
         
         return view(
@@ -72,26 +74,29 @@ class SiteController extends Controller
 
     public function productDetail(Request $r, $id){
 
-        $product = Product::with('volume','volume.sizechart','color')->where('slug',$slug)->first();
-        $volume = $product->volume;
-        $color = $product->color;
-        $sizechart = $product->volume->sizechart;
+        $productDetail = ProductDetail::where('id',$id)->first();
+        $anotherProductSize = ProductDetail::where('category_id', $productDetail->category_id)->where('color_id', $productDetail->color_id)->where('product_id',$productDetail->product_id)->get();
+        $product = Product::where('id',$productDetail->product_id)->first();
+        $category = $productDetail->category_id;
+        $color = $product->color_id;
+        $sizechart = $product->size_id;
 
-        $relateProducts = Product::where('volume_id', $product->volume_id)
+        $relateProducts = ProductDetail::where('category_id', $product->category_id)
                         ->where('id','<>', $product->id)->limit(4)->get();
 
         $data = [
             'title' => $product->seo_title ? $product->seo_title : $product->product_title,
-            'volumes' => $volume,
+            'category' => $category,
             'color' => $color,
             'sizechart' => $sizechart,
             'relateProducts' => $relateProducts,
-            'product' => $product
+            'productDetail' => $productDetail,
+            'anotherProductSize' => $anotherProductSize
         ];
 
         return view(
             'site.product-detail'
-            // ,['data'=>$data]
+            ,['data'=>$data]
         );
     }
 

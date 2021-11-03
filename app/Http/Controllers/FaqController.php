@@ -31,21 +31,21 @@ class FaqController extends Controller
 
     public function edit($id)
     {
-        $cabang = Faq::findOrFail($id);
+        $faq = Faq::findOrFail($id);
        	$data = [ 
             'faq_name'=>request('faq_name'), 
             'faq_code'=>request('faq_code')
         ];
         
-        $cabang->update($data);
+        $faq->update($data);
         return redirect()->route('faq');
     }
 
 
     public function delete($id, Request $request)
     {
-        $cabang = Faq::findOrFail($id);
-        $cabang->delete();
+        $faq = Faq::findOrFail($id);
+        $faq->delete();
 
         return redirect()->route('faq');
     }

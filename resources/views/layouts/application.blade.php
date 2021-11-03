@@ -14,6 +14,7 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/product-image.css')}}">
 
     <!-- Additional CSS -->
     <link rel="stylesheet" href="{{asset('/assets/css/vertilcal-carousel.css')}}">
