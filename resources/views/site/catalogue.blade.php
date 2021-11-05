@@ -118,7 +118,7 @@
                             <img src="{{asset('storage/products/'.$item->design_image_path)}}" width="100px" class="card-img-top" alt="{{$item->product_name}}">
                             <div class="card-body">
                                 <a href="{{url('/site')}}/product/{{$item->id}}">
-                                    <p class="card-text text-center product-card-product-title">{{$item->product->product_name}} {{$item->product->detail->color->color_name}} {{w$item->product->detail->size->size_name}} {{$item->product->detail->category->category_name}}</p>
+                                    <p class="card-text text-center product-card-product-title">{{$item->product->product_name}} {{$item->product->detail->color->color_name}} {{$item->product->detail->size->size_name}} {{$item->product->detail->category->category_name}}</p>
                                 </a>
                                 <p class="card-text text-center product-card-product-price">{{rupiah($item->price)}}</p>
                             
