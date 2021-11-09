@@ -2,6 +2,7 @@
 @section('pagetitle', 'Product')
 @section('content')
 
+
     <div id="toolbar">
         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
     </div>
@@ -14,6 +15,8 @@
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product_name" data-sortable="true">Product Name</th>
             <th data-field="product_code" data-sortable="true">Product Code</th>
+            <th data-field="product_color" data-sortable="true">Color</th>
+            <th data-field="product_category" data-sortable="true">Category</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,6 +26,20 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->product_name}}</td>
                     <td>{{$value->product_code}}</td>
+                    <td>
+                        @if($value->color)
+                            {{$value->color->color_name}}
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>
+                        @if($value->category)
+                            {{$value->category->category_name}}
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -73,6 +90,25 @@
                         <label>Product Code</label>
                         <input type="text" class="form-control" name="product_code" placeholder="Product Code" value="">
                     </div>
+
+                    <div class="form-group">
+                        <label>Color</label>
+                        <select class="form-control" name="color" placeholder="Color" required>
+                            @foreach($data['color'] as $key=>$value)
+                                <option value="{{$value->id}}">{{$value->color_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" name="category" placeholder="Category" required>
+                            @foreach($data['category'] as $key=>$value)
+                                <option value="{{$value->id}}">{{$value->category_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                 <button class="btn btn-primary btn-block" type="submit">Add New Product</button>
@@ -104,6 +140,32 @@
                     <div class="form-group">
                         <label>Product Code</label>
                         <input type="text" class="form-control" name="product_code" placeholder="Product Code" value="{{$value->product_code}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Color</label>
+                        <select class="form-control" name="color" placeholder="Color" required>
+                            @foreach($data['color'] as $keycolor=>$valuecolor)
+                                @if($valuecolor->id == $value->color_id)
+                                    <option value="{{$valuecolor->id}}" selected>{{$valuecolor->color_name}}</option>
+                                @else
+                                    <option value="{{$valuecolor->id}}">{{$valuecolor->color_name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" name="category" placeholder="Category" required>
+                            @foreach($data['category'] as $keycategory=>$valuecategory)
+                                @if($valuecategory->id == $value->category_id)
+                                    <option value="{{$valuecategory->id}}" selected>{{$valuecategory->category_name}}</option>
+                                @else
+                                    <option value="{{$valuecategory->id}}">{{$valuecategory->category_name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -114,6 +114,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/product/detail/{id}/add', 'ProductDetailController@add')->name('product_detail.add');
         Route::post('/product/detail/{id}/edit/{iddetail}', 'ProductDetailController@edit')->name('product_detail.edit');
         Route::delete('/product/detail/{id}/delete/{iddetail}', 'ProductDetailController@delete')->name('product_detail.delete');
+
+        Route::get('/product/image/{id}', 'ProductDetailImageController@index')->name('product_detail_image');
+        Route::post('/product/image/{id}/add', 'ProductDetailImageController@add')->name('product_detail_image.add');
+        Route::post('/product/image/{id}/edit/{iddetail}', 'ProductDetailImageController@edit')->name('product_detail_image.edit');
+        Route::delete('/product/image/{id}/delete/{iddetail}', 'ProductDetailImageController@delete')->name('product_detail_image.delete');
     
         Route::get('/purchasing', 'PurchasingController@index')->name('purchasing');
         Route::post('/purchasing/add', 'PurchasingController@add')->name('purchasing.add');

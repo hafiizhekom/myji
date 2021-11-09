@@ -23,7 +23,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -31,7 +31,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('faq')}}" class="nav-link">
+            <a href="{{route('faq')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'faq') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-question-circle"></i>
               <p>
                 FAQ
@@ -39,7 +39,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="pages/widgets.html" class="nav-link {{ (substr_count(Route::currentRouteName(), 'slider') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-images"></i>
               <p>
                 Slider
@@ -47,7 +47,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('testimony')}}" class="nav-link">
+            <a href="{{route('testimony')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'testimony') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-comments"></i>
               <p>
                 Testimony
@@ -56,7 +56,7 @@
           </li>
           <li class="nav-header">MASTER</li>
           <li class="nav-item">
-            <a href="{{route('channel')}}" class="nav-link">
+            <a href="{{route('channel')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'channel') > 0) ? 'active' : '' }}">
               <i class="nav-icon fab fa-whatsapp"></i>
               <p>
                 Channel
@@ -64,7 +64,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('size')}}" class="nav-link">
+            <a href="{{route('size')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'size') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-expand-alt"></i>
               <p>
                 Size
@@ -72,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('category')}}" class="nav-link">
+            <a href="{{route('category')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'category') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-tags"></i>
               <p>
                 Category
@@ -80,7 +80,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('color')}}" class="nav-link">
+            <a href="{{route('color')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'color') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-palette"></i>
               <p>
                 Color
@@ -88,7 +88,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('product')}}" class="nav-link">
+            <a href="{{route('product')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'product') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-tshirt"></i>
               <p>
                 Product
@@ -97,51 +97,51 @@
           </li>
           <li class="nav-header">ORDER</li>
           <li class="nav-item">
-            <a href="{{route('order')}}" class="nav-link">
+            <a href="{{route('order')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'order') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>Order</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('refund')}}" class="nav-link">
+            <a href="{{route('refund')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'refund') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-exchange-alt"></i>
               <p>Refund</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('promo')}}" class="nav-link">
+            <a href="{{route('promo')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'promo') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-percent"></i>
               <p>Promo</p>
             </a>
           </li>
           <li class="nav-header">PRODUCTION</li>
           <li class="nav-item">
-            <a href="{{route('purchasing')}}" class="nav-link">
+            <a href="{{route('purchasing')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'purchasing') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-truck"></i>
               <p>Purchasing</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('production.request')}}" class="nav-link">
+            <a href="{{route('production.request')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'production_request') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>Production Request</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('production.actual')}}" class="nav-link">
+            <a href="{{route('production.actual')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'production_actual') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-dolly-flatbed"></i>
               <p>Production Actual</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('production.defect')}}" class="nav-link">
+            <a href="{{route('production.defect')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'production_defect') > 0) ? 'active' : '' }}">
               <i class="nav-icon fas fa-store-alt-slash"></i>
               <p>Production Defect</p>
             </a>
           </li>
           <li class="nav-header">REPORT</li>
           <li class="nav-item">
-            <a href="{{route('report.stock')}}" class="nav-link">
+            <a href="{{route('report.stock')}}" class="nav-link {{ (substr_count(Route::currentRouteName(), 'report.stock') > 0) ? 'active' : '' }}">
               <i class="fas fa-warehouse"></i>
               <p>Stock</p>
             </a>

@@ -14,6 +14,7 @@
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="name" data-sortable="true">Color Name</th>
             <th data-field="code" data-sortable="true">Color Code</th>            
+            <th data-field="hex" data-sortable="true">Color Hex</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,6 +24,12 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->color_name}}</td>
                     <td>{{$value->color_code}}</td>
+                    <td>
+                        @if($value->color_hex)
+                            <i class="nav-icon fas fa-square-full" style="color:{{$value->color_hex}};"></i>
+                            {{$value->color_hex}}
+                        @endif
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -32,6 +39,14 @@
 
 @section('additionalJs')
         <script>
+
+            $('.colorpicker').on('input',
+                function() {
+                    $('.example-colorpicker').html($(this).val());
+                }
+            );
+
+
             function TableActions (value, row, index) {
                 return [
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
@@ -62,12 +77,18 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Color Name</label>
-                        <input type="text" class="form-control" name="color_name" placeholder="Color Name" value="">
+                        <input type="text" class="form-control" name="color_name" placeholder="Green Tea" value="">
                     </div>
 
                     <div class="form-group">
                         <label>Color Code</label>
-                        <input type="text" class="form-control" name="color_code" placeholder="Color Code" value="">
+                        <input type="text" class="form-control" name="color_code" placeholder="green_tea" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Color</label>
+                        <input type="color" class="form-control colorpicker" name="color_hex" value="#000000" placeholder="Color" value="">
+                        <small class="example-colorpicker">#000000</small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -100,6 +121,12 @@
                     <div class="form-group">
                         <label>Color Code</label>
                         <input type="text" class="form-control" name="color_code" placeholder="Color Code" value="{{$value->color_code}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Color</label>
+                        <input type="color" class="form-control colorpicker" name="color_hex" value="{{$value->color_hex}}" placeholder="Color" value="">
+                        <small class="example-colorpicker">{{$value->color_hex}}</small>
                     </div>
                 </div>
                 <div class="modal-footer">

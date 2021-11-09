@@ -38,7 +38,7 @@
                     <td>{{$value->discount_amount}}</td>
                     <td>{{$value->discount_percentage}}</td>
                     <td>{{$value->address_shipping}}</td>
-                    <td>{{$value->total_price}}</td>
+                    <td>{{number_format($value->total_price,0,',','.')}}</td>
                     <td>{{$value->order_date}}</td>
                     <td></td>
                 </tr>

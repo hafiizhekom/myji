@@ -16,8 +16,9 @@ class ProductController extends Controller
 
         $product = Product::all();
         $color = Color::all();
-        $size = Size::all();
         $category = Category::all();
+        $size = Size::all();
+       
         $data = [
             'product' => $product,
             'size' => $size,
@@ -34,7 +35,9 @@ class ProductController extends Controller
     {
     	$data = [
             'product_name'=>request('product_name'), 
-            'product_code'=>request('product_code')
+            'product_code'=>request('product_code'),
+            'color_id'=>request('color'),
+            'category_id'=>request('category'),
         ];
         $simpan = Product::create($data)->id;
 
@@ -46,7 +49,9 @@ class ProductController extends Controller
         $cabang = Product::findOrFail($id);
        	$data = [ 
             'product_name'=>request('product_name'), 
-            'product_code'=>request('product_code')
+            'product_code'=>request('product_code'),
+            'color_id'=>request('color'),
+            'category_id'=>request('category'),
         ];
         
         $cabang->update($data);

@@ -11,7 +11,7 @@
             <label>Discount Amount</label>: {{$data['order']->discount_amount}}<br>
             <label>Discount Percentage</label>: {{$data['order']->discount_percentage}}%<br>
             <label>Address Shipping</label>: {{$data['order']->address_shipping}}<br>
-            <label>Total Price</label>: {{$data['order']->total_price}}<br>
+            <label>Total Price</label>: {{number_format($data['order']->total_price,0,',','.')}}<br>
             <label>Order Date</label>: {{$data['order']->order_date}}<br>
             <label>Order Type</label>: {{$data['order']->type_order}}<br>
             @if($data['order']->type_order == "return")
@@ -47,10 +47,10 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->productDetail->product->product_name}}</td>
                     <td>{{$value->productDetail->size->size_name}}</td>
-                    <td>{{$value->productDetail->color->color_name}}</td>
-                    <td>{{$value->productDetail->category->category_name}}</td>
+                    <td>{{$value->productDetail->product->color->color_name}}</td>
+                    <td>{{$value->productDetail->product->category->category_name}}</td>
                     <td>{{$value->quantity}}</td>
-                    <td>{{$value->price}}</td>
+                    <td>{{number_format($value->price,0,',','.')}}</td>
                     <td>{{ucfirst($value->status)}}</td>
                     <td></td>
                 </tr>
@@ -115,7 +115,7 @@
                         <label>Product</label>
                         <select class="form-control" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->color->color_name}} {{$value->category->category_name}}</option>
+                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->product->color->color_name}} {{$value->product->category->category_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -208,9 +208,9 @@
                         <select class="form-control" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$valueproductdetail)
                                 @if($valueproductdetail->id == $value->productDetail->id)
-                                    <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->color->color_name}} {{$valueproductdetail->category->category_name}}</option>
+                                    <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
                                 @else
-                                    <option value="{{$valueproductdetail->id}}">{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->color->color_name}} {{$valueproductdetail->category->category_name}}</option>
+                                    <option value="{{$valueproductdetail->id}}">{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
                                 @endif
                             @endforeach
                         </select>
