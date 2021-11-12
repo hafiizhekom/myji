@@ -1,5 +1,5 @@
 @extends('layouts.application_admin')
-@section('pagetitle', 'Testimony')
+@section('pagetitle', 'Slider')
 @section('content')
 
     <div id="toolbar">
@@ -20,23 +20,31 @@
         </tr>
         </thead>
         <tbody>
-            @foreach ($data['testimony'] as $key=>$value)
+            @foreach ($data['slider'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->title}}</td>
                     <td>
                         @if($value->image)
-                            <a href="#" data-toggle="modal" data-target="#image-{{$value->id}}"><img src="{{asset('/storage/testimonies/'.$value->image)}}" width="100px"></a>
+                            <a href="#" data-toggle="modal" data-target="#image-{{$value->id}}"><img src="{{asset('/storage/sliders/'.$value->image)}}" width="100px"></a>
                         @endif
                     </td>
                     <td>
                         {{$value->order}}
-                        <a class="text-info" href="#" data-toggle="modal" data-target="#increasing-{{$value->id}}">
-                            <i class="fas fa-arrow-up"></i>
-                        </a>
-                        <a class="text-info" href="#" data-toggle="modal" data-target="#decreasing-{{$value->id}}">
-                            <i class="fas fa-arrow-down"></i>
-                        </a>
+
+                        @if($value->order==0)
+                            <a class="text-info" href="#" data-toggle="modal" data-target="#increasing-{{$value->id}}">
+                                <i class="fas fa-arrow-up"></i>
+                            </a>
+                        @else
+                            <a class="text-info" href="#" data-toggle="modal" data-target="#increasing-{{$value->id}}">
+                                <i class="fas fa-arrow-up"></i>
+                            </a>
+                            <a class="text-info" href="#" data-toggle="modal" data-target="#decreasing-{{$value->id}}">
+                                <i class="fas fa-arrow-down"></i>
+                            </a>
+                        @endif
+                        
                     </td>
                     <td></td>
                 </tr>
@@ -92,10 +100,10 @@
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('testimony.add')}}" method="post" enctype="multipart/form-data">
+            <form class="form" action="{{route('slider.add')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Testimony</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add New Slider</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,7 +111,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Testimony Name" value="">
+                        <input type="text" class="form-control" name="title" placeholder="Slider Name" value="">
                     </div>
 
                     <div class="form-group">
@@ -112,7 +120,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-primary btn-block" type="submit">Add New Testimony</button>
+                <button class="btn btn-primary btn-block" type="submit">Add New Slider</button>
                 </div>
             </form>
         </div>
@@ -120,14 +128,14 @@
     </div>
 
     <!-- Modal Edit-->
-    @foreach ($data['testimony'] as $key=>$value)
+    @foreach ($data['slider'] as $key=>$value)
     <div class="modal fade" id="edit-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('testimony.edit', $value->id)}}" method="post" enctype="multipart/form-data">
+            <form class="form" action="{{route('slider.edit', $value->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Testimony {{$value->testimony_name}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Slider {{$value->slider_name}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -135,7 +143,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Testimony Name" value="{{$value->title}}">
+                        <input type="text" class="form-control" name="title" placeholder="Slider Name" value="{{$value->title}}">
                     </div>
 
                     <div class="form-group">
@@ -168,7 +176,7 @@
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('testimony.increasing.edit', $value->id)}}" method="post">
+                <form class="form" action="{{route('slider.increasing.edit', $value->id)}}" method="post">
                     @csrf
                     <div class="btn-group" style="width: 100%;">
                         <button type="submit" class="btn btn-default">Increase</button>
@@ -191,7 +199,7 @@
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('testimony.decreasing.edit', $value->id)}}" method="post">
+                <form class="form" action="{{route('slider.decreasing.edit', $value->id)}}" method="post">
                     @csrf
                     <div class="btn-group" style="width: 100%;">
                         <button type="submit" class="btn btn-default">Decrease</button>
@@ -205,18 +213,18 @@
     @endforeach
 
     <!-- Modal Delete-->
-    @foreach ($data['testimony'] as $key=>$value)
+    @foreach ($data['slider'] as $key=>$value)
     <div class="modal fade" id="delete-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->testimony_name}}?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->slider_name}}?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('testimony.delete', $value->id)}}" method="post">
+                <form class="form" action="{{route('slider.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
                     <div class="btn-group" style="width: 100%;">

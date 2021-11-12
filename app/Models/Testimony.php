@@ -10,5 +10,5 @@ class Testimony extends Model
 {
     use SoftDeletes; 
     protected $table = 'testimony';
-    protected $fillable = ['title','image','content'];
+    protected $fillable = ['title','image','order'];
 }

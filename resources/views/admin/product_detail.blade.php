@@ -68,7 +68,6 @@
 @section('additionalJs')
         <script>
             
-            
             function TableActions (value, row, index) {
                 return [
                     '<a class="text-info" href="/admin/product/image/',row.id,'">',
@@ -117,7 +116,7 @@
 
                     <div class="form-group">
                         <label>Yard / Piece</label>
-                        <input type="number" min="0" class="form-control" name="yard_per_piece" placeholder="Price per Yard" value="" required>
+                        <input type="number" min="0" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" name="yard_per_piece" placeholder="Price per Yard" value="" required>
                     </div>
 
                     <div class="form-group">
@@ -173,7 +172,7 @@
 
                     <div class="form-group">
                         <label>Yard / Piece</label>
-                        <input type="number" min="0" class="form-control" name="yard_per_piece" placeholder="Yard per Piece" value="{{$value->yard_per_piece}}" required>
+                        <input type="number" min="0" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" name="yard_per_piece" placeholder="Yard per Piece" value="{{$value->yard_per_piece}}" required>
                     </div>
 
                     <div class="form-group">

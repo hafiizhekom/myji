@@ -32,9 +32,11 @@ class OrderDetailController extends Controller
             'order_id'=>$id, 
             'product_detail_id'=>request('product_detail_id'),
             'quantity'=>request('quantity'),
-            'price'=>request('price')
+            'price'=>request('price'),
+            'total_price'=>request('total_price'),
         ];
         $simpan = OrderDetail::create($data);
+        $this->updateOrderTotalPrice($id);
         return redirect()->route('order_detail', ['id'=>$id]);
     }
 
@@ -46,10 +48,12 @@ class OrderDetailController extends Controller
             'order_id'=>$id, 
             'product_detail_id'=>request('product_detail_id'),
             'quantity'=>request('quantity'),
-            'price'=>request('price')
+            'price'=>request('price'),
+            'total_price'=>request('total_price'),
         ];
         
         $order->update($data);
+        $this->updateOrderTotalPrice($order->order_id);
         return redirect()->route('order_detail', ['id'=>$id]);
     }
 
@@ -60,6 +64,21 @@ class OrderDetailController extends Controller
         $order->delete();
 
         return redirect()->route('order_detail', ['id'=>$id]);
+    }
+
+    private function updateOrderTotalPrice($id){
+        $order = Order::where('id', $id)->first();
+        $newPrice = totalprice_order($order);
+
+        $order = Order::find($id);
+        $order->total_price = $newPrice;
+        if($order->save()){
+            return true;
+        }else{
+            return false;
+        }
+
+        
     }
 }
 

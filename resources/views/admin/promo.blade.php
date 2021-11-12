@@ -14,7 +14,6 @@
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="promo_name" data-sortable="true">Promo Name</th>
             <th data-field="fixed_amount" data-sortable="true">Fixed Amount</th>
-            <th data-field="percentage_amount" data-sortable="true">Percentage Amount</th>
             <th data-field="start_time" data-sortable="true">Start Time</th>
             <th data-field="end_time" data-sortable="true">End Time</th>
             <th data-field="active" data-sortable="true">Active</th>
@@ -27,7 +26,6 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->promo_name}}</td>
                     <td>{{$value->fixed_amount}}</td>
-                    <td>{{$value->percentage_amount}}</td>
                     <td>{{$value->start_time}}</td>
                     <td>{{$value->end_time}}</td>
                     <td>
@@ -97,11 +95,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Percentage Amount</label>
-                        <input type="number" class="form-control" name="percentage_amount" placeholder="Percentage Amount" min="0" max="100" value="">
-                    </div>
-
-                    <div class="form-group">
                         <label>Promo Date</label>
                         <input type="text" class="form-control" name="promo_date"  placeholder="Promo Date" value="">
                     </div>
@@ -145,11 +138,6 @@
                     <div class="form-group">
                         <label>Fixed Amount</label>
                         <input type="number" class="form-control" name="fixed_amount" placeholder="Fixed Amount" min="0" value="{{$value->fixed_amount}}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Percentage Amount</label>
-                        <input type="number" class="form-control" name="percentage_amount" placeholder="Percentage Amount" min="0" max="100" value="{{$value->percentage_amount}}">
                     </div>
 
                     <div class="form-group">

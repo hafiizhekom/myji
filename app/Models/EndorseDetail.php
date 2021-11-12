@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class OrderDetail extends Model
+class EndorseDetail extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'order_detail';
-    protected $fillable = ['order_id', 'product_detail_id', 'quantity', 'price', 'total_price', 'status'];
+    protected $table = 'endorse_detail';
+    protected $fillable = ['endorse_id', 'product_detail_id', 'quantity'];
 
 
     public function productDetail() 
@@ -19,9 +19,9 @@ class OrderDetail extends Model
         return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id');
     }
 
-    public function order()
+    public function endorse()
     {
-        return $this->belongsTo('App\Models\Order', 'order_id');
+        return $this->belongsTo('App\Models\Endorse', 'endorse_id');
     }
 
     public function refund()

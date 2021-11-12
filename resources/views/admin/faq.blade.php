@@ -12,10 +12,9 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="order" data-visible="false">Order</th>
-            <th data-field="name" data-sortable="true">Title</th>
+            <th data-field="title" data-sortable="true">Title</th>
             <th data-formatter="TableActionsContent">Content</th>
-            <th data-formatter="TableActionsOrder">Order</th>
+            <th data-field="order" data-sortable="true">Order</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,10 +22,17 @@
             @foreach ($data['faq'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->order}}</td>
                     <td>{{$value->title}}</td>
                     <td></td>
-                    <td></td>
+                    <td>
+                        {{$value->order}}
+                        <a class="text-info" href="#" data-toggle="modal" data-target="#increasing-{{$value->id}}">
+                            <i class="fas fa-arrow-up"></i>
+                        </a>
+                        <a class="text-info" href="#" data-toggle="modal" data-target="#decreasing-{{$value->id}}">
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -36,9 +42,8 @@
 
 @section('additionalJs')
         <script>
-
             $(document).ready(function() {
-                $('#summernote').summernote();
+               $('.summernote').summernote();
             });
             
             function TableActionsContent (value, row, index) {
@@ -46,18 +51,6 @@
                     '<a class="text-info" href="#" data-toggle="modal" data-target="#content-',row.id,'">',
                     '<i class="fas fa-eye"></i>',
                     '</a> '
-                ].join('');
-            }
-
-            function TableActionsOrder (value, row, index) {
-                return [
-                    row.order,
-                    ' <a class="text-info" href="#">',
-                    ' <i class="fas fa-arrow-up"></i>',
-                    '</a>',
-                    ' <a class="text-info" href="#">',
-                    ' <i class="fas fa-arrow-down"></i>',
-                    '</a>'
                 ].join('');
             }
 
@@ -95,9 +88,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Faq Code</label>
-                        <textarea id="summernote" name="editordata"></textarea>
-                        <input type="text" class="form-control" name="faq_code" placeholder="Faq Code" value="">
+                        <label>Content</label>
+                        <textarea class="summernote" name="content" placeholder="Content"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -142,19 +134,65 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Faq Name</label>
-                        <input type="text" class="form-control" name="faq_name" placeholder="Faq Name" value="{{$value->faq_name}}">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="faq_name" placeholder="Faq Name" value="{{$value->title}}">
                     </div>
 
                     <div class="form-group">
-                        <label>Faq Code</label>
-                        <input type="text" class="form-control" name="faq_code" placeholder="Faq Code" value="{{$value->faq_code}}">
+                        <label>Content</label>
+                        <textarea class="summernote" name="content" placeholder="Content">{{$value->content}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
                 </div>
             </form>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Incereasing-->
+    <div class="modal fade" id="increasing-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to increasing order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="{{route('faq.increasing.edit', $value->id)}}" method="post">
+                    @csrf
+                    <div class="btn-group" style="width: 100%;">
+                        <button type="submit" class="btn btn-default">Increase</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Decreasing-->
+    <div class="modal fade" id="decreasing-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to decreasing order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="{{route('faq.decreasing.edit', $value->id)}}" method="post">
+                    @csrf
+                    <div class="btn-group" style="width: 100%;">
+                        <button type="submit" class="btn btn-default">Decrease</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
         </div>
     </div>
@@ -166,7 +204,7 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->faq_name}}?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->title}}?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

@@ -38,6 +38,37 @@
             
 @endsection
 
+@section('additionalJs')
+        <script>
+            
+
+            $(document).ready(function() {
+                $("input[type=file]").change(function(){
+                    var oImg=new Image();
+                    var avail = false;
+                    for( i=0; i < this.files.length; i++ ){
+                        
+                        oImg.src=URL.createObjectURL( this.files[i] );
+                        oImg.onload=function(){
+                            var width=oImg.naturalWidth;
+                            var height=oImg.naturalHeight;
+                            var ratio = oImg.width/oImg.height;
+                            
+                            if(Math.round(ratio * 100) / 100 >= 0.60 && Math.round(ratio * 100) / 100 <= 0.80){
+                                
+                            }else{
+                                alert('Image ratio must be 2 (width) : 3 (height) or 3 (width) : 4 (height)');  
+                                $("input[type=file]").val(''); 
+                                return;
+                            }
+                           
+                        };
+                    }
+                });
+            });
+        </script>
+   
+@endsection
 
 
 @section('modals')

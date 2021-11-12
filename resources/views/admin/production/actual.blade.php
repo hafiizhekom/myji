@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group">
-        <button class="btn btn-info btn-block" type="submit">Search</button>
+        <button class="btn btn-info btn-block" type="submit">Detail</button>
     </div>
 </form>
 @endsection

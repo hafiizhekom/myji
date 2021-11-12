@@ -9,7 +9,7 @@ class FaqController extends Controller
 {
     public function index(){
 
-        $faq = Faq::all();
+        $faq = Faq::orderBy('order', 'desc')->get();
         $data = [
             'faq' => $faq
         ];
@@ -21,11 +21,48 @@ class FaqController extends Controller
 
     public function add()
     {
+
+        $lastFaq = Faq::orderBy('order', 'desc')->first();
+        if(!$lastFaq){
+            $lastOrder = 1;
+        }else{
+            $lastOrder = $lastFaq->order+1;
+        }
+
+        
     	$data = [
-            'faq_name'=>request('faq_name'), 
-            'faq_code'=>request('faq_code')
+            'title'=>request('title'), 
+            'content'=>request('content'),
+            'order' => $lastOrder
+
         ];
         $simpan = Faq::create($data);
+        return redirect()->route('faq');
+    }
+
+    public function increasingOrder($id)
+    {
+        $faq = Faq::where('id',$id)->first();
+        $faqTop = Faq::where('order', $faq->order + 1)->first();
+
+        if($faqTop){
+            $faqTop->update(['order'=>$faq->order]);
+        }
+
+        $faq->update(['order'=>$faq->order + 1]);
+        return redirect()->route('faq');
+    }
+
+    public function decreasingOrder($id)
+    {
+        $faq = Faq::where('id',$id)->first();
+        $faqBot = Faq::where('order', $faq->order - 1)->first();
+
+        if($faqBot){
+            $faqBot->update(['order'=>$faq->order]);
+        }
+
+        $faq->update(['order'=>$faq->order - 1]);
         return redirect()->route('faq');
     }
 
@@ -33,8 +70,8 @@ class FaqController extends Controller
     {
         $faq = Faq::findOrFail($id);
        	$data = [ 
-            'faq_name'=>request('faq_name'), 
-            'faq_code'=>request('faq_code')
+            'title'=>request('title'), 
+            'content'=>request('content')
         ];
         
         $faq->update($data);

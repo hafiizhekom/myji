@@ -74,16 +74,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/order/detail/{id}/add', 'OrderDetailController@add')->name('order_detail.add');
         Route::post('/order/detail/{id}/edit/{iddetail}', 'OrderDetailController@edit')->name('order_detail.edit');
         Route::delete('/order/detail/{id}/delete/{iddetail}', 'OrderDetailController@delete')->name('order_detail.delete');
+
+        Route::get('/endorse', 'EndorseController@index')->name('endorse');
+        Route::post('/endorse/add', 'EndorseController@add')->name('endorse.add');
+        Route::post('/endorse/edit/{id}', 'EndorseController@edit')->name('endorse.edit');
+        Route::delete('/endorse/delete/{id}', 'EndorseController@delete')->name('endorse.delete');
+    
+        Route::get('/endorse/detail/{id}', 'EndorseDetailController@index')->name('endorse_detail');
+        Route::post('/endorse/detail/{id}/add', 'EndorseDetailController@add')->name('endorse_detail.add');
+        Route::post('/endorse/detail/{id}/edit/{iddetail}', 'EndorseDetailController@edit')->name('endorse_detail.edit');
+        Route::delete('/endorse/detail/{id}/delete/{iddetail}', 'EndorseDetailController@delete')->name('endorse_detail.delete');
     
         Route::get('/customer', 'CustomerController@index')->name('customer');
         Route::post('/customer/add', 'CustomerController@add')->name('customer.add');
         Route::post('/customer/edit/{id}', 'CustomerController@edit')->name('customer.edit');
         Route::delete('/customer/delete/{id}', 'CustomerController@delete')->name('customer.delete');
-    
-        Route::get('/faq', 'FaqController@index')->name('faq');
-        Route::post('/faq/add', 'FaqController@add')->name('faq.add');
-        Route::post('/faq/edit/{id}', 'FaqController@edit')->name('faq.edit');
-        Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('faq.delete');
     
         Route::get('/color', 'ColorController@index')->name('color');
         Route::post('/color/add', 'ColorController@add')->name('color.add');
@@ -141,12 +146,28 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/production/defect/search', 'ProductionDefectController@search')->name('production.defect.search');
         Route::post('/production/defect/edit/{id}', 'ProductionDefectController@edit')->name('production.defect.edit');
         Route::delete('/production/defect/delete/{id}', 'ProductionDefectController@delete')->name('production.defect.delete');
+
+        Route::get('/faq', 'FaqController@index')->name('faq');
+        Route::post('/faq/add', 'FaqController@add')->name('faq.add');
+        Route::post('/faq/edit/increase/{id}', 'FaqController@increasingOrder')->name('faq.increasing.edit');
+        Route::post('/faq/edit/decrease/{id}', 'FaqController@decreasingOrder')->name('faq.decreasing.edit');
+        Route::post('/faq/edit/{id}', 'FaqController@edit')->name('faq.edit');
+        Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('faq.delete');
     
         Route::get('/testimony', 'TestimonyController@index')->name('testimony');
         Route::post('/testimony/add', 'TestimonyController@add')->name('testimony.add');
+        Route::post('/testimony/edit/increase/{id}', 'TestimonyController@increasingOrder')->name('testimony.increasing.edit');
+        Route::post('/testimony/edit/decrease/{id}', 'TestimonyController@decreasingOrder')->name('testimony.decreasing.edit');
         Route::post('/testimony/edit/{id}', 'TestimonyController@edit')->name('testimony.edit');
         Route::delete('/testimony/delete/{id}', 'TestimonyController@delete')->name('testimony.delete');
     
+        Route::get('/slider', 'SliderController@index')->name('slider');
+        Route::post('/slider/add', 'SliderController@add')->name('slider.add');
+        Route::post('/slider/edit/increase/{id}', 'SliderController@increasingOrder')->name('slider.increasing.edit');
+        Route::post('/slider/edit/decrease/{id}', 'SliderController@decreasingOrder')->name('slider.decreasing.edit');
+        Route::post('/slider/edit/{id}', 'SliderController@edit')->name('slider.edit');
+        Route::delete('/slider/delete/{id}', 'SliderController@delete')->name('slider.delete');
+
         // Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
         // Route::get('/how-to-order', 'SiteController@howToOrder');
         // Route::get('/faq', 'SiteController@faq');

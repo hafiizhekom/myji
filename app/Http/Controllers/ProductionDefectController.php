@@ -17,7 +17,7 @@ class ProductionDefectController extends Controller
 
         $data = [
             'production' => $production,
-            'production_request' => $production_request
+            'production.request' => $production_request
         ];
         return view(
             'admin.production.defect'

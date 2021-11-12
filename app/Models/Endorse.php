@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Order extends Model
+class Endorse extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'order';
-    protected $fillable = ['channel_id', 'customer_id', 'discount_amount', 'address_shipping', 'total_price', 'order_date', 'type_order', 'return_order'];
+    protected $table = 'endorse';
+    protected $fillable = ['channel_id', 'customer_id', 'address_shipping', 'endorse_date'];
 
     public function channel()
     {
@@ -25,7 +25,7 @@ class Order extends Model
 
     public function detail()
     {
-        return $this->hasMany('App\Models\OrderDetail');
+        return $this->hasMany('App\Models\EndorseDetail');
     }
 
 }

@@ -1,24 +1,18 @@
 @extends('layouts.application_admin')
-@section('pagetitle', 'Promo Detail')
+@section('pagetitle', 'Endorse Detail')
 @section('breadcrumb')
-    <a class="btn btn-sm btn-link float-right" href="{{route('promo')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+    <a class="btn btn-sm btn-link float-right" href="{{route('endorse')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
 @endsection
 @section('content')
 
 
     <div class="card">
-        <div class="card-body"> 
-            <label>Promo Name</label>: {{$data['promo']->promo_name}}<br>
-            <label>Start Time</label>: {{$data['promo']->start_time}}<br>
-            <label>End Time</label>: {{$data['promo']->end_time}}<br>
-            <label>Fixed Amount</label>: {{number_format($data['promo']->fixed_amount,0,',','.')}}<br>
-            <label>Percentage Amount</label>: {{$data['promo']->percentage_amount}}<br>
-            <label>Active</label>:
-            @if($data['promo']->active)
-                <i class="fas fa-check"></i>
-            @else
-                <i class="fas fa-times"></i>
-            @endif
+        <div class="card-body">
+            <label>Endorse ID</label>: #{{$data['endorse']->id}}<br>
+            <label>Channel</label>: {{$data['endorse']->channel->channel_name}}<br>
+            <label>Customer</label>: {{$data['endorse']->customer->first_name}} {{$data['endorse']->customer->last_name}} ({{$data['endorse']->customer->email}})<br>
+            <label>Address Shipping</label>: {{$data['endorse']->address_shipping}}<br>
+            <label>Endorse Date</label>: {{$data['endorse']->endorse_date}}<br>
         </div>
     </div>
 
@@ -34,16 +28,22 @@
         <tr>
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product" data-sortable="true">Product</th>
-            <th data-field="final_price" data-sortable="true">Final Price</th>
+            <th data-field="product_size" data-sortable="true">Product Size</th>
+            <th data-field="product_color" data-sortable="true">Product Color</th>
+            <th data-field="product_category" data-sortable="true">Product Category</th>
+            <th data-field="quantity" data-sortable="true">Quantity</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
         <tbody>
-            @foreach($data['promoDetail'] as $key=>$value)
+            @foreach($data['endorseDetail'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}} {{$value->productDetail->product->color->color_name}} {{$value->productDetail->product->category->category_name}}</td>
-                    <td>{{number_format($value->productDetail->price - $data['promo']->fixed_amount,0,',','.')}}</td>
+                    <td>{{$value->productDetail->product->product_name}}</td>
+                    <td>{{$value->productDetail->size->size_name}}</td>
+                    <td>{{$value->productDetail->product->color->color_name}}</td>
+                    <td>{{$value->productDetail->product->category->category_name}}</td>
+                    <td>{{$value->quantity}}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -53,13 +53,27 @@
 
 @section('additionalJs')
         <script>
-           
+
+            $(function() {
+                $('input[name="endorse_date"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+
+            });
+
+            
 
             function TableActions (value, row, index) {
+                var statusAction = '';
+                
                 return [
+                    statusAction,
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
                     '<i class="fas fa-edit"></i>',
-                    '</a>',
+                    '</a> ',
                     '<a class="text-danger" href="#" data-toggle="modal" data-target="#delete-',row.id,'">' ,
                     '<i class="fas fa-trash"></i>',
                     '</a>'
@@ -74,10 +88,10 @@
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('promo_detail.add', $data['promo']->id)}}" method="post">
+            <form class="form" action="{{route('endorse_detail.add', $data['endorse']->id)}}" method="post">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Promo Detail</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add New Endorse Detail</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -92,9 +106,14 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" min="0" class="form-control addquantity" name="quantity" placeholder="Quantity" value="0" required>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-primary btn-block" type="submit">Add New Promo Detail</button>
+                <button class="btn btn-primary btn-block" type="submit">Add New Endorse Detail</button>
                 </div>
             </form>
         </div>
@@ -102,14 +121,14 @@
     </div>
 
     <!-- Modal Edit-->
-    @foreach ($data['promoDetail'] as $key=>$value)
+    @foreach ($data['endorseDetail'] as $key=>$value)
     <div class="modal fade" id="edit-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('promo_detail.edit', ['id'=>$data['promo']->id, 'iddetail'=>$value->id])}}" method="post">
+            <form class="form" action="{{route('endorse_detail.edit', ['id'=>$data['endorse']->id, 'iddetail'=>$value->id])}}" method="post">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Promo {{$value->promo_name}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Endorse {{$value->endorse_name}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -128,6 +147,11 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" min="0" class="form-control editquantity" name="quantity" placeholder="Quantity" value="{{$value->quantity}}" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
@@ -139,18 +163,18 @@
     @endforeach
 
     <!-- Modal Delete-->
-    @foreach ($data['promoDetail'] as $key=>$value)
+    @foreach ($data['endorseDetail'] as $key=>$value)
     <div class="modal fade" id="delete-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->promo_name}}?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete {{$value->endorse_name}}?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('promo_detail.delete', ['id'=>$data['promo']->id, 'iddetail'=>$value->id])}}" method="post">
+                <form class="form" action="{{route('endorse_detail.delete', ['id'=>$data['endorse']->id, 'iddetail'=>$value->id])}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
                     <div class="btn-group" style="width: 100%;">

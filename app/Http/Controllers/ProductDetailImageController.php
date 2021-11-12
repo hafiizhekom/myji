@@ -35,7 +35,7 @@ class ProductDetailImageController extends Controller
         
        
 
-        if($request->hasfile('image'))
+        if($request->hasfile('image')) 
         {
             foreach ($request->file('image') as $key => $image) {
                 $product_detail = ProductDetail::find($id);

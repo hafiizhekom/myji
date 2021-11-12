@@ -242,12 +242,12 @@ INSERT INTO `production` (`id`, `purchasing_id`, `product_detail_id`, `request`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `production_actual`
+-- Table structure for table `production.actual`
 --
 
-CREATE TABLE `production_actual` (
-  `id_production_actual` bigint(20) NOT NULL,
-  `id_production_request` bigint(20) NOT NULL,
+CREATE TABLE `production.actual` (
+  `id_production.actual` bigint(20) NOT NULL,
+  `id_production.request` bigint(20) NOT NULL,
   `actual` bigint(20) NOT NULL,
   `flag` char(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -511,10 +511,10 @@ ALTER TABLE `production`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `production_actual`
+-- Indexes for table `production.actual`
 --
-ALTER TABLE `production_actual`
-  ADD PRIMARY KEY (`id_production_actual`);
+ALTER TABLE `production.actual`
+  ADD PRIMARY KEY (`id_production.actual`);
 
 --
 -- Indexes for table `product_detail`
@@ -619,10 +619,10 @@ ALTER TABLE `production`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `production_actual`
+-- AUTO_INCREMENT for table `production.actual`
 --
-ALTER TABLE `production_actual`
-  MODIFY `id_production_actual` bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `production.actual`
+  MODIFY `id_production.actual` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_detail`

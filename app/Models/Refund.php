@@ -11,7 +11,7 @@ class Refund extends Model
     use SoftDeletes;
 
     protected $table = 'refund';
-    protected $fillable = ['order_detail_id', 'type', 'stock_flow', 'reason'];
+    protected $fillable = ['order_detail_id', 'type', 'quantity', 'stock_flow', 'reason'];
 
     public function orderDetail()
     {
