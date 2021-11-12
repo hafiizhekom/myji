@@ -13,6 +13,7 @@
         <tr>
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="po_code" data-sortable="true">PO Code</th>
+            <th data-field="supplier_name" data-sortable="true">Supplier Name</th>
             <th data-field="item" data-sortable="true">Item</th>
             <th data-field="unit" data-sortable="true">Unit</th>
             <th data-field="unit_price" data-sortable="true">Unit Price</th>
@@ -21,6 +22,8 @@
             <th data-field="total_price" data-sortable="true">Total Price</th>
             <th data-field="shipping_cost" data-sortable="true">Shipping Cost</th>
             <th data-field="total_price_with_shipping" data-sortable="true">Total Price with Shipping Cost</th>
+            <th data-field="order_date" data-sortable="true">Order Date</th>
+            <th data-field="estimation_date" data-sortable="true">Estimation Date</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -29,14 +32,17 @@
                 <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->po_code}}</td>
+                    <td>{{$value->supplier_name}}</td>
                     <td>{{$value->item}}</td>
-                    <td>{{$value->unit}}</td>
-                    <td>{{$value->unit_price}}</td>
+                    <td>{{number_format($value->unit,2,',','.')}}</td>
+                    <td>{{number_format($value->unit_price,0,',','.')}}</td>
                     <td>{{$value->discount_amount}}</td>
                     <td>{{$value->discount_percentage}}</td>
-                    <td>{{$value->total_price}}</td>
-                    <td>{{$value->shipping_cost}}</td>
-                    <td>{{$value->total_price_with_shipping}}</td>
+                    <td>{{number_format($value->total_price,0,',','.')}}</td>
+                    <td>{{number_format($value->shipping_cost,0,',','.')}}</td>
+                    <td>{{number_format($value->total_price_with_shipping,0,',','.')}}</td>
+                    <td>{{$value->order_date}}</td>
+                    <td>{{$value->estimation_date}}</td>
                     
                     <td></td>
                 </tr>
@@ -63,7 +69,7 @@
         <script>
 
             function calculate_totalprice_add(){
-                var unit = parseInt($('#addunit').val());
+                var unit = parseFloat($('#addunit').val());
                 var price = parseInt($('#addprice').val());
                 var total_price = unit * price;
 
@@ -106,24 +112,59 @@
 
             $(document).ready(function () {
 
+                $('input[name="order_date"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+
+                $('input[name="estimation_date"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+
+
                 $('#addunit').keyup(function() {
                     calculate_totalprice_add();
+                });
+
+                $("#addunit").bind('click', function () {
+                    calculate_totalprice_add();         
                 });
 
                 $('#addprice').keyup(function() {
                     calculate_totalprice_add();
                 });
 
+                $("#addprice").bind('click', function () {
+                    calculate_totalprice_add();         
+                });
+
                 $('#adddiscountamount').keyup(function() {
                     calculate_totalprice_add();
+                });
+
+                $("#adddiscountamount").bind('click', function () {
+                    calculate_totalprice_add();         
                 });
 
                 $('#adddiscountpercentage').keyup(function() {
                     calculate_totalprice_add();
                 });
 
+                $("#adddiscountpercentage").bind('click', function () {
+                    calculate_totalprice_add();         
+                });
+
                 $('#addshippingcost').keyup(function() {
                     calculate_totalprice_add();
+                });
+
+                $("#addshippingcost").bind('click', function () {
+                    calculate_totalprice_add();         
                 });
                
             });
@@ -152,13 +193,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Supplier Name</label>
+                        <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name" value="" required>
+                    </div>
+
+                    <div class="form-group">
                         <label>Item</label>
                         <input type="text" class="form-control" name="item" placeholder="Item" value="" required>
                     </div>
                     
                     <div class="form-group">
                         <label>Unit</label>
-                        <input type="number" class="form-control" id="addunit" min="0" name="unit" placeholder="Unit" value="0" required>
+                        <input type="number" class="form-control" id="addunit" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0" name="unit" placeholder="Unit" value="0" required>
                     </div>
 
                     <div class="form-group">
@@ -190,6 +236,16 @@
                         <label>Total Price With Shipping Cost</label>
                         <input type="text" class="form-control" min="0" id="addtotalpriceshipping" name="total_price_with_shipping" placeholder="Total Price With Shipping Cost" value="" readonly="readonly" required>
                     </div>
+
+                    <div class="form-group">
+                        <label>Order Date</label>
+                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estimation Date</label>
+                        <input type="text" class="form-control" name="estimation_date"  placeholder="Estimation Date" value="">
+                    </div>
                 </div>
                 <div class="modal-footer">
                 <button class="btn btn-primary btn-block" type="submit">Add New Purchasing</button>
@@ -219,13 +275,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Supplier Name</label>
+                        <input type="text" class="form-control" name="supplier_name" placeholder="Supplier Name" value="{{$value->supplier_name}}" required>
+                    </div>
+
+                    <div class="form-group">
                         <label>Item</label>
                         <input type="text" class="form-control" name="item" placeholder="Item" value="{{$value->item}}" required>
                     </div>
                     
                     <div class="form-group">
                         <label>Unit</label>
-                        <input type="number" class="form-control" id="editunit-{{$value->id}}" onkeyup="calculate_totalprice_edit({{$value->id}})" min="0" name="unit" placeholder="Unit" value="{{$value->unit}}" required>
+                        <input type="number" class="form-control" id="editunit-{{$value->id}}" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" onkeyup="calculate_totalprice_edit({{$value->id}})" min="0" name="unit" placeholder="Unit" value="{{$value->unit}}" required>
                     </div>
 
                     <div class="form-group">
@@ -256,6 +317,16 @@
                     <div class="form-group">
                         <label>Total Price With Shipping Cost</label>
                         <input type="text" class="form-control" min="0" id="edittotalpriceshipping-{{$value->id}}" name="total_price_with_shipping" placeholder="Total Price With Shipping Cost" value="{{$value->total_price_with_shipping}}" readonly="readonly" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Order Date</label>
+                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="{{$value->order_date}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estimation Date</label>
+                        <input type="text" class="form-control" name="estimation_date"  placeholder="Estimation Date" value="{{$value->estimation_date}}">
                     </div>
                 </div>
                 <div class="modal-footer">

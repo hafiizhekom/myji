@@ -16,7 +16,6 @@
             <th data-field="channel" data-sortable="true">Channel</th>
             <th data-field="customer" data-sortable="true">Customer</th>
             <th data-field="discount_amount" data-sortable="true">Discount Amount</th>
-            <th data-field="discount_percentage" data-sortable="true">Discount Percentage</th>
             <th data-field="address_shipping" data-sortable="true">Address Shipping</th>
             <th data-field="total_price" data-sortable="true">Total Price</th>
             <th data-field="order_date" data-sortable="true">Order Date</th>
@@ -36,9 +35,8 @@
                     <td>{{$value->channel->channel_name}}</td>
                     <td>{{$value->customer->first_name}} {{$value->customer->last_name}}</td>
                     <td>{{$value->discount_amount}}</td>
-                    <td>{{$value->discount_percentage}}</td>
                     <td>{{$value->address_shipping}}</td>
-                    <td>{{$value->total_price}}</td>
+                    <td>{{number_format($value->total_price,0,',','.')}}</td>
                     <td>{{$value->order_date}}</td>
                     <td></td>
                 </tr>
@@ -67,6 +65,18 @@
                         $("#return_order_group").show();
                     }else{
                         $("#return_order_group").hide();
+                    }
+                });
+
+                
+                $(".text-address-shipping-customer").hide();
+                $('.address-customer').change(function() {
+                    
+                    if(this.checked) {
+                        
+                        $(".text-address-shipping").val($(".text-address-shipping-customer").val());
+                    } else {
+                        $(".text-address-shipping").val("");
                     }
                 });
             });
@@ -140,18 +150,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Discount Percentage</label>
-                        <input type="number" min="0" max="100" class="form-control" name="discount_percentage" placeholder="Discount Percentage" value="" required>
-                    </div>
-
-                    <div class="form-group">
                         <label>Address Shipping</label>
-                        <textarea name="address_shipping" placeholder="Address Shipping" class="form-control" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Total Price</label>
-                        <input type="number" min="0" class="form-control" name="total_price" placeholder="Total Price" value="" required>
+                        <textarea name="address_shipping" placeholder="Address Shipping" class="form-control text-address-shipping" required></textarea>
+                        <textarea name="address_shipping_customer" class="form-control text-address-shipping-customer">{{$value->address}}</textarea>
+                        <input type="checkbox" class="address-customer"> Same as Customer Address
                     </div>
 
                     <div class="form-group">
@@ -166,7 +168,7 @@
 
                     <div class="form-group" id="return_order_group" style="display:none;">
                         <label>Return Order</label>
-                        <select class="form-control" id="return-order-selectpicker" name="return_order" placeholder="Return Order" required>
+                        <select class="form-control" id="return-order-selectpicker" name="return_order" placeholder="Return Order">
                             @foreach($data['orderAll'] as $key=>$value)
                                 <option value="{{$value->id}}">#{{$value->id}} {{$value->channel->channel_name}} {{$value->customer->first_name}} {{$value->customer->last_name}} {{$value->total_price}}</option>
                             @endforeach
@@ -227,18 +229,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Discount Percentage</label>
-                        <input type="number" min="0" max="100" class="form-control" name="discount_percentage" placeholder="Discount Percentage" value="{{$value->discount_percentage}}" required>
-                    </div>
-
-                    <div class="form-group">
                         <label>Address Shipping</label>
                         <textarea name="address_shipping" placeholder="Address Shipping" class="form-control" required>{{$value->address_shipping}}</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Total Price</label>
-                        <input type="number" min="0" class="form-control" name="total_price" placeholder="Total Price" value="{{$value->total_price}}" required>
                     </div>
 
                     <div class="form-group">

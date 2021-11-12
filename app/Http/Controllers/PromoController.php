@@ -34,7 +34,6 @@ class PromoController extends Controller
     	$data = [
             'promo_name'=>request('promo_name'), 
             'fixed_amount'=>request('fixed_amount'),
-            'percentage_amount'=>request('percentage_amount'),
             'start_time'=>$promo_date[0],
             'end_time'=>$promo_date[1],
             'active'=>request('active')

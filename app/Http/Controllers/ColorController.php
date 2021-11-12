@@ -23,7 +23,8 @@ class ColorController extends Controller
     {
     	$data = [
             'color_name'=>request('color_name'), 
-            'color_code'=>request('color_code')
+            'color_code'=>request('color_code'),
+            'color_hex'=>request('color_hex'),
         ];
         $simpan = Color::create($data);
         return redirect()->route('color');
@@ -34,7 +35,8 @@ class ColorController extends Controller
         $cabang = Color::findOrFail($id);
        	$data = [ 
             'color_name'=>request('color_name'), 
-            'color_code'=>request('color_code')
+            'color_code'=>request('color_code'),
+            'color_hex'=>request('color_hex'),
         ];
         
         $cabang->update($data);

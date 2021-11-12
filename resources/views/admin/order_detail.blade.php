@@ -1,5 +1,8 @@
 @extends('layouts.application_admin')
 @section('pagetitle', 'Order Detail')
+@section('breadcrumb')
+    <a class="btn btn-sm btn-link float-right" href="{{route('order')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+@endsection
 @section('content')
 
 
@@ -8,14 +11,13 @@
             <label>Order ID</label>: #{{$data['order']->id}}<br>
             <label>Channel</label>: {{$data['order']->channel->channel_name}}<br>
             <label>Customer</label>: {{$data['order']->customer->first_name}} {{$data['order']->customer->last_name}} ({{$data['order']->customer->email}})<br>
-            <label>Discount Amount</label>: {{$data['order']->discount_amount}}<br>
-            <label>Discount Percentage</label>: {{$data['order']->discount_percentage}}%<br>
+            <label>Discount Amount</label>: {{number_format($data['order']->discount_amount,0,',','.')}}<br>
             <label>Address Shipping</label>: {{$data['order']->address_shipping}}<br>
-            <label>Total Price</label>: {{$data['order']->total_price}}<br>
+            <label>Total Price</label>: {{number_format($data['order']->total_price,0,',','.')}}<br>
             <label>Order Date</label>: {{$data['order']->order_date}}<br>
             <label>Order Type</label>: {{$data['order']->type_order}}<br>
             @if($data['order']->type_order == "return")
-            <label>Return Order</label>: #{{$data['order']->return_order}}<br>
+                <label>Return Order</label>: #{{$data['order']->return_order}}<br>
             @endif
         </div>
     </div>
@@ -37,6 +39,7 @@
             <th data-field="product_category" data-sortable="true">Product Category</th>
             <th data-field="quantity" data-sortable="true">Quantity</th>
             <th data-field="price" data-sortable="true">Price</th>
+            <th data-field="total_price" data-sortable="true">Total Price</th>
             <th data-field="status" data-sortable="true">Status</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
@@ -47,10 +50,11 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->productDetail->product->product_name}}</td>
                     <td>{{$value->productDetail->size->size_name}}</td>
-                    <td>{{$value->productDetail->color->color_name}}</td>
-                    <td>{{$value->productDetail->category->category_name}}</td>
+                    <td>{{$value->productDetail->product->color->color_name}}</td>
+                    <td>{{$value->productDetail->product->category->category_name}}</td>
                     <td>{{$value->quantity}}</td>
-                    <td>{{$value->price}}</td>
+                    <td>{{number_format($value->price,0,',','.')}}</td>
+                    <td>{{number_format($value->total_price,0,',','.')}}</td>
                     <td>{{ucfirst($value->status)}}</td>
                     <td></td>
                 </tr>
@@ -69,6 +73,45 @@
                         format: 'YYYY/MM/DD'
                     }
                 });
+
+                $(".addprice").keyup(function(){
+                    var total_price = $(this).val() * $(".addquantity").val();
+                    $(".addtotalprice").val(total_price);
+                });
+
+                $(".addquantity").keyup(function(){
+                    var total_price = $(this).val() * $(".addprice").val();
+                    $(".addtotalprice").val(total_price);
+                });
+
+                $(".editprice").keyup(function(){
+                    var total_price = $(this).val() * $(".editquantity").val();
+                    $(".edittotalprice").val(total_price);
+                });
+
+                $(".editquantity").keyup(function(){
+                    var total_price = $(this).val() * $(".editprice").val();
+                    $(".edittotalprice").val(total_price);
+                });
+
+                $('.custom-add-totalprice').change(function() {
+                    if(this.checked) {
+                        $(".addtotalprice").attr("readonly", false); 
+                    }else{
+                        $(".addtotalprice").attr("readonly", true); 
+                    }
+                });
+
+                $('.custom-edit-totalprice').change(function() {
+                    if(this.checked) {
+                        $(".edittotalprice").attr("readonly", false); 
+                    }else{
+                        $(".edittotalprice").attr("readonly", true); 
+                    }
+                });
+
+
+
             });
 
             
@@ -81,7 +124,7 @@
                     '<i class="fas fa-exchange-alt"></i>',
                     '</a> '].join('');
                 }
-                    
+                     
                 
                 return [
                     statusAction,
@@ -115,19 +158,25 @@
                         <label>Product</label>
                         <select class="form-control" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->color->color_name}} {{$value->category->category_name}}</option>
+                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->product->color->color_name}} {{$value->product->category->category_name}}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Quantity</label>
-                        <input type="number" min="0" class="form-control" name="quantity" placeholder="Quantity" value="" required>
+                        <input type="number" min="0" class="form-control addquantity" name="quantity" placeholder="Quantity" value="0" required>
                     </div>
 
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" min="0" class="form-control" name="price" placeholder="Price" value="" required>
+                        <input type="number" min="0" class="form-control addprice" name="price" placeholder="Price" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Price</label>
+                        <input type="number" min="0" class="form-control addtotalprice" name="total_price" placeholder="Total Price" value="0" readonly required>
+                        <input type="checkbox" class="custom-add-totalprice"> Custom Total Price
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -159,6 +208,11 @@
                         <label>Reason</label>
                         <textarea placeholder="Reason" name="reason" class="form-control"></textarea>
                     </div>
+
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" placeholder="Quantity" name="quantity" class="form-control" min="1" max="2" required>
+                    </div>
                     
                     <div class="form-group">
                         <label>Type</label>
@@ -176,8 +230,7 @@
                             <option value="defect">Defect</option>
                         </select>
                     </div>
-
-
+                    
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
@@ -208,9 +261,9 @@
                         <select class="form-control" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$valueproductdetail)
                                 @if($valueproductdetail->id == $value->productDetail->id)
-                                    <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->color->color_name}} {{$valueproductdetail->category->category_name}}</option>
+                                    <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
                                 @else
-                                    <option value="{{$valueproductdetail->id}}">{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->color->color_name}} {{$valueproductdetail->category->category_name}}</option>
+                                    <option value="{{$valueproductdetail->id}}">{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -218,12 +271,18 @@
 
                     <div class="form-group">
                         <label>Quantity</label>
-                        <input type="number" min="0" class="form-control" name="quantity" placeholder="Quantity" value="{{$value->quantity}}" required>
+                        <input type="number" min="0" class="form-control editquantity" name="quantity" placeholder="Quantity" value="{{$value->quantity}}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" min="0" class="form-control" name="price" placeholder="Price" value="{{$value->price}}" required>
+                        <input type="number" min="0" class="form-control editprice" name="price" placeholder="Price" value="{{$value->price}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Price</label>
+                        <input type="number" min="0" class="form-control edittotalprice" name="total_price" placeholder="Total Price" value="{{$value->total_price}}" readonly required>
+                        <input type="checkbox" class="custom-edit-totalprice"> Custom Total Price
                     </div>
                 </div>
                 <div class="modal-footer">

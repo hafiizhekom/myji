@@ -12,9 +12,10 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
+            
             <th data-field="name" data-sortable="true">Title</th>
-            <th data-field="image" data-sortable="true">Image</th>         
-            <th data-field="content" data-sortable="true">Content</th>
+            <th data-field="image" data-sortable="true">Image</th>
+            <th data-field="order" data-sortable="true">Order</th>  
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,8 +24,20 @@
                 <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->title}}</td>
-                    <td>{{$value->image}}</td>
-                    <td>{{$value->content}}</td>
+                    <td>
+                        @if($value->image)
+                            <a href="#" data-toggle="modal" data-target="#image-{{$value->id}}"><img src="{{asset('/storage/testimonies/'.$value->image)}}" width="100px"></a>
+                        @endif
+                    </td>
+                    <td>
+                        {{$value->order}}
+                        <a class="text-info" href="#" data-toggle="modal" data-target="#increasing-{{$value->id}}">
+                            <i class="fas fa-arrow-up"></i>
+                        </a>
+                        <a class="text-info" href="#" data-toggle="modal" data-target="#decreasing-{{$value->id}}">
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -34,6 +47,32 @@
 
 @section('additionalJs')
         <script>
+
+            $(document).ready(function() {
+                $("input[type=file]").change(function(){
+                    var oImg=new Image();
+                    var avail = false;
+                    for( i=0; i < this.files.length; i++ ){
+                        
+                        oImg.src=URL.createObjectURL( this.files[i] );
+                        oImg.onload=function(){
+                            var width=oImg.naturalWidth;
+                            var height=oImg.naturalHeight;
+                            var ratio = oImg.width/oImg.height;
+                            
+                            if(Math.round(ratio * 100) / 100 >= 0.60 && Math.round(ratio * 100) / 100 <= 0.80){
+                                
+                            }else{
+                                alert('Image ratio must be 2 (width) : 3 (height) or 3 (width) : 4 (height)');  
+                                $("input[type=file]").val(''); 
+                                return;
+                            }
+                           
+                        };
+                    }
+                });
+            });
+            
             function TableActions (value, row, index) {
                 return [
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
@@ -53,7 +92,7 @@
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('testimony.add')}}" method="post">
+            <form class="form" action="{{route('testimony.add')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add New Testimony</h5>
@@ -63,13 +102,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Testimony Name</label>
-                        <input type="text" class="form-control" name="testimony_name" placeholder="Testimony Name" value="">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Testimony Name" value="">
                     </div>
 
                     <div class="form-group">
-                        <label>Testimony Code</label>
-                        <input type="text" class="form-control" name="testimony_code" placeholder="Testimony Code" value="">
+                        <label>Image</label><br>
+                        <input type="file" accept="image/*" name="image" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -85,7 +124,7 @@
     <div class="modal fade" id="edit-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('testimony.edit', $value->id)}}" method="post">
+            <form class="form" action="{{route('testimony.edit', $value->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Testimony {{$value->testimony_name}}</h5>
@@ -95,19 +134,71 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Testimony Name</label>
-                        <input type="text" class="form-control" name="testimony_name" placeholder="Testimony Name" value="{{$value->testimony_name}}">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Testimony Name" value="{{$value->title}}">
                     </div>
 
                     <div class="form-group">
-                        <label>Testimony Code</label>
-                        <input type="text" class="form-control" name="testimony_code" placeholder="Testimony Code" value="{{$value->testimony_code}}">
+                        <label>Image</label><br>
+                        <input type="file" accept="image/*" name="image">
                     </div>
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
                 </div>
             </form>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="image-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <img src="{{asset('/storage/testimonies/'.$value->image)}}" width="100%">
+        </div>
+    </div>
+
+    <!-- Modal Incereasing-->
+    <div class="modal fade" id="increasing-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to increasing order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="{{route('testimony.increasing.edit', $value->id)}}" method="post">
+                    @csrf
+                    <div class="btn-group" style="width: 100%;">
+                        <button type="submit" class="btn btn-default">Increase</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Decreasing-->
+    <div class="modal fade" id="decreasing-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to decreasing order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="{{route('testimony.decreasing.edit', $value->id)}}" method="post">
+                    @csrf
+                    <div class="btn-group" style="width: 100%;">
+                        <button type="submit" class="btn btn-default">Decrease</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
         </div>
     </div>

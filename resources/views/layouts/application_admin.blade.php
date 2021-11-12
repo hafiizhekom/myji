@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="{{asset('/assets/adminlte/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('/assets/adminlte/plugins/summernote/summernote-bs4.min.css')}}">
+  <!-- image hover -->
+  <link rel="stylesheet" href="{{asset('/assets/css/image-gallery.css')}}">
 
   <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />

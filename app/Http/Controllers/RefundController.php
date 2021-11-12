@@ -43,6 +43,7 @@ class RefundController extends Controller
             'order_detail_id'=>request('order_detail_id'), 
             'reason'=>request('reason'),
             'type'=>request('type'),
+            'quantity'=>request('quantity'),
             'stock_flow'=>request('stock_flow')
         ];
 

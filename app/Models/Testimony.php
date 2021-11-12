@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Testimony extends Model
 {
-    // use SoftDeletes; 
+    use SoftDeletes; 
     protected $table = 'testimony';
-    protected $fillable = ['title','image','content'];
+    protected $fillable = ['title','image','order'];
 }

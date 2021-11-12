@@ -1,14 +1,17 @@
 @extends('layouts.application_admin')
 @section('pagetitle', 'Promo Detail')
+@section('breadcrumb')
+    <a class="btn btn-sm btn-link float-right" href="{{route('promo')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+@endsection
 @section('content')
 
 
     <div class="card">
-        <div class="card-body">
+        <div class="card-body"> 
             <label>Promo Name</label>: {{$data['promo']->promo_name}}<br>
             <label>Start Time</label>: {{$data['promo']->start_time}}<br>
             <label>End Time</label>: {{$data['promo']->end_time}}<br>
-            <label>Fixed Amount</label>: {{$data['promo']->fixed_amount}}<br>
+            <label>Fixed Amount</label>: {{number_format($data['promo']->fixed_amount,0,',','.')}}<br>
             <label>Percentage Amount</label>: {{$data['promo']->percentage_amount}}<br>
             <label>Active</label>:
             @if($data['promo']->active)
@@ -31,6 +34,7 @@
         <tr>
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product" data-sortable="true">Product</th>
+            <th data-field="final_price" data-sortable="true">Final Price</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -38,7 +42,8 @@
             @foreach($data['promoDetail'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}} {{$value->productDetail->color->color_name}} {{$value->productDetail->category->category_name}}</td>
+                    <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}} {{$value->productDetail->product->color->color_name}} {{$value->productDetail->product->category->category_name}}</td>
+                    <td>{{number_format($value->productDetail->price - $data['promo']->fixed_amount,0,',','.')}}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -82,7 +87,7 @@
                         <label>Product</label>
                         <select class="form-control" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->color->color_name}} {{$value->category->category_name}}</option>
+                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->product->color->color_name}} {{$value->product->category->category_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -116,9 +121,9 @@
                         <select class="form-control" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$valueproductdetail)
                                 @if($valueproductdetail->id == $value->productDetail->id)
-                                    <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->color->color_name}} {{$valueproductdetail->category->category_name}}</option>
+                                    <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
                                 @else
-                                    <option value="{{$valueproductdetail->id}}">{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->color->color_name}} {{$valueproductdetail->category->category_name}}</option>
+                                    <option value="{{$valueproductdetail->id}}">{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
                                 @endif
                             @endforeach
                         </select>

@@ -1,5 +1,8 @@
 @extends('layouts.application_admin')
-@section('pagetitle', 'Product '.$data['product'][0]->product_name)
+@section('pagetitle', $data['product'][0]->product_name)
+@section('breadcrumb')
+    <a class="btn btn-sm btn-link float-right" href="{{route('product')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+@endsection
 @section('content')
 
     <div id="toolbar">
@@ -8,18 +11,14 @@
 
     <table data-toggle="table"
     data-search="true"
-    data-toolbar="#toolbar"
-    data-detail-view="true"
-    data-detail-formatter="detailFormatter">
+    data-toolbar="#toolbar">
         <thead>
         <tr>
-            <th data-field="id" data-visible="false">ID</th>          
+            <th data-field="id" data-visible="false">ID</th>       
+            <th data-field="product_id" data-visible="false">Product ID</th>
             <th data-field="product_size" data-sortable="true">Size</th>
-            <th data-field="product_color" data-sortable="true">Color</th>
-            <th data-field="product_category" data-sortable="true">Category</th>
             <th data-field="product_price" data-sortable="true">Price</th>
             <th data-field="product_yard" data-sortable="true">Yard/Piece</th>
-            <th data-field="product_image" data-sortable="true" data-visible="false">Image</th>
             <th data-field="whatsapp_link" data-sortable="true">Whatsapp Link</th>
             <th data-field="shopee_link" data-sortable="true">Shopee Link</th>
             <th data-formatter="TableActions">Action</th>
@@ -29,23 +28,10 @@
             @foreach ($data['productDetail'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
+                    <td>{{$value->product_id}}</td>
                     <td>
                         @if($value->size->id)
                             {{$value->size->size_name}}
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>
-                        @if($value->color)
-                            {{$value->color->color_name}}
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>
-                        @if($value->category)
-                            {{$value->category->category_name}}
                         @else
                             -
                         @endif
@@ -55,9 +41,6 @@
                     </td>
                     <td>
                         {{$value->yard_per_piece}}
-                    </td>
-                    <td>
-                        {{asset('/storage/products/'.$value->design_image_path)}}
                     </td>
                     <td>
                         @if($value->whatsapp_link)
@@ -84,29 +67,12 @@
 
 @section('additionalJs')
         <script>
-            function detailFormatter(index, row) {
-                var html = []
-                html.push('<div class="container-fluid">')
-                    html.push('<div class="row">')
-                        html.push('<div class="col-4 pr-2">')
-                            html.push('<img width="100%" src="' + row.product_image + '">')
-                        html.push('</div>')
-                        html.push('<div class="col">')
-                            html.push('<p><b>Size:</b> ' + row.product_size + '</p>')
-                            html.push('<p><b>Color:</b> ' + row.product_color + '</p>')
-                            html.push('<p><b>Category:</b> ' + row.product_category + '</p>')
-                            html.push('<p><b>Price:</b> ' + row.product_price + '</p>')
-                            html.push('<p><b>Yard per Piece:</b> ' + row.product_yard + '</p>')
-                        html.push('</div>')
-                    html.push('</div>')
-                html.push('</div>')
-                
-                
-                return html.join('')
-            }
             
             function TableActions (value, row, index) {
                 return [
+                    '<a class="text-info" href="/admin/product/image/',row.id,'">',
+                    '<i class="fas fa-images"></i>',
+                    '</a> ',
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
                     '<i class="fas fa-edit"></i>',
                     '</a> ',
@@ -144,31 +110,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Color</label>
-                        <select class="form-control" name="color" placeholder="Color" required>
-                            @foreach($data['color'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->color_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select class="form-control" name="category" placeholder="Category" required>
-                            @foreach($data['category'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->category_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
                         <label>Price</label>
                         <input type="number" min="0" class="form-control" name="price" placeholder="Price" value="" required>
                     </div>
 
                     <div class="form-group">
                         <label>Yard / Piece</label>
-                        <input type="number" min="0" class="form-control" name="yard_per_piece" placeholder="Price per Yard" value="" required>
+                        <input type="number" min="0" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" name="yard_per_piece" placeholder="Price per Yard" value="" required>
                     </div>
 
                     <div class="form-group">
@@ -179,11 +127,6 @@
                     <div class="form-group">
                         <label>Shopee Link</label>
                         <input type="text" class="form-control" name="shopee_link" placeholder="Shopee Link" value="" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Image Product</label><br>
-                        <input type="file" accept="image/*" name="image" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -223,39 +166,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Color</label>
-                        <select class="form-control" name="color" placeholder="Color" required>
-                            @foreach($data['color'] as $keycolor=>$valuecolor)
-                                @if($valuecolor->id == $value->color_id)
-                                    <option value="{{$valuecolor->id}}" selected>{{$valuecolor->color_name}}</option>
-                                @else
-                                    <option value="{{$valuecolor->id}}">{{$valuecolor->color_name}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select class="form-control" name="category" placeholder="Category" required>
-                            @foreach($data['category'] as $keycategory=>$valuecategory)
-                                @if($valuecategory->id == $value->category_id)
-                                    <option value="{{$valuecategory->id}}" selected>{{$valuecategory->category_name}}</option>
-                                @else
-                                    <option value="{{$valuecategory->id}}">{{$valuecategory->category_name}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
                         <label>Price</label>
                         <input type="number" min="0" class="form-control" name="price" placeholder="Price" value="{{$value->price}}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Yard / Piece</label>
-                        <input type="number" min="0" class="form-control" name="yard_per_piece" placeholder="Yard per Piece" value="{{$value->yard_per_piece}}" required>
+                        <input type="number" min="0" class="form-control" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" name="yard_per_piece" placeholder="Yard per Piece" value="{{$value->yard_per_piece}}" required>
                     </div>
 
                     <div class="form-group">
@@ -266,11 +183,6 @@
                     <div class="form-group">
                         <label>Shopee Link</label>
                         <input type="text" class="form-control" name="shopee_link" placeholder="Shopee Link" value="{{$value->shopee_link}}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Image Product</label><br>
-                        <input type="file" accept="image/*" name="image">
                     </div>
                 </div>
                 <div class="modal-footer">

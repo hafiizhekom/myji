@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group">
-        <button class="btn btn-info btn-block" type="submit">Search</button>
+        <button class="btn btn-info btn-block" type="submit">Detail</button>
     </div>
 </form>
     <div class="form-group">
@@ -78,7 +78,7 @@
                         <label>Product</label>
                         <select class="form-control selectpicker" multiple data-live-search="true" id="productrequest" onchange="selectproduct()" name="product_detail_id[]" placeholder="Product" required>
                             @foreach($data['product_detail'] as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->color->color_name}}</option>
+                                <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}}</option>
                             @endforeach
                         </select>
                     </div>

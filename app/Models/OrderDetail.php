@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class OrderDetail extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'order_detail';
-    protected $fillable = ['order_id', 'product_detail_id', 'quantity', 'price', 'status'];
+    protected $fillable = ['order_id', 'product_detail_id', 'quantity', 'price', 'total_price', 'status'];
 
 
     public function productDetail() 

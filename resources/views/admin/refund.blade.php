@@ -12,6 +12,7 @@
             <th data-field="order" data-sortable="true">Order</th>
             <th data-field="orderdetail" data-sortable="true">Order Detail</th>
             <th data-field="type" data-sortable="true">Type</th>
+            <th data-field="quantity" data-sortable="true">Quantity</th>
             <th data-field="stock_flow" data-sortable="true">Stock Flow</th>
             <th data-field="reason" data-sortable="true">Reason</th>
             <th data-formatter="TableActions">Action</th>
@@ -23,8 +24,9 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->orderDetail->order->customer->first_name}} {{$value->orderDetail->order->customer->last_name}}</td>
                     <td>#{{$value->orderDetail->order->id}} {{$value->orderDetail->order->channel->channel_name}}: {{$value->orderDetail->order->total_price}}</td>
-                    <td>{{$value->orderDetail->productDetail->product->product_name}} {{$value->orderDetail->productDetail->size->size_name}} {{$value->orderDetail->productDetail->color->color_name}} {{$value->orderDetail->productDetail->category->category_name}} ({{$value->orderDetail->quantity}}x{{$value->orderDetail->price}})</td>
+                    <td>{{$value->orderDetail->productDetail->product->product_name}} {{$value->orderDetail->productDetail->size->size_name}} {{$value->orderDetail->productDetail->product->color->color_name}} {{$value->orderDetail->productDetail->product->category->category_name}} ({{$value->orderDetail->quantity}}x{{$value->orderDetail->price}})</td>
                     <td>{{$value->type}}</td>
+                    <td>{{$value->quantity}}</td>
                     <td>{{$value->stock_flow}}</td>
                     <td>{{$value->reason}}</td>
                     <td></td>
@@ -50,10 +52,7 @@
                 return [
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
                     '<i class="fas fa-edit"></i>',
-                    '</a> ',
-                    '<a class="text-danger" href="#" data-toggle="modal" data-target="#delete-',row.id,'">' ,
-                    '<i class="fas fa-trash"></i>',
-                    '</a>'
+                    '</a> '
                 ].join('');
             }
         </script>

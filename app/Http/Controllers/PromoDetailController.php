@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Promo;
 use App\Models\PromoDetail;
-use App\Models\ProductDetail;
+use App\Models\ProductDetail; 
  
 class PromoDetailController extends Controller
 {

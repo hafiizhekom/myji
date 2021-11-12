@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class ProductDetail extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'product_detail';
-    protected $fillable = ['product_id', 'size_id', 'color_id', 'category_id', 'price', 'yard_per_piece', 'design_image_path', 'shopee_link', 'whatsapp_link'];
+    protected $fillable = ['product_id', 'size_id', 'price', 'yard_per_piece', 'design_image_path', 'shopee_link', 'whatsapp_link'];
 
     public function product()
     {
@@ -20,14 +23,9 @@ class ProductDetail extends Model
         return $this->belongsTo('App\Models\Size', 'size_id');
     }
 
-    public function color()
+    public function productDetailImage()
     {
-        return $this->belongsTo('App\Models\Color', 'color_id');
-    }
-
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Category', 'category_id');
+        return $this->hasMany('App\Models\ProductDetailImage');
     }
 
     public function production()
