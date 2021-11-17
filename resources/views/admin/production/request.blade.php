@@ -1,4 +1,4 @@
-@extends('layouts.application_admin')
+@extends('layouts.application_admin') 
 @section('pagetitle', 'Production Request')
 @section('content')
 
@@ -9,6 +9,24 @@
             @foreach($data['production'] as $key=>$value)
                 <option value="{{$value->purchasing->po_code}}">{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</option>
             @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Month</label>
+        <select class="form-control" name="month" placeholder="Month" required>
+            @for ($i=1; $i <=12 ; $i++)
+                <option value="{{$i}}">{{  date("F", mktime(0, 0, 0, $i, 10)) }}</option>
+            @endfor
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Year</label>
+        <select class="form-control" name="year" placeholder="Year" required>
+            @for ($i=2020; $i <=2040 ; $i++)
+                <option value="{{$i}}">{{ $i }}</option>
+            @endfor
         </select>
     </div>
 

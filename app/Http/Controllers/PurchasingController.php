@@ -9,17 +9,37 @@ class PurchasingController extends Controller
 {
     public function index(){
 
-        $purchasing = Purchasing::all();
+        return view(
+            'admin.production.purchasing'
+        );
+
+        
+    }
+
+    public function search(Request $request){
+        
+        
+        $month = request('month');
+        $year = request('year');
+
+        $request->session()->flash('month', $month);
+        $request->session()->flash('year', $year);
+        $purchasing = Purchasing::
+        whereMonth('order_date', '=', $month)->
+        whereYear('order_date', '=', $year)->
+        get();
+
+        
         $data = [
             'purchasing' => $purchasing
         ];
         return view(
-            'admin.purchasing'
+            'admin.production.purchasing_search'
             ,['data'=>$data]
         );
     }
 
-    public function add()
+    public function add(Request $request)
     {
     	$data = [
             'po_code'=>request('po_code'),
@@ -37,10 +57,10 @@ class PurchasingController extends Controller
             
         ];
         $simpan = Purchasing::create($data);
-        return redirect()->route('purchasing');
+        return redirect()->route('production.purchasing.search', ['month'=>$request->session()->get('month'), 'year'=>$request->session()->get('year') ]);
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $cabang = Purchasing::findOrFail($id);
         $data = [
@@ -59,7 +79,7 @@ class PurchasingController extends Controller
         ];
         
         $cabang->update($data);
-        return redirect()->route('purchasing');
+        return redirect()->route('production.purchasing.search', ['month'=>$request->session()->get('month'), 'year'=>$request->session()->get('year') ]);
     }
 
 

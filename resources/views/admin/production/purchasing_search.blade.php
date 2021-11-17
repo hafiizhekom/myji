@@ -1,5 +1,8 @@
 @extends('layouts.application_admin')
 @section('pagetitle', 'Purchasing')
+@section('breadcrumb')
+    <a class="btn btn-sm btn-link float-right" href="{{route('production.purchasing')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+@endsection
 @section('content')
 
     <div id="toolbar">
@@ -41,8 +44,8 @@
                     <td>{{number_format($value->total_price,0,',','.')}}</td>
                     <td>{{number_format($value->shipping_cost,0,',','.')}}</td>
                     <td>{{number_format($value->total_price_with_shipping,0,',','.')}}</td>
-                    <td>{{$value->order_date}}</td>
-                    <td>{{$value->estimation_date}}</td>
+                    <td>{{ date_beautify($value->order_date) }}</td>
+                    <td>{{ date_beautify($value->estimation_date) }}</td>
                     
                     <td></td>
                 </tr>
@@ -178,7 +181,7 @@
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('purchasing.add')}}" method="post">
+            <form class="form" action="{{route('production.purchasing.add')}}" method="post">
                 @csrf
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add New Purchasing</h5>
@@ -260,7 +263,7 @@
     <div class="modal fade" id="edit-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" action="{{route('purchasing.edit', $value->id)}}" method="post">
+            <form class="form" action="{{route('production.purchasing.edit', $value->id)}}" method="post">
                 @csrf
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Purchasing {{$value->purchasing_name}}</h5>
@@ -350,7 +353,7 @@
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('purchasing.delete', $value->id)}}" method="post">
+                <form class="form" action="{{route('production.purchasing.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
                     <div class="btn-group" style="width: 100%;">

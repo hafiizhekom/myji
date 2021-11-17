@@ -130,7 +130,7 @@
           </li>
           <li class="nav-header">PRODUCTION</li>
           <li class="nav-item">
-            <a href="{{route('purchasing')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) >= 1 ? ( ( explode('.', Route::currentRouteName())[0] == 'purchasing' ) ? 'active' : '') : '' }}">
+            <a href="{{route('production.purchasing')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'production' && explode('.', Route::currentRouteName())[1] == 'purchasing' ) ? 'active' : '') : '' }}">
               <i class="nav-icon fas fa-truck"></i>
               <p>Purchasing</p>
             </a>

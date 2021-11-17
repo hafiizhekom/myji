@@ -1,6 +1,17 @@
 @extends('layouts.application_admin')
 @section('pagetitle', 'Production Request')
+@section('breadcrumb')
+    <a class="btn btn-sm btn-link float-right" href="{{route('production.request')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+@endsection
 @section('content')
+
+    
+    <div class="card">
+        <div class="card-body">
+            <label>PO Code</label>: {{ $data['purchasing']->po_code}} ({{ $data['purchasing']->production->productDetail->product->product_name}} {{$data['purchasing']->production->productDetail->size->size_name}})<br>
+            <label>Period</label>: {{$data['period']}}
+        </div>
+    </div>
 
     <div id="toolbar">
         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
@@ -13,9 +24,9 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="po_code" data-sortable="true" data-filter-control="select">PO Code</th>
             <th data-field="product" data-sortable="true" data-filter-control="select">Product</th>
             <th data-field="request" data-sortable="true">Request</th>
+            <th data-field="request_date" data-sortable="true">Date</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,9 +34,9 @@
             @foreach ($data['production'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</td>
                     <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}}</td>
                     <td>{{$value->request}}</td>
+                    <td>{{ date_beautify($value->request_date) }}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -83,6 +94,11 @@
                     <div class="form-group">
                         <label>Request</label>
                         <input type="number" class="form-control" min="0" name="request" placeholder="Request" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Order Date</label>
+                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
