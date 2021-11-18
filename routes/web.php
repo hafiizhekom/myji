@@ -142,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/production/actual/search', 'ProductionActualController@search')->name('production.actual.search');
         Route::post('/production/actual/edit/{id}', 'ProductionActualController@edit')->name('production.actual.edit');
         Route::delete('/production/actual/delete/{id}', 'ProductionActualController@delete')->name('production.actual.delete');
+        Route::post('/production/actual/complete/{id}', 'ProductionActualController@complete')->name('production.actual.complete');
     
         Route::get('/production/defect', 'ProductionDefectController@index')->name('production.defect');
         Route::get('/production/defect/search', 'ProductionDefectController@search')->name('production.defect.search');

@@ -2,7 +2,7 @@
 @section('pagetitle', 'Refund')
 @section('content')
 
-    <table data-toggle="table"
+    <table data-toggle="table" data-pagination="true"
     data-search="true"
     data-toolbar="#toolbar">
         <thead>

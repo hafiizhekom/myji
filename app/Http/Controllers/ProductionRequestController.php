@@ -39,14 +39,29 @@ class ProductionRequestController extends Controller
         $po_code = request('po_code');
         $month = request('month');
         $year = request('year'); 
-
-        $request->session()->flash('month', $month);
-        $request->session()->flash('year', $year);
+        
+        if(($month || $month!=0) && ($year || $year!=0)){
+            $period = date("F Y", strtotime($year."-".$month."-01"));
+        }else if($month || $month!=0){
+            $period = date("F", strtotime("2021-".$month."-01"));
+        }else if($year || $year!=0){
+            $period = date("Y", strtotime($year."-01-01"));
+        }else{
+            $period = "All Time";
+        }
+        
 
         $purchasing = Purchasing::where('po_code',$po_code)->first();
 
-        $production = Production::where('purchasing_id',$purchasing->id)->whereMonth('request_date', '=', $month)->
-        whereYear('request_date', '=', $year)->get();
+        $production = Production::where('purchasing_id',$purchasing->id);
+        if($month || $month!=0){
+            $production = $production->whereMonth('request_date', '=', $month);
+        }
+
+        if($year || $year!=0){
+            $production = $production->whereYear('request_date', '=', $year);
+        }
+        $production = $production->get();
             
         $productExclude = [];
         foreach($production as $item){
@@ -60,7 +75,9 @@ class ProductionRequestController extends Controller
             'production' => $production,
             'purchasing' => $purchasing,
             'product_detail' => $product_detail,
-            'period' => date("F Y", strtotime($year."-".$month."-01"))
+            'period' => $period,
+            'month' => $month,
+            'year' => $year,
         ];
         return view(
             'admin.production.request_search'
@@ -68,57 +85,70 @@ class ProductionRequestController extends Controller
         );
     }
 
-    public function append()
+    public function append(Request $request)
     {
+        $month = request('month');
+        $year = request('year');
         
         $data = [
             'purchasing_id'=>request('purchasing_id'), 
             'product_detail_id'=>request('product_detail_id'),
             'request'=>request('request'),
-            'request_date'=>date('Y-m-d')
+            'request_date'=>request('request_date')
         ];
         $simpan = Production::create($data);
 
         $purchasing = Purchasing::where('id', request('purchasing_id'))->first();
  	
-        return redirect()->route('production.request.search', ['po_code'=>$purchasing->po_code, 'month'=>date('n'), 'year'=>date('Y') ]);
+        // return redirect()->route('production.request.search', ['po_code'=>$purchasing->po_code, 'month'=>date('n'), 'year'=>date('Y') ]);
+        return redirect()->route('production.request.search', ['po_code'=>$purchasing->po_code, 'month'=>$month, 'year'=>$year ]);
     }
 
     public function add()
     {
 
+        $month = date('n', strtotime(request('request_date')));
+        $year = date('Y', strtotime(request('request_date')));
+
         foreach(request('product_detail_id') as $key=>$value){
             $data = [
                 'purchasing_id'=>request('purchasing_id'), 
                 'product_detail_id'=>$value,
-                'request'=>request('request-'.$value)
+                'request'=>request('request-'.$value),
+                'request_date'=>request('request_date'), 
             ];
             $simpan = Production::create($data);
         }
 
         $purchasing = Purchasing::where('id', request('purchasing_id'))->first();
  	
-        return redirect()->route('production.request.search', ['po_code'=>$purchasing->po_code, 'month'=>date('n'), 'year'=>date('Y') ]);
+        return redirect()->route('production.request.search', ['po_code'=>$purchasing->po_code, 'month'=>$month, 'year'=>$year ]);
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        
+        $month = request('month');
+        $year = request('year');
         $production = Production::findOrFail($id);
         $data = [
-            'request'=>request('request')
+            'request'=>request('request'),
+            'request_date'=>request('request_date')
         ];
         
         $production->update($data);
-        return redirect()->route('production.request.search',['po_code'=>$production->purchasing->po_code, 'month'=>date('n'), 'year'=>date('Y') ]);
+        return redirect()->route('production.request.search',['po_code'=>$production->purchasing->po_code, 'month'=>$month, 'year'=>$year ]);
     }
 
 
     public function delete($id, Request $request)
     {
+        $month = request('month');
+        $year = request('year');
         $production = Production::findOrFail($id);
         $production->delete();
 
-        return redirect()->route('production.request.search',['po_code'=>$production->purchasing->po_code, 'month'=>date('n'), 'year'=>date('Y') ]);
+        return redirect()->route('production.request.search',['po_code'=>$production->purchasing->po_code, 'month'=>$month, 'year'=>$year ]);
     }
 }
 

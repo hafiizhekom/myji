@@ -9,24 +9,25 @@
         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
     </div>
 
-    <table data-toggle="table"
+    <table data-toggle="table" data-pagination="true"
     data-search="true"
     data-toolbar="#toolbar">
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="po_code" data-sortable="true">PO Code</th>
-            <th data-field="supplier_name" data-sortable="true">Supplier Name</th>
+            <th data-field="po_code" data-sortable="true">PO</th>
+            <th data-field="supplier_name" data-sortable="true">Supplier</th>
             <th data-field="item" data-sortable="true">Item</th>
             <th data-field="unit" data-sortable="true">Unit</th>
             <th data-field="unit_price" data-sortable="true">Unit Price</th>
-            <th data-field="discount_amount" data-sortable="true">Discount Amount</th>
-            <th data-field="discount_percentage" data-sortable="true">Discount Percentage</th>
+            <th data-field="discount_amount" data-sortable="true">Discount</th>
+            <th data-field="discount_percentage" data-sortable="true">Discount %</th>
             <th data-field="total_price" data-sortable="true">Total Price</th>
             <th data-field="shipping_cost" data-sortable="true">Shipping Cost</th>
-            <th data-field="total_price_with_shipping" data-sortable="true">Total Price with Shipping Cost</th>
+            <th data-field="total_price_with_shipping" data-sortable="true">Total</th>
             <th data-field="order_date" data-sortable="true">Order Date</th>
             <th data-field="estimation_date" data-sortable="true">Estimation Date</th>
+            <th data-field="flag_complete" data-sortable="true" data-visible="true">Flag Complete</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -46,6 +47,13 @@
                     <td>{{number_format($value->total_price_with_shipping,0,',','.')}}</td>
                     <td>{{ date_beautify($value->order_date) }}</td>
                     <td>{{ date_beautify($value->estimation_date) }}</td>
+                    <td>
+                        @if($value->flag_complete)    
+                            <i class="fas fa-check"></i>
+                        @else
+                            <i class="fas fa-times"></i>
+                        @endif
+                    </td>
                     
                     <td></td>
                 </tr>
@@ -56,6 +64,7 @@
 
 @section('additionalJs')
         <script>
+                
             function TableActions (value, row, index) {
                 return [
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
@@ -242,13 +251,16 @@
 
                     <div class="form-group">
                         <label>Order Date</label>
-                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="">
+                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="" required>
                     </div>
 
                     <div class="form-group">
                         <label>Estimation Date</label>
-                        <input type="text" class="form-control" name="estimation_date"  placeholder="Estimation Date" value="">
+                        <input type="text" class="form-control" name="estimation_date"  placeholder="Estimation Date" value="" required>
                     </div>
+
+                    <input type="hidden" name="month" value="{{$data['month']}}">
+                    <input type="hidden" name="year" value="{{$data['year']}}">
                 </div>
                 <div class="modal-footer">
                 <button class="btn btn-primary btn-block" type="submit">Add New Purchasing</button>
@@ -324,13 +336,16 @@
 
                     <div class="form-group">
                         <label>Order Date</label>
-                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="{{$value->order_date}}">
+                        <input type="text" class="form-control" name="order_date"  placeholder="Order Date" value="{{$value->order_date}}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Estimation Date</label>
-                        <input type="text" class="form-control" name="estimation_date"  placeholder="Estimation Date" value="{{$value->estimation_date}}">
+                        <input type="text" class="form-control" name="estimation_date"  placeholder="Estimation Date" value="{{$value->estimation_date}}" required>
                     </div>
+
+                    <input type="hidden" name="month" value="{{$data['month']}}">
+                    <input type="hidden" name="year" value="{{$data['year']}}">
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
@@ -356,10 +371,13 @@
                 <form class="form" action="{{route('production.purchasing.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
+                    <input type="hidden" name="month" value="{{$data['month']}}">
+                    <input type="hidden" name="year" value="{{$data['year']}}">
                     <div class="btn-group" style="width: 100%;">
                         <button type="submit" class="btn btn-danger">Delete</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
+                    
                 </form>
             </div>
         </div>
