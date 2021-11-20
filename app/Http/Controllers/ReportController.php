@@ -5,17 +5,141 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ProductDetail;
 use App\Models\Production;
+use App\Models\Purchasing;
 use App\Models\OrderDetail;
  
 class ReportController extends Controller
 {
+    public function production_request(){
+        $result=$this->calc_production_request();
+
+        $data = [
+            'request' => $result
+        ];
+        return view( 
+            'admin.report.production_request'
+            ,['data'=>$data]
+        ); 
+
+    }
+
+    public function production_estimation(){
+        $stock = $this->calc_stock();
+        
+        foreach ($stock as $key => $value) {
+            $stock[$key]['production_request'] = $this->calc_production_request_by_product($value['product_detail']->id);
+            $stock[$key]['estimation_stock']=$value['stock']+$this->calc_production_request_by_product($value['product_detail']->id);
+        }
+
+        
+        $data = [
+            'stock' => $stock
+        ];
+        return view( 
+            'admin.report.production_estimation'
+            ,['data'=>$data]
+        ); 
+
+    }
+    
     public function stock(){
 
+        $result = $this->calc_stock();
+
+        // dd($result);
+        $data = [
+            'stock' => $result
+        ];
+        return view( 
+            'admin.report.stock'
+            ,['data'=>$data]
+        ); 
+    }
+
+    private function calc_production_request_by_product($product_detail_id){
+        $request = [];
+        $request_stock = 0;
+        $production = new Production();
+        $production = $production
+        ->where('product_detail_id', $product_detail_id)
+        ->where(function ($query) {
+            $query->where('actual',0)->orWhereNull('actual');
+        })
+        ->get();
+
+       
+        foreach ($production as $key2 => $value2) {
+            $request_stock = $request_stock + $value2->request;
+        }
+
+        return $request_stock;
+    }
+
+    // array:9 [▼
+    // 8 => array:2 [▼
+    //     "po_code" => "PO-1"
+    //     "request_stock" => 700
+    // ]
+    // 9 => array:2 [▼
+    //     "po_code" => "PO-2"
+    //     "request_stock" => 0
+    // ]
+    private function calc_production_request(){
+        $request = [];
+        $purchasing = new Purchasing();
+        $purchasing = $purchasing->get();
+        foreach ($purchasing as $key => $value) {
+            $request_stock = 0;
+            $production = new Production();
+            $production = $production
+            ->where('purchasing_id', $value->id)
+            ->where(function ($query) {
+                $query->where('actual',0)->orWhereNull('actual');
+            })
+            ->get();
+            foreach ($production as $key2 => $value2) {
+                $request_stock = $request_stock + $value2->request;
+            }
+            $request[$value->id]['po_code']= $value->po_code;
+            $request[$value->id]['request_stock']= $request_stock;
+        }
+
+        return $request;
+    }
+
+    // array:8 [▼
+    // 1 => array:11 [▼
+    //     "product" => App\Models\ProductDetail {#1373 ▶}
+    //     "actual" => 242
+    //     "defect" => 1
+    //     "sold" => 16
+    //     "return_actual_minus" => 0
+    //     "return_actual" => 0
+    //     "refund_actual" => 0
+    //     "return_defect" => 0
+    //     "refund_defect" => 0
+    //     "stockdefect" => 1
+    //     "stock" => 225
+    // ]
+    // 2 => array:11 [▼
+    //     "product" => App\Models\ProductDetail {#1374 ▶}
+    //     "actual" => 0
+    //     "defect" => 0
+    //     "sold" => 23
+    //     "return_actual_minus" => 0
+    //     "return_actual" => 0
+    //     "refund_actual" => 23
+    //     "return_defect" => 0
+    //     "refund_defect" => 0
+    //     "stockdefect" => 0
+    //     "stock" => 0
+    // ]
+    private function calc_stock(){
         $result = [];
         $product = ProductDetail::all();
         
         foreach ($product as $keyProduct => $valueProduct) {
-            $result[$valueProduct->id]['product'] = $valueProduct;
+            $result[$valueProduct->id]['product_detail'] = $valueProduct;
             
             $stock = 0;
             $stockdefect = 0;
@@ -111,59 +235,7 @@ class ReportController extends Controller
     
         }
 
-        // dd($result);
-        $data = [
-            'stock' => $result
-        ];
-        return view( 
-            'admin.report.stock'
-            ,['data'=>$data]
-        ); 
-    }
-
-
-    public function stock_flow($id){
-
-        $result = [];
-        $product = ProductDetail::where('id', $id)->first();
-        $production = Production::where('product_detail_id', $product->id)->get();
-        foreach ($production as $keyProduction => $valueProduction) {
-            # code...
-        }
-
-
-    }
-
-
-    public function add()
-    {
-    	$data = [
-            'color_name'=>request('color_name'), 
-            'color_code'=>request('color_code')
-        ];
-        $simpan = Color::create($data);
-        return redirect()->route('color');
-    }
-
-    public function edit($id)
-    {
-        $cabang = Color::findOrFail($id);
-       	$data = [ 
-            'color_name'=>request('color_name'), 
-            'color_code'=>request('color_code')
-        ];
-        
-        $cabang->update($data);
-        return redirect()->route('color');
-    }
-
-
-    public function delete($id, Request $request)
-    {
-        $cabang = Color::findOrFail($id);
-        $cabang->delete();
-
-        return redirect()->route('color');
+        return $result;
     }
 }
 

@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', 'DashboardController@index');
     
         Route::get('/report/stock', 'ReportController@stock')->name('report.stock');
+        Route::get('/report/production/estimation', 'ReportController@production_estimation')->name('report.production.estimation');
+        Route::get('/report/production/request', 'ReportController@production_request')->name('report.production.request');
         Route::get('/report/stock/{id}', 'ReportController@stock_flow')->name('report.stock_flow');
     
         Route::get('/promo', 'PromoController@index')->name('promo');

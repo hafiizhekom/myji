@@ -160,6 +160,18 @@
               <p>Stock</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('report.production.request')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'report' && explode('.', Route::currentRouteName())[1] == 'production' && explode('.', Route::currentRouteName())[2] == 'request' ) ? 'active' : '') : '' }}">
+              <i class="fas fa-list-alt"></i>
+              <p>Production Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('report.production.estimation')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'report' && explode('.', Route::currentRouteName())[1] == 'production' && explode('.', Route::currentRouteName())[2] == 'estimation' ) ? 'active' : '') : '' }}">
+              <i class="fas fa-square-root-alt"></i>
+              <p>Estimation Stock</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -14,27 +14,21 @@
     >
         <colgroup>
             <col></col>
+            <col class="bg-blue"></col>
+            <col class="bg-red"></col>
+            <col class="bg-yellow"></col>
+            <col class="bg-yellow"></col>
+            <col class="bg-blue"></col>
+            <col class="bg-blue"></col>
+            <col class="bg-red"></col>
+            <col class="bg-red"></col>
+            <col class="bg-red"></col>
             <col></col>
-            <col></col>
-            <col></col>
-            <col class="bg-info"></col>
-            <col class="bg-danger"></col>
-            <col class="bg-warning"></col>
-            <col class="bg-warning"></col>
-            <col class="bg-info"></col>
-            <col class="bg-info"></col>
-            <col class="bg-danger"></col>
-            <col class="bg-danger"></col>
-            <col class="bg-danger"></col>
-            <col class="bg-info"></col>
         </colgroup>
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product" data-sortable="true" data-filter-control="select">Product</th>
-            <th data-field="color" data-sortable="true" data-filter-control="select">Color</th>
-            <th data-field="category" data-sortable="true" data-filter-control="select">Category</th>
-            <th data-field="size" data-sortable="true" data-filter-control="select">Size</th>
             <th data-field="actual" data-sortable="true" data-filter-control="input">Production Actual <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Production Actual"></i></th>
             <th data-field="defect" data-sortable="true" data-filter-control="input">Production Defect <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Produciton Defect"></i></th>
             <th data-field="sold" data-sortable="true" data-filter-control="input">Sold <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Order Success"></i></th>
@@ -51,10 +45,7 @@
             @foreach ($data['stock'] as $key=>$value)
                 <tr>
                     <td>{{$key}}</td>
-                    <td>{{$value['product']->product->product_name}}</td>
-                    <td>{{$value['product']->product->color->color_name}}</td>
-                    <td>{{$value['product']->product->category->category_name}}</td>
-                    <td>{{$value['product']->size->size_name}}</td>
+                    <td>{{$value['product_detail']->product->product_name}} {{$value['product_detail']->product->color->color_name}} {{$value['product_detail']->product->category->category_name}} {{$value['product_detail']->size->size_name}}</td>
                     <td>{{$value['actual']}}</td>
                     <td>{{$value['defect']}}</td>
                     <td>{{$value['sold']}}</td>
