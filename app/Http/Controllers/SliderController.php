@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\slider;
+use App\Models\Slider;
 use Storage;
 
 class SliderController extends Controller
