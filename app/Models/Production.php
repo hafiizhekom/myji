@@ -11,7 +11,7 @@ class Production extends Model
     use SoftDeletes;
 
     protected $table = 'production';
-    protected $fillable = ['purchasing_id','product_detail_id', 'request', 'actual', 'defect'];
+    protected $fillable = ['purchasing_id','product_detail_id', 'request', 'actual', 'defect', 'request_date', 'actual_date','defect_date', 'actual_complete', 'reason_defect'];
 
     public function purchasing()
     {

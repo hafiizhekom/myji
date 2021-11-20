@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', 'DashboardController@index');
     
         Route::get('/report/stock', 'ReportController@stock')->name('report.stock');
+        Route::get('/report/production/estimation', 'ReportController@production_estimation')->name('report.production.estimation');
+        Route::get('/report/production/request', 'ReportController@production_request')->name('report.production.request');
         Route::get('/report/stock/{id}', 'ReportController@stock_flow')->name('report.stock_flow');
     
         Route::get('/promo', 'PromoController@index')->name('promo');
@@ -125,10 +127,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/product/image/{id}/edit/{iddetail}', 'ProductDetailImageController@edit')->name('product_detail_image.edit');
         Route::delete('/product/image/{id}/delete/{iddetail}', 'ProductDetailImageController@delete')->name('product_detail_image.delete');
     
-        Route::get('/purchasing', 'PurchasingController@index')->name('purchasing');
-        Route::post('/purchasing/add', 'PurchasingController@add')->name('purchasing.add');
-        Route::post('/purchasing/edit/{id}', 'PurchasingController@edit')->name('purchasing.edit');
-        Route::delete('/purchasing/delete/{id}', 'PurchasingController@delete')->name('purchasing.delete');
+        Route::get('/purchasing', 'PurchasingController@index')->name('production.purchasing');
+        Route::get('/purchasing/search', 'PurchasingController@search')->name('production.purchasing.search');
+        Route::post('/purchasing/add', 'PurchasingController@add')->name('production.purchasing.add');
+        Route::post('/purchasing/edit/{id}', 'PurchasingController@edit')->name('production.purchasing.edit');
+        Route::delete('/purchasing/delete/{id}', 'PurchasingController@delete')->name('production.purchasing.delete');
     
         Route::get('/production/request', 'ProductionRequestController@index')->name('production.request');
         Route::get('/production/request/search', 'ProductionRequestController@search')->name('production.request.search');
@@ -141,6 +144,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/production/actual/search', 'ProductionActualController@search')->name('production.actual.search');
         Route::post('/production/actual/edit/{id}', 'ProductionActualController@edit')->name('production.actual.edit');
         Route::delete('/production/actual/delete/{id}', 'ProductionActualController@delete')->name('production.actual.delete');
+        Route::post('/production/actual/complete/{id}', 'ProductionActualController@complete')->name('production.actual.complete');
     
         Route::get('/production/defect', 'ProductionDefectController@index')->name('production.defect');
         Route::get('/production/defect/search', 'ProductionDefectController@search')->name('production.defect.search');

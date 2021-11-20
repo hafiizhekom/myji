@@ -1,4 +1,4 @@
-@extends('layouts.application_admin')
+@extends('layouts.application_admin') 
 @section('pagetitle', 'Production Request')
 @section('content')
 
@@ -9,6 +9,26 @@
             @foreach($data['production'] as $key=>$value)
                 <option value="{{$value->purchasing->po_code}}">{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</option>
             @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Month</label>
+        <select class="form-control" name="month" placeholder="Month" required>
+            <option value="0">All</option>
+            @for ($i=1; $i <=12 ; $i++)
+                <option value="{{$i}}">{{  date("F", mktime(0, 0, 0, $i, 10)) }}</option>
+            @endfor
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Year</label>
+        <select class="form-control" name="year" placeholder="Year" required>
+            <option value="0">All</option>
+            @for ($i=2020; $i <=2040 ; $i++)
+                <option value="{{$i}}">{{ $i }}</option>
+            @endfor
         </select>
     </div>
 
@@ -29,6 +49,16 @@
         </script>
 
         <script>
+
+            $(function() {
+                $('input[name="request_date"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+            });
+
             function selectproduct(){
                 var product = $('#productrequest').val();
                 var productDescElement = $('#productrequest option:selected');
@@ -75,6 +105,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Request Date</label>
+                        <input type="text" class="form-control" name="request_date"  placeholder="Request Date" value="">
+                    </div>
+
+                    <div class="form-group">
                         <label>Product</label>
                         <select class="form-control selectpicker" multiple data-live-search="true" id="productrequest" onchange="selectproduct()" name="product_detail_id[]" placeholder="Product" required>
                             @foreach($data['product_detail'] as $key=>$value)
@@ -82,6 +117,8 @@
                             @endforeach
                         </select>
                     </div>
+
+                    
 
 
                     <div class="requst_amount_area">

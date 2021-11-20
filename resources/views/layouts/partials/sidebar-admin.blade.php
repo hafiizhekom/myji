@@ -130,7 +130,7 @@
           </li>
           <li class="nav-header">PRODUCTION</li>
           <li class="nav-item">
-            <a href="{{route('purchasing')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) >= 1 ? ( ( explode('.', Route::currentRouteName())[0] == 'purchasing' ) ? 'active' : '') : '' }}">
+            <a href="{{route('production.purchasing')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'production' && explode('.', Route::currentRouteName())[1] == 'purchasing' ) ? 'active' : '') : '' }}">
               <i class="nav-icon fas fa-truck"></i>
               <p>Purchasing</p>
             </a>
@@ -158,6 +158,18 @@
             <a href="{{route('report.stock')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'report' && explode('.', Route::currentRouteName())[1] == 'stock' ) ? 'active' : '') : '' }}">
               <i class="fas fa-warehouse"></i>
               <p>Stock</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('report.production.request')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'report' && explode('.', Route::currentRouteName())[1] == 'production' && explode('.', Route::currentRouteName())[2] == 'request' ) ? 'active' : '') : '' }}">
+              <i class="fas fa-list-alt"></i>
+              <p>Production Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('report.production.estimation')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'report' && explode('.', Route::currentRouteName())[1] == 'production' && explode('.', Route::currentRouteName())[2] == 'estimation' ) ? 'active' : '') : '' }}">
+              <i class="fas fa-square-root-alt"></i>
+              <p>Estimation Stock</p>
             </a>
           </li>
         </ul>

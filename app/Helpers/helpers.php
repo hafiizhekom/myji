@@ -5,6 +5,10 @@ function rupiah($angka){
 	return $hasil_rupiah;    
 }
 
+function date_beautify($date){
+    return date('d M Y', strtotime($date));
+}
+
 function totalprice_order($order){
     
     $price=0;

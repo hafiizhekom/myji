@@ -27,7 +27,7 @@
         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
     </div>
 
-    <table data-toggle="table"
+    <table data-toggle="table" data-pagination="true"
     data-search="true"
     data-toolbar="#toolbar">
         <thead>

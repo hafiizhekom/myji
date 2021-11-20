@@ -1,17 +1,7 @@
-@extends('layouts.application_admin')
-@section('pagetitle', 'Production Defect')
+@extends('layouts.application_admin') 
+@section('pagetitle', 'Purchasing')
 @section('content')
-
-<form class="form" method="get" action="{{route('production.defect.search')}}">
-    <div class="form-group">
-        <label>PO Code</label>
-        <select class="form-control" name="po_code" placeholder="PO Code" required>
-            @foreach($data['production'] as $key=>$value)
-                <option value="{{$value->purchasing->po_code}}">{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</option>
-            @endforeach
-        </select>
-    </div>
-
+<form class="form" method="get" action="{{route('production.purchasing.search')}}">
     <div class="form-group">
         <label>Month</label>
         <select class="form-control" name="month" placeholder="Month" required>

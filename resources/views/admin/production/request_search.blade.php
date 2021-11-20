@@ -1,21 +1,32 @@
 @extends('layouts.application_admin')
 @section('pagetitle', 'Production Request')
+@section('breadcrumb') 
+    <a class="btn btn-sm btn-link float-right" href="{{route('production.request')}}"><i class="fas fa-arrow-left"></i> Back</button></a>
+@endsection
 @section('content')
+
+    
+    <div class="card">
+        <div class="card-body">
+            <label>PO Code</label>: {{ $data['purchasing']->po_code}} ({{ $data['purchasing']->item}} {{ $data['purchasing']->unit}} Unit)<br>
+            <label>Period</label>: {{$data['period']}}
+        </div>
+    </div>
 
     <div id="toolbar">
         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
     </div>
 
-    <table data-toggle="table"
+    <table data-toggle="table" data-pagination="true"
     data-search="true"
     data-toolbar="#toolbar"
     data-filter-control="true">
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="po_code" data-sortable="true" data-filter-control="select">PO Code</th>
             <th data-field="product" data-sortable="true" data-filter-control="select">Product</th>
             <th data-field="request" data-sortable="true">Request</th>
+            <th data-field="request_date" data-sortable="true">Date</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,9 +34,9 @@
             @foreach ($data['production'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->purchasing->po_code}} - {{$value->purchasing->item}} {{$value->purchasing->unit}}</td>
-                    <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}}</td>
+                    <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->product->color->color_name}} {{$value->productDetail->product->category->category_name}} {{$value->productDetail->size->size_name}}</td>
                     <td>{{$value->request}}</td>
+                    <td>{{ date_beautify($value->request_date) }}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -35,6 +46,17 @@
 
 @section('additionalJs')
         <script>
+
+            $(function() {
+                $('input[name="request_date"]').daterangepicker({
+                    singleDatePicker: true,
+                    locale: {
+                        format: 'YYYY/MM/DD'
+                    }
+                });
+            });
+
+
             function TableActions (value, row, index) {
                 return [
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
@@ -84,6 +106,14 @@
                         <label>Request</label>
                         <input type="number" class="form-control" min="0" name="request" placeholder="Request" value="0" required>
                     </div>
+
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <input type="text" class="form-control" name="request_date"  placeholder="Request Date" value="" required>
+                    </div>
+
+                    <input type="hidden" name="month" value="{{$data['month']}}">
+                    <input type="hidden" name="year" value="{{$data['year']}}">
                 </div>
                 <div class="modal-footer">
                 <button class="btn btn-primary btn-block" type="submit">Append New Production</button>
@@ -111,6 +141,12 @@
                         <label>Request</label>
                         <input type="number" class="form-control" min="0" name="request" placeholder="Request" value="{{$value->request}}" required>
                     </div>
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <input type="text" class="form-control" name="request_date"  placeholder="Request Date" value="{{$value->request_date}}" required>
+                    </div>
+                    <input type="hidden" name="month" value="{{$data['month']}}">
+                    <input type="hidden" name="year" value="{{$data['year']}}">
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
@@ -136,10 +172,13 @@
                 <form class="form" action="{{route('production.request.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
+                    <input type="hidden" name="month" value="{{$data['month']}}">
+                    <input type="hidden" name="year" value="{{$data['year']}}">
                     <div class="btn-group" style="width: 100%;">
                         <button type="submit" class="btn btn-danger">Delete</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
+                    
                 </form>
             </div>
         </div>
