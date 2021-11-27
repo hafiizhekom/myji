@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Jobs\ProcessQueue;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,15 +42,39 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/product/{id}', 'SiteController@productDetail');
 });
 
+Route::get('/test-queue', function () use ($router){
+    
+    for ($i = 0; $i < 5; $i++) {
+        // dispatch(new App\Jobs\ProcessEmail($i));
+        echo $i;
+        echo "<br>";
+        ProcessQueue::dispatch($i)->delay(now()->addMinutes(1))->onConnection('rabbitmq');
+        echo "<br>";
+    }
+    
+    // dispatch(new ProcessHelloWorld("Hello world dari Serverless ID!"));
+
+    echo "<br>";
+    echo "<br>";
+    return '5 Jobs dispatched!';
+
+});
+
+Route::get('/mail', 'HomeController@sendEmail');
+Route::get('/mail-queue', 'HomeController@sendEmailQueue');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::group(['prefix' => 'admin'], function(){
         Route::get('/', 'DashboardController@index');
+
+        Route::get('/export/production/{id}', 'ExportController@production')->name('export.excel.production');;
     
         Route::get('/report/stock', 'ReportController@stock')->name('report.stock');
         Route::get('/report/production/estimation', 'ReportController@production_estimation')->name('report.production.estimation');
-        Route::get('/report/production/request', 'ReportController@production_request')->name('report.production.request');
+        Route::get('/report/production', 'ReportController@production')->name('report.production');
         Route::get('/report/stock/{id}', 'ReportController@stock_flow')->name('report.stock_flow');
     
         Route::get('/promo', 'PromoController@index')->name('promo');

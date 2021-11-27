@@ -145,17 +145,15 @@
                 </div>
             </div>
 
-            <div>
+            <div> 
                 <!-- Slick --> 
                 <div class="carousel-slick">
                     @foreach($data['mostWanted'] as $i=>$item)
-                    @php
-                    
-                    // $images = json_decode($item->images, true);
-                    @endphp
                     <div class="col-md  ">
                         <div class="card mb-3 product-card-alt"> 
-                            <img src="{{asset('storage/products/'.$item->detail->design_image_path)}}" width="100px" class="card-img-top mx-auto" style='max-width:350px' alt="{{$item->product_name}}">
+                            @if(isset($item->detail->productDetailImage[0]->file))
+                                <img src="{{asset('storage/products/'.$item->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top mx-auto" style='max-width:350px' alt="{{$item->product_name}}">
+                            @endif
                             <div class="card-body">
                                 <p class="card-text text-center product-card-product-title">{{$item->product_name}}</p>
                                 <p class="card-text text-center product-card-product-price">{{rupiah($item->detail->price)}}</p>

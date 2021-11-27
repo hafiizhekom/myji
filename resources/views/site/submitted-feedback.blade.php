@@ -19,14 +19,15 @@
     </div>
 @endsection
 
-@section('js')
-
-            $("#ideas-textarea").focus()
+@section('additionalJs')
+    <script>
+        
+            $("#ideas-textarea").focus();
             $("#ideas-textarea").keyup(function(e) {
-            while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
-                $(this).height($(this).height()+1);
-            };
+                while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+                    $(this).height($(this).height()+1);
+                };
                
-        });
-
+            });
+    </script>
 @endsection
