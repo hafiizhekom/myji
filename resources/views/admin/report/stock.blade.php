@@ -32,6 +32,7 @@
             <th data-field="actual" data-sortable="true" data-filter-control="input">Production Actual <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Production Actual"></i></th>
             <th data-field="defect" data-sortable="true" data-filter-control="input">Production Defect <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Produciton Defect"></i></th>
             <th data-field="sold" data-sortable="true" data-filter-control="input">Sold <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Order Success"></i></th>
+            <th data-field="endorse" data-sortable="true" data-filter-control="input">Endorse <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Endorse"></i></th>
             <th data-field="return_actual_minus" data-sortable="true" data-filter-control="input">Return Outcoming <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Order Return"></i></th>
             <th data-field="return_actual" data-sortable="true" data-filter-control="input">Return Incoming <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Order Detail Return Item to Actual"></i></th>
             <th data-field="refund_actual" data-sortable="true" data-filter-control="input">Refund Incoming <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Data Order Detail Refund Amount to Actual"></i></th>
@@ -49,6 +50,7 @@
                     <td>{{$value['actual']}}</td>
                     <td>{{$value['defect']}}</td>
                     <td>{{$value['sold']}}</td>
+                    <td>{{$value['endorse']}}</td>
                     <td>{{$value['return_actual_minus']}}</td>
                     <td>{{$value['return_actual']}}</td>
                     <td>{{$value['refund_actual']}}</td>

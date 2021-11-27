@@ -6,6 +6,7 @@ use App\Models\ProductDetail;
 use App\Models\Production;
 use App\Models\Purchasing;
 use App\Models\OrderDetail;
+use App\Models\EndorseDetail;
  
 class ReportController extends Controller
 {
@@ -168,6 +169,15 @@ class ReportController extends Controller
                 $quantity = $quantity + $valueOrderDetail->quantity;
             }
             $result[$valueProduct->id]['sold'] = $quantity;
+            $stock = $stock - $quantity;
+
+            //DIKURANGI DARI SELURUH ENDORSE
+            $orderDetail = EndorseDetail::where('product_detail_id', $valueProduct->id)->get();
+            $quantity = 0;
+            foreach ($orderDetail as $keyOrderDetail => $valueOrderDetail) {
+                $quantity = $quantity + $valueOrderDetail->quantity;
+            }
+            $result[$valueProduct->id]['endorse'] = $quantity;
             $stock = $stock - $quantity;
 
             

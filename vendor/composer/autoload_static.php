@@ -149,6 +149,7 @@ class ComposerStaticInit3475f94fbc300c8eed8bd3e946fdd81e
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\SerializableClosure\\' => 28,
+            'Laravel\\Sail\\' => 13,
         ),
         'K' => 
         array (
@@ -479,6 +480,10 @@ class ComposerStaticInit3475f94fbc300c8eed8bd3e946fdd81e
         array (
             0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
         ),
+        'Laravel\\Sail\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/sail/src',
+        ),
         'KitLoong\\MigrationsGenerator\\' => 
         array (
             0 => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator',
@@ -630,6 +635,7 @@ class ComposerStaticInit3475f94fbc300c8eed8bd3e946fdd81e
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\ProductWasCreated' => __DIR__ . '/../..' . '/app/Events/ProductWasCreated.php',
+        'App\\Excels\\Exports\\ProductionExport' => __DIR__ . '/../..' . '/app/Excels/Exports/ProductionExport.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -673,9 +679,7 @@ class ComposerStaticInit3475f94fbc300c8eed8bd3e946fdd81e
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Jobs\\ProcessEmail' => __DIR__ . '/../..' . '/app/Jobs/ProcessEmail.php',
-        'App\\Jobs\\ProcessHelloWorld' => __DIR__ . '/../..' . '/app/Jobs/ProcessHelloWorld.php',
-        'App\\Mail\\SendMailTemplate' => __DIR__ . '/../..' . '/app/Mail/SendMailTemplate.php',
+        'App\\Jobs\\ProcessQueue' => __DIR__ . '/../..' . '/app/Jobs/ProcessQueue.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Channel' => __DIR__ . '/../..' . '/app/Models/Channel.php',
         'App\\Models\\Color' => __DIR__ . '/../..' . '/app/Models/Color.php',
@@ -3554,6 +3558,9 @@ class ComposerStaticInit3475f94fbc300c8eed8bd3e946fdd81e
         'KitLoong\\MigrationsGenerator\\Types\\TinyIntegerType' => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator/Types/TinyIntegerType.php',
         'KitLoong\\MigrationsGenerator\\Types\\UUIDType' => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator/Types/UUIDType.php',
         'KitLoong\\MigrationsGenerator\\Types\\YearType' => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator/Types/YearType.php',
+        'Laravel\\Sail\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/InstallCommand.php',
+        'Laravel\\Sail\\Console\\PublishCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/PublishCommand.php',
+        'Laravel\\Sail\\SailServiceProvider' => __DIR__ . '/..' . '/laravel/sail/src/SailServiceProvider.php',
         'Laravel\\SerializableClosure\\Contracts\\Serializable' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Contracts/Serializable.php',
         'Laravel\\SerializableClosure\\Contracts\\Signer' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Contracts/Signer.php',
         'Laravel\\SerializableClosure\\Exceptions\\InvalidSignatureException' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Exceptions/InvalidSignatureException.php',
