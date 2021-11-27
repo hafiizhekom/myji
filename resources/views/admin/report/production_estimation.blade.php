@@ -17,7 +17,7 @@
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product" data-sortable="true" data-filter-control="select">Product</th>
             <th data-field="stock" data-sortable="true" data-filter-control="input">Stock</th>
-            <th data-field="request" data-sortable="true" data-filter-control="input">Request</th>
+            <th data-field="request" data-sortable="true" data-filter-control="input">Request (Ongoing PO)</th>
             <th data-field="estimation" data-sortable="true" data-filter-control="input">Estimation</th>
         </tr>
         </thead>

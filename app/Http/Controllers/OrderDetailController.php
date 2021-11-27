@@ -14,11 +14,17 @@ class OrderDetailController extends Controller
 
         $order = Order::where('id',$id)->first();
         $orderDetail = OrderDetail::where('order_id',$id)->get();
-        $productDetail = ProductDetail::all();
+        $productDetail = ProductDetail::orderBy('product_id','desc')->get();
+        $price=[];
+        foreach ($productDetail as $key => $value) {
+            # code...
+            $price[$value->id]=$value->price;
+        }
         $data = [
             'order' => $order,
             'orderDetail' => $orderDetail,
             'productDetail' => $productDetail,
+            'price' => $price
         ];
         return view(
             'admin.order_detail'

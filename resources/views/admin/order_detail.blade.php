@@ -58,15 +58,32 @@
                     <td>{{ucfirst($value->status)}}</td>
                     <td></td>
                 </tr>
-            @endforeach
+            @endforeach 
         </tbody>
         </table>
 @endsection
 
 @section('additionalJs')
+        <script type='text/javascript'>
+            @php
+                $price_json = json_encode($data['price']);
+                echo "var price = ". $price_json . ";\n";
+            @endphp
+        </script>
         <script>
 
             $(function() {
+                
+
+                $(".product-detail-add-selectpicker").change(function(){
+                    $(".addprice").val(price[$(this).val()]);
+                });
+
+                $(".product-detail-edit-selectpicker").change(function(){
+                    console.log($(this).data("id"));
+                    $("#editprice-"+$(this).data("id")).val(price[$(this).val()]);
+                });
+
                 $('input[name="order_date"]').daterangepicker({
                     singleDatePicker: true,
                     locale: {
@@ -137,6 +154,8 @@
                 ].join('');
             }
         </script>
+
+    
    
 @endsection
 
@@ -156,7 +175,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Product</label>
-                        <select class="form-control" name="product_detail_id" placeholder="Product" required>
+                        <select class="form-control product-detail-add-selectpicker" name="product_detail_id" placeholder="Product" required>
                             @foreach($data['productDetail'] as $key=>$value)
                                 <option value="{{$value->id}}">{{$value->product->product_name}} {{$value->size->size_name}} {{$value->product->color->color_name}} {{$value->product->category->category_name}}</option>
                             @endforeach
@@ -170,7 +189,7 @@
 
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" min="0" class="form-control addprice" name="price" placeholder="Price" value="0" required>
+                        <input type="number" min="0" class="form-control addprice" name="price" placeholder="Price" value="{{$data['productDetail'][0]->price}}" readonly required>
                     </div>
 
                     <div class="form-group">
@@ -258,7 +277,7 @@
                     
                     <div class="form-group">
                         <label>Product</label>
-                        <select class="form-control" name="product_detail_id" placeholder="Product" required>
+                        <select class="form-control product-detail-edit-selectpicker" name="product_detail_id" placeholder="Product" data-id="{{$value->id}}" required>
                             @foreach($data['productDetail'] as $key=>$valueproductdetail)
                                 @if($valueproductdetail->id == $value->productDetail->id)
                                     <option value="{{$valueproductdetail->id}}" selected>{{$valueproductdetail->product->product_name}} {{$valueproductdetail->size->size_name}} {{$valueproductdetail->product->color->color_name}} {{$valueproductdetail->product->category->category_name}}</option>
@@ -276,7 +295,7 @@
 
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" min="0" class="form-control editprice" name="price" placeholder="Price" value="{{$value->price}}" required>
+                        <input type="number" min="0" class="form-control editprice" id="editprice-{{$value->id}}" name="price" placeholder="Price" value="{{$value->price}}" readonly required>
                     </div>
 
                     <div class="form-group">

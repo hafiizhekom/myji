@@ -177,7 +177,11 @@
                     <input type="hidden" name="month" value="{{$data['month']}}">
                     <input type="hidden" name="year" value="{{$data['year']}}">
                     <div class="btn-group" style="width: 100%;">
-                        <button type="submit" class="btn btn-success">Yes</button>
+                        @if($value->actual) 
+                            <button type="submit" class="btn btn-success">Yes</button>
+                        @else
+                            <button type="submit" class="btn btn-success" disabled>Yes</button>
+                        @endif
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                     
