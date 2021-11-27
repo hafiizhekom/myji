@@ -10,14 +10,16 @@ use App\Models\Testimony;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
-use App\Models\Faq;
+use App\Models\FAQ;
  
 class SiteController extends Controller
 {
     public function index(){
 
         $slider = Slider::orderBy('order', 'ASC')->get();
-        $mostWanted = Product::orderBy('view','DESC')->limit(3)->get();
+        $mostWanted = Product::with('detail.productDetailImage')->orderBy('view','DESC')->limit(3)->get();
+
+        // dd(json_encode($mostWanted));
         $testimonies = Testimony::all();
         $data = [
             'slider' => $slider,
@@ -115,7 +117,15 @@ class SiteController extends Controller
     }
 
     public function sizeRecomendation(){
-        return view('site.size-recomendation');
+        $size= Size::orderBy('point', 'desc')->get();
+        $measurement = [];
+        foreach ($size as $key => $value) {
+            $measurement[$key]['code']=$value->size_code;
+            $measurement[$key]['point']=$value->point;
+        }
+
+        
+        return view('site.size-recomendation', ['measurement'=>$measurement]);
     }
 
     public function feedback(){

@@ -650,8 +650,13 @@ h1.size-rec-title {
     display: none !important;
 }
 
+#table-measurement tbody {
+    display: table !important;
+}
+
 #table-measurement td {
-    width: 50% !important;
+    
+    
 }
 
 .table-measurement td:first-child {
@@ -661,7 +666,8 @@ h1.size-rec-title {
     font-weight: 700 !important;
     line-height: 22px;
     letter-spacing: 0.03em;
-    text-align: left;
+    text-align: center !important;
+    width: 30% !important;
 }
 
 .table-measurement td {
@@ -672,6 +678,7 @@ h1.size-rec-title {
     line-height: 22px;
     letter-spacing: 0.03em;
     text-align: left;
+    width: 70%;
 }
 
 /* Product Card */

@@ -14,6 +14,7 @@
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="name" data-sortable="true">Size Name</th>
             <th data-field="code" data-sortable="true">Size Code</th>            
+            <th data-field="point" data-sortable="true">Point</th>     
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -23,6 +24,7 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->size_name}}</td>
                     <td>{{$value->size_code}}</td>
+                    <td>{{$value->point}}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -62,12 +64,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Size Name</label>
-                        <input type="text" class="form-control" name="size_name" placeholder="Size Name" value="">
+                        <input type="text" class="form-control" name="size_name" placeholder="Size Name" value="" required>
                     </div>
 
                     <div class="form-group">
                         <label>Size Code</label>
-                        <input type="text" class="form-control" name="size_code" placeholder="Size Code" value="">
+                        <input type="text" class="form-control" name="size_code" placeholder="Size Code" value="" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Point</label>
+                        <input type="number" class="form-control" name="point" placeholder="Point" min="0" value="" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -94,12 +101,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Size Name</label>
-                        <input type="text" class="form-control" name="size_name" placeholder="Size Name" value="{{$value->size_name}}">
+                        <input type="text" class="form-control" name="size_name" placeholder="Size Name" value="{{$value->size_name}}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Size Code</label>
-                        <input type="text" class="form-control" name="size_code" placeholder="Size Code" value="{{$value->size_code}}">
+                        <input type="text" class="form-control" name="size_code" placeholder="Size Code" value="{{$value->size_code}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Point</label>
+                        <input type="number" class="form-control" name="point" placeholder="Point" min="0" value="{{$value->size_code}}" required>
                     </div>
                 </div>
                 <div class="modal-footer">

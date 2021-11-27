@@ -52,14 +52,16 @@
                             <div class="row my-3">
                                 <div class="col-lg-12">
                                     <label for="measurementB">measurement weight</label>
-                                    <input type="number" min="0" class="size-rec-input" id="measurementB" name="size-rec-input-design" />
+                                    <input type="number" min="40" max="95" class="size-rec-input" id="measurementB" name="size-rec-input-design" />
+                                    <small>40-95 kg</small>
                                 </div>
                             </div>
 
                             <div class="row my-3">
                                 <div class="col-lg-12">
                                     <label for="measurementC">measurement height</label>
-                                    <input type="number" min="0" class="size-rec-input" id="measurementC" name="size-rec-input-design" />
+                                    <input type="number" min="145" max="185" class="size-rec-input" id="measurementC" name="size-rec-input-design" />
+                                    <small>145-185 cm</small>
                                 </div>
                             </div>
                             <div class="row">
@@ -80,8 +82,15 @@
 
 @endsection
 
-@section('js')
+@section('additionalJs')
+    <script type='text/javascript'>
+    @php
+        $measurement_json = json_encode($measurement);
+        echo "var measurement = ". $measurement_json . ";\n";
+        @endphp
+    </script>
 
+    <script>
     $("#formMeasurement > input[type='submit']").click(()=>{
         $("#formMeasurement").submit()
     });
@@ -93,14 +102,19 @@
         let gender = $("#gender").val() 
         let weight = $("#measurementB").val()
         let height = $("#measurementC").val()
-        
-        let result = ["S", "M", "L"]
 
-        $(result).each(function(index, value){
-          $("#result-size").append("<div class='px-3'><h4 class='text-center mb-0' id='myji-measurement-size-recomendation-value'>" + value + "</h4><span >size</span></div>")    
-        })
+        let point = weight * height;
+        var size = 'Unknown';
+        measurement.forEach(element => {
+            if (point <= element['point']) {
+                console.log(point+ '-'+ element['point']+'-'+element['code']);
+                size = element['code'];
+            }    
+        });
+
+        $("#result-size").html("<div class='px-3'><h4 class='text-center mb-0' id='myji-measurement-size-recomendation-value'>" + size + "</h4><span >size</span></div>");
     });
-    
+    </script>
 @endsection
 
 @section('modals')
@@ -132,7 +146,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    @php
+                                        $before = 0;
+                                    @endphp
+                                    @foreach ($measurement as $key=>$size)
+                                        @php
+                                            if(isset($measurement[$key+1])){
+                                                $before = $measurement[$key+1]['point']+1;
+                                            }else{
+                                                $before=0;
+                                            }
+                                            
+                                        @endphp
+                                        <tr>
+                                            <td>{{$size['code']}}</td>
+                                            <td>Weight (Kg) x Height (Cm) = {{$before}} - {{$size['point']}} point</td>
+                                        </tr>
+
+                                       
+                                    @endforeach
+                                    <!-- <tr>
                                         <td>
                                             Size 1
                                         </td>
@@ -163,7 +196,7 @@
                                         <td>
                                             PB: 79 | LD: 60 | PT: 27,5 | LK: 55
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\ProductDetail;
 use App\Models\Production;
 use App\Models\Purchasing;
@@ -10,15 +9,13 @@ use App\Models\OrderDetail;
  
 class ReportController extends Controller
 {
-    public function production_request(){
-        $result=$this->calc_production_request();
+    public function production(){
+        $result=$this->calc_production();
 
-        $data = [
-            'request' => $result
-        ];
+        
         return view( 
-            'admin.report.production_request'
-            ,['data'=>$data]
+            'admin.report.production'
+            ,['data'=>$result]
         ); 
 
     }
@@ -56,6 +53,10 @@ class ReportController extends Controller
         ); 
     }
 
+    public function export_stock(){   
+        return Excel::download(new InvoicesExport, 'invoices.xlsx');
+    }
+
     private function calc_production_request_by_product($product_detail_id){
         $request = [];
         $request_stock = 0;
@@ -84,12 +85,13 @@ class ReportController extends Controller
     //     "po_code" => "PO-2"
     //     "request_stock" => 0
     // ]
-    private function calc_production_request(){
-        $request = [];
+    private function calc_production(){
+        $data = [];
         $purchasing = new Purchasing();
         $purchasing = $purchasing->get();
         foreach ($purchasing as $key => $value) {
             $request_stock = 0;
+            $actual_stock = 0;
             $production = new Production();
             $production = $production
             ->where('purchasing_id', $value->id)
@@ -99,12 +101,14 @@ class ReportController extends Controller
             ->get();
             foreach ($production as $key2 => $value2) {
                 $request_stock = $request_stock + $value2->request;
+                $actual_stock = $actual_stock + $value2->actual;
             }
-            $request[$value->id]['po_code']= $value->po_code;
-            $request[$value->id]['request_stock']= $request_stock;
+            $data[$value->id]['po_code']= $value->po_code;
+            $data[$value->id]['request_stock']= $request_stock;
+            $data[$value->id]['actual_stock']= $actual_stock;
         }
 
-        return $request;
+        return $data;
     }
 
     // array:8 [▼
@@ -237,5 +241,6 @@ class ReportController extends Controller
 
         return $result;
     }
+
 }
 

@@ -10,7 +10,7 @@ class Size extends Model
 
     use SoftDeletes;
     protected $table = 'size';
-    protected $fillable = ['size_code','size_name'];
+    protected $fillable = ['size_code','size_name', 'point'];
 
     public function productDetail()
     {
