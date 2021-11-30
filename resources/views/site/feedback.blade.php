@@ -2,7 +2,11 @@
 @section('pagetitle', 'Feedback')
 @section('content')
 
- 
+@if(Session::has('message'))
+    <div class="fixed-top alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show" auto-close="2000" role="alert">
+        {{ Session::get('message') }}
+    </div>
+@endif
 <div class="container content">
         <div class="row">
             <div class="col-lg-5 col-md-12 mb-lg-5">
@@ -12,7 +16,8 @@
                 
                 <div class="row mb-4">
                     <div class="col-lg-12">
-                        <form action="javascript:;">
+                        <form action="{{route('shop.feedback.add')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-12 feedback-content-head">
                                     <h5>Got something to say? Drop down here!</h5>
@@ -22,7 +27,7 @@
                         
                             <div id="propose-design" class="row my-3">
                                 <div class="col-lg-12">
-                                    <textarea id="ideas-textarea" class="feedback-input"></textarea>
+                                    <textarea id="ideas-textarea" class="feedback-input" name="feedback"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -68,6 +73,16 @@
 
 @section('additionalJs')
     <script>
+        $(function() {
+            var alert = $('div.alert[auto-close]');
+            alert.each(function() {
+                var that = $(this);
+                var time_period = that.attr('auto-close');
+                setTimeout(function() {
+                that.alert('close');
+                }, time_period);
+            });
+        });
         $( document ).ready(function() {
             $("#ideas-textarea").focus();
             $("#ideas-textarea").keyup(function(e) {

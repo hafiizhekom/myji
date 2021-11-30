@@ -6,7 +6,7 @@
         <div id="banner" class="carousel slide h-100" data-ride="carousel">            
             <!-- Indicators -->
             <ul class="carousel-indicators">
-            @foreach($data['slider'] as $i=> $slider)
+            @foreach($data['slider'] as $i=> $slider) 
                 <li data-target="#banner" data-slide-to="{{$i}}" class="active"></li>
             @endforeach
             </ul>
@@ -19,7 +19,7 @@
                 @else
                 <div class="carousel-item h-100">
                 @endif
-                <img class="h-100 object-cover" src="{{asset('/assets/images/slider/'.$slider->image)}}" alt="{{$slider->title}}">
+                <img class="h-100 object-cover" src="{{asset('storage/sliders/'.$slider->image)}}" alt="{{$slider->title}}">
                 </div>
             @endforeach
             </div>
@@ -152,7 +152,7 @@
                     <div class="col-md  ">
                         <div class="card mb-3 product-card-alt"> 
                             @if(isset($item->detail->productDetailImage[0]->file))
-                                <img src="{{asset('storage/products/'.$item->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top mx-auto" style='max-width:350px' alt="{{$item->product_name}}">
+                                <img src="{{asset('storage/products/'.$item->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top mx-auto product-image-350" style='max-width:350px' alt="{{$item->product_name}}">
                             @endif
                             <div class="card-body">
                                 <p class="card-text text-center product-card-product-title">{{$item->product_name}}</p>

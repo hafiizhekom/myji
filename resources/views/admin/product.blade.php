@@ -16,6 +16,7 @@
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product_name" data-sortable="true">Product Name</th>
             <th data-field="product_code" data-sortable="true">Product Code</th>
+            <th data-field="product_description" data-sortable="true">Product Description</th>
             <th data-field="product_color" data-sortable="true">Color</th>
             <th data-field="product_category" data-sortable="true">Category</th>
             <th data-field="image_production" data-sortable="true" data-visible="true">Image Production</th>
@@ -28,6 +29,11 @@
                     <td>{{$value->id}}</td>
                     <td>{{$value->product_name}}</td>
                     <td>{{$value->product_code}}</td>
+                    <td>
+                        @if($value->description)
+                            <a href="#" data-toggle="modal" data-target="#description-{{$value->id}}" class="btn btn-sm btn-info">Description</a>
+                        @endif
+                    </td>
                     <td>
                         @if($value->color)
                             {{$value->color->color_name}}
@@ -56,6 +62,15 @@
 
 @section('additionalJs')
         <script>
+             $(document).ready(function() {
+                $('.summernote').summernote({
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                    ]
+                    });
+            });
             
 
             $(document).ready(function() {
@@ -126,6 +141,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Product Description</label>
+                        <textarea class="summernote" name="description" placeholder="Content"></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label>Color</label>
                         <select class="form-control" name="color" placeholder="Color" required>
                             @foreach($data['color'] as $key=>$value)
@@ -182,6 +202,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Product Description</label>
+                        <textarea class="summernote" name="description" placeholder="Content">{{$value->description}}</textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label>Color</label>
                         <select class="form-control" name="color" placeholder="Color" required>
                             @foreach($data['color'] as $keycolor=>$valuecolor)
@@ -225,6 +250,22 @@
     <div class="modal fade" id="image-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <img src="{{asset('/storage/productions/'.$value->image_file)}}" width="100%">
+        </div>
+    </div>
+
+    <div class="modal fade" id="description-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Description {{$value->product_name}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php echo $value->description; ?>
+                    </div>
+            </div>
         </div>
     </div>
     @endforeach

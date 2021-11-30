@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\ProductDetail;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
 use Storage;
-use Image;
 
 class ProductController extends Controller
 {
@@ -39,6 +37,7 @@ class ProductController extends Controller
     	$data = [
             'product_name'=>request('product_name'), 
             'product_code'=>request('product_code'),
+            'description'=>request('description'),
             'color_id'=>request('color'),
             'category_id'=>request('category'),
         ];
@@ -74,6 +73,7 @@ class ProductController extends Controller
             $data = [ 
                 'product_name'=>request('product_name'), 
                 'product_code'=>request('product_code'),
+                'description'=>request('description'),
                 'color_id'=>request('color'),
                 'category_id'=>request('category'),
                 'image_file'=>$newNameImage
@@ -82,6 +82,7 @@ class ProductController extends Controller
             $data = [ 
                 'product_name'=>request('product_name'), 
                 'product_code'=>request('product_code'),
+                'description'=>request('description'),
                 'color_id'=>request('color'),
                 'category_id'=>request('category'),
             ];

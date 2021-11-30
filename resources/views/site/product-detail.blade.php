@@ -9,15 +9,16 @@
                         <div class = "productDetail-imgs">
                             <div class = "img-display">
                               <div id="img-container" class = "img-showcase">
-                                <img src = "{{asset('storage/products/'.$data['productDetail']->design_image_path)}}" alt = "" width="100%">
-                              
+                                    <a href="#" data-toggle="modal" data-target="#image-{{$data['productDetail']->productDetailImage[0]->id}}" >
+                                        <img src = "{{asset('storage/products/'.$data['productDetail']->productDetailImage[0]->file)}}"  class="product-image-showcase" alt = "" width="100%">
+                                    </a>
                               </div>
                             </div>
                             <div class = "img-select">
-                            @foreach($data['anotherProductSize'] as $i=>$product)
+                            @foreach($data['productDetailGallery'] as $i=>$product)
                               <div class = "img-item">
-                                <a href = "#" data-id = "{{$i+1}}">
-                                  <img src = "{{asset('storage/products/'.$product->design_image_path)}}" alt = "shoe image" width="100%">
+                                <a href = "#" data-id = "{{$i+1}}" data-toggle="modal" data-target="#image-{{$product->id}}">
+                                  <img src = "{{asset('storage/products/'.$product->file)}}" class="product-image-gallery" width="100%">
                                 </a>
                               </div>
                             @endforeach
@@ -32,28 +33,34 @@
                     <div class="col-lg-7 px-5">
                         <div class="row">
                             <div class="col-lg-12">
-                                {{-- <h3 class="productDetail-detail-title">{{$data['productDetail']->productDetail_name}}</h3> --}}
+                                <h3 class="productDetail-detail-title">{{$data['productDetail']->product->product_name}} - {{$data['productDetail']->product->color->color_name}} - {{$data['productDetail']->product->category->category_name}}</h3>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 d-flex">
                                 <div class="mr-5 productDetail-detail-price-container">
-                                    <span class="productDetail-detail-for-gender mr-2">MEN</span>
-                                    {{-- <span class="productDetail-detail-productDetail-price">@currency($data['productDetail']->men_price)</span> --}}
+                                    {{$data['productDetail']->size->size_name}}
+                                    <!-- <span class="productDetail-detail-for-gender mr-2">MEN</span>
+                                    <span class="productDetail-detail-productDetail-price"></span> -->
                                 </div>
-                                <div class="productDetail-detail-price-container">
-                                    <span class="productDetail-detail-for-gender mr-2">WOMAN</span>
-                                    {{-- <span class="productDetail-detail-price">@currency($data['productDetail']->woman_price)</span> --}}
-                                </div>
+                                <!-- <div class="productDetail-detail-price-container">
+                                     <span class="productDetail-detail-for-gender mr-2">WOMEN</span>
+                                    <span class="productDetail-detail-productDetail-price"></span>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-lg-12">
+                                {!!$data['productDetail']->product->description!!}
                             </div>
                         </div>
                         <div class="row mt-3 mb-3">
                             <div class="col-lg-12 d-flex productDetail-detail-shop-buttons-container">
                                 <div class="mb-3">
-                                    <a href="{{$data['productDetail']->shopee_link}}" target="_blank" class="btn button-primary button-shop">Shop at Shopee</a>
+                                    <a href="{{url(env('SHOPEE_LINK')).$data['productDetail']->shopee_link}}" target="_blank" class="btn button-primary button-shop">Shop at Shopee</a>
                                 </div>
                                 <div>
-                                    <a href="" target="_blank" class="btn button-secondary button-shop">Shop Via Whatsapp</a>
+                                    <a href="{{url(env('WHATSAPP_LINK')).$data['productDetail']->shopee_link}}" target="_blank" class="btn button-secondary button-shop">Shop Via Whatsapp</a>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +76,7 @@
                         </div>
                         <div class="row mt-3 mb-3">
                             <div class="col-lg-12">
-                                <img class="productDetail-detail-sizechart-image" src="" />
+                                <img class="productDetail-detail-sizechart-image" src="{{asset('assets/images/size-chart.png')}}" />
                             </div>
                         </div>
 
@@ -100,15 +107,13 @@
             <div class="row">
 
                 @foreach($data['relateProducts'] as $i=>$relateItem)
-                    @php
-                    $image = json_decode($relateItem->images, true);
-                    @endphp
                 <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card mb-3 productDetail-card-alt">
-                        <img src="{{Voyager::image($image[0])}}" width="100px" class="card-img-top" alt="Story 1">
+                    <!-- <div class="card mb-3 productDetail-card-alt"> -->
+                    <div class="card mb-3 product-card-alt">
+                        <img src="{{asset('storage/products/'.$relateItem->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top product-image-250" alt="Story 1">
                         <div class="card-body">
-                            <p class="card-text text-center productDetail-card-productDetail-title"><a href="{{url('site')}}/{{$relateItem->slug}}">{{$relateItem->productDetail_name}}</a></p>
-                            <p class="card-text text-center productDetail-card-productDetail-price">@currency($relateItem->men_price)</p>
+                            <p class="card-text text-center productDetail-card-productDetail-title"><a href="{{url('site')}}/{{$relateItem->slug}}">{{$relateItem->product_name}}</a></p>
+                            <p class="card-text text-center productDetail-card-productDetail-price">{{rupiah($relateItem->men_price)}}</p>
                         
                         </div>
                     </div>
@@ -120,13 +125,43 @@
 
     </section>
 
+    @foreach($data['productDetailGallery'] as $i=>$product)
+        <div class="modal fade" id="image-{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <img src="{{asset('storage/products/'.$product->file)}}" width="100%">
+            </div>
+        </div>
+    @endforeach
+
+    <div class="modal fade" id="image-{{$data['productDetail']->productDetailImage[0]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <img src="{{asset('storage/products/'.$data['productDetail']->productDetailImage[0]->file)}}" width="100%">
+        </div>
+    </div>
+
 @endsection
 
 @section('additionalJs')
 <script src="{{asset('/assets/javascripts/productDetail-image.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-image-zoom/js-image-zoom.min.js"></script>
     
-
+<script>
+    $( document ).ready(function() {
+        var showcase =  $('.product-image-showcase').attr('src');
+        $( ".product-image-gallery" ).hover(
+            function(e) {
+                if(e.type == "mouseenter") {
+                    console.log("over");
+                    $('.product-image-showcase').attr('src', $(this).attr('src'));
+                }
+                else if (e.type == "mouseleave") {
+                    console.log(showcase);
+                    $('.product-image-showcase').attr('src', showcase);
+                }
+            }
+        );
+    });
+</script>
 @endsection
 
 @section('additionalCss')
