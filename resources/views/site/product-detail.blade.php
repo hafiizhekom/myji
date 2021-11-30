@@ -76,7 +76,7 @@
                         </div>
                         <div class="row mt-3 mb-3">
                             <div class="col-lg-12">
-                                <img class="productDetail-detail-sizechart-image" src="{{asset('assets/images/arrow-l.svg')}}" />
+                                <img class="productDetail-detail-sizechart-image" src="{{asset('assets/images/size-chart.png')}}" />
                             </div>
                         </div>
 
