@@ -12,7 +12,7 @@
             <div class="row mt-5">
                 <div class="col-md-5ths col-xs-6 mb-4 mx-auto">
                     <div class="card mb-3 how-to-order-card">
-                        <img src="{{asset('/assets/images/howtoorder/how-to-order_1.svg')}}"  class="card-img-top mx-auto" alt="How To Order 1">
+                        <img src="{{asset('/assets/images/howtoorder/how-to-order_1.gif')}}"  class="card-img-top mx-auto" alt="How To Order 1">
                         <div class="card-body">
                             <p class="card-text text-center how-to-order-card-text">Choose your design</p>
                         </div>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-5ths col-xs-6 mb-4 mx-auto">
                     <div class="card mb-3 how-to-order-card">
-                        <img src="{{asset('/assets/images/howtoorder/how-to-order_2.svg')}}"  class="card-img-top mx-auto" alt="How To Order 1">
+                        <img src="{{asset('/assets/images/howtoorder/how-to-order_2.gif')}}"  class="card-img-top mx-auto" alt="How To Order 1">
                         <div class="card-body">
                             <p class="card-text text-center how-to-order-card-text">Check size availability and measurement</p>
                         
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-5ths col-xs-6 mb-4 mx-auto">
                     <div class="card mb-3 how-to-order-card">
-                        <img src="{{asset('/assets/images/howtoorder/how-to-order_3.svg')}}"  class="card-img-top mx-auto" alt="How To Order 1">
+                        <img src="{{asset('/assets/images/howtoorder/how-to-order_3.gif')}}"  class="card-img-top mx-auto" alt="How To Order 1">
                         <div class="card-body">
                             
                             <p class="card-text text-center how-to-order-card-text">Choose your 
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-5ths col-xs-6 mb-4 mx-auto">
                     <div class="card mb-3 how-to-order-card">
-                        <img src="{{asset('/assets/images/howtoorder/how-to-order_4.svg')}}"  class="card-img-top mx-auto" alt="How To Order 1">
+                        <img src="{{asset('/assets/images/howtoorder/how-to-order_4.gif')}}"  class="card-img-top mx-auto" alt="How To Order 1">
                         <div class="card-body">
                             
                             <p class="card-text text-center how-to-order-card-text">Sit tight and wait for your products will be delivered to your home</p>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-5ths col-xs-6 mb-4 mx-auto">
                     <div class="card mb-3 how-to-order-card">
-                        <img src="{{asset('/assets/images/howtoorder/how-to-order_5.svg')}}"  class="card-img-top mx-auto" alt="How To Order 1">
+                        <img src="{{asset('/assets/images/howtoorder/how-to-order_5.gif')}}"  class="card-img-top mx-auto" alt="How To Order 1">
                         <div class="card-body">
                             
                             <p class="card-text text-center how-to-order-card-text">Ready to impress/Tik-Tok/ travel with MYJI!</p>

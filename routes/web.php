@@ -34,11 +34,12 @@ Auth::routes();
 
 Route::group(['prefix' => 'site'], function(){
     Route::get('/', 'SiteController@index');
-    Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
+    Route::get('/catalogue', 'SiteController@catalogue')->name('shop.catalogue');
     Route::get('/how-to-order', 'SiteController@howToOrder');
     Route::get('/faq', 'SiteController@faq');
     Route::get('/size-recomendation', 'SiteController@sizeRecomendation');
-    Route::get('/feedback', 'SiteController@feedback');
+    Route::get('/feedback', 'SiteController@feedback')->name('shop.feedback');
+    Route::get('/feedback/send', 'SiteController@sendFeedback')->name('shop.feedback.add');
     Route::get('/product/{id}', 'SiteController@productDetail');
 });
 
@@ -196,6 +197,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/slider/edit/decrease/{id}', 'SliderController@decreasingOrder')->name('slider.decreasing.edit');
         Route::post('/slider/edit/{id}', 'SliderController@edit')->name('slider.edit');
         Route::delete('/slider/delete/{id}', 'SliderController@delete')->name('slider.delete');
+
+        Route::get('/feedback', 'FeedbackController@index')->name('feedback');
+        Route::delete('/feedback/delete/{id}', 'FeedbackController@delete')->name('feedback.delete');
 
         // Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
         // Route::get('/how-to-order', 'SiteController@howToOrder');

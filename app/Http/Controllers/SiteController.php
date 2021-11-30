@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\ProductDetailImage;
 use App\Models\Testimony;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
 use App\Models\FAQ;
+use App\Models\Feedback;
+use Session;
  
 class SiteController extends Controller
 {
@@ -41,31 +44,29 @@ class SiteController extends Controller
         
         $color = Color::all();
         $category = Category::all();
-        $size = Size::all();
 
-        $product_detail = ProductDetail::orderBy('created_at', 'DESC');
+        $product = Product::has('detail.productDetailImage')->orderBy('created_at', 'DESC');
 
         
         if($r->color){
-            $product_detail = $product_detail->whereHas('color', function($q) use($r){
+            $product = $product->whereHas('color', function($q) use($r){
                 $q->where('color_code', $r->color);
             });  
         }
 
         if($r->category){
-            $product_detail = $product_detail->whereHas('category', function($q) use($r){
-                $q->where('category_code', $r->vol);
+            $product = $product->whereHas('category', function($q) use($r){
+                $q->where('category_code', $r->category);
             });  
         }
 
         
-        $product_detail = $product_detail->paginate(9);
+        $product = $product->paginate(9);
 
         $data = [
             'color' => $color,
             'category' => $category,
-            'size' => $size,
-            'product_detail' => $product_detail
+            'product' => $product
         ];
         
         return view(
@@ -76,15 +77,15 @@ class SiteController extends Controller
 
     public function productDetail(Request $r, $id){
 
-        $productDetail = ProductDetail::where('id',$id)->first();
-        $anotherProductSize = ProductDetail::where('category_id', $productDetail->category_id)->where('color_id', $productDetail->color_id)->where('product_id',$productDetail->product_id)->get();
-        $product = Product::where('id',$productDetail->product_id)->first();
+        $productDetail = ProductDetail::has('productDetailImage')->where('id',$id)->first();
+        $productDetailGallery= ProductDetailImage::where('main_image',0)->where('product_detail_id',$id)->get();
+        $anotherProductSize = ProductDetail::where('product_id',$productDetail->product_id)->get();
+        $product = Product::where('id',$productDetail->product_id)->has('detail.productDetailImage')->first();
         $category = $productDetail->category_id;
         $color = $product->color_id;
         $sizechart = $product->size_id;
 
-        $relateProducts = ProductDetail::where('category_id', $product->category_id)
-                        ->where('id','<>', $product->id)->limit(4)->get();
+        $relateProducts = Product::where('id','<>', $product->id)->has('detail.productDetailImage')->limit(4)->get();
 
         $data = [
             'title' => $product->seo_title ? $product->seo_title : $product->product_title,
@@ -93,6 +94,7 @@ class SiteController extends Controller
             'sizechart' => $sizechart,
             'relateProducts' => $relateProducts,
             'productDetail' => $productDetail,
+            'productDetailGallery' => $productDetailGallery,
             'anotherProductSize' => $anotherProductSize
         ];
 
@@ -130,6 +132,17 @@ class SiteController extends Controller
 
     public function feedback(){
         return view('site.feedback');
+    }
+
+    public function sendFeedback(Request $request){
+        $data = [
+            'feedback'=>request('feedback'), 
+            'ip_address'=>$request->ip()
+        ];
+        $simpan = Feedback::create($data);
+        Session::flash('message', 'Success send feedback!'); 
+        Session::flash('alert-class', 'alert-info'); 
+        return redirect()->route('shop.feedback');
     }
 }
 
