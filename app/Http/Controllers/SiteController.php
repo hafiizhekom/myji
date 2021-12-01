@@ -13,6 +13,7 @@ use App\Models\Size;
 use App\Models\Category;
 use App\Models\FAQ;
 use App\Models\Feedback;
+use App\Models\FeedbackIdea;
 use Session;
  
 class SiteController extends Controller
@@ -141,6 +142,17 @@ class SiteController extends Controller
         ];
         $simpan = Feedback::create($data);
         Session::flash('message', 'Success send feedback!'); 
+        Session::flash('alert-class', 'alert-info'); 
+        return redirect()->route('shop.feedback');
+    }
+
+    public function sendFeedbackidea(Request $request){
+        $data = [
+            'url'=>request('url'), 
+            'ip_address'=>$request->ip()
+        ];
+        $simpan = FeedbackIdea::create($data);
+        Session::flash('message', 'Success send design!'); 
         Session::flash('alert-class', 'alert-info'); 
         return redirect()->route('shop.feedback');
     }

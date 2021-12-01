@@ -40,6 +40,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/size-recomendation', 'SiteController@sizeRecomendation');
     Route::get('/feedback', 'SiteController@feedback')->name('shop.feedback');
     Route::get('/feedback/send', 'SiteController@sendFeedback')->name('shop.feedback.add');
+    Route::get('/feedback_idea/send', 'SiteController@sendFeedbackidea')->name('shop.feedback_idea.add');
     Route::get('/product/{id}', 'SiteController@productDetail');
 });
 
@@ -200,6 +201,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/feedback', 'FeedbackController@index')->name('feedback');
         Route::delete('/feedback/delete/{id}', 'FeedbackController@delete')->name('feedback.delete');
+
+        Route::get('/feedback_idea', 'FeedbackIdeaController@index')->name('feedback_idea');
+        Route::delete('/feedback_idea/delete/{id}', 'FeedbackIdeaController@delete')->name('feedback_idea.delete');
 
         // Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
         // Route::get('/how-to-order', 'SiteController@howToOrder');

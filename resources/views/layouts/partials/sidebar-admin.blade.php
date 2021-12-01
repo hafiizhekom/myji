@@ -62,6 +62,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('feedback_idea')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) >= 1 ? ( ( explode('.', Route::currentRouteName())[0] == 'feedback_idea' ) ? 'active' : '') : '' }}">
+              <i class="nav-icon fas fa-paste"></i>
+              <p>
+                Feedback Idea
+              </p>
+            </a>
+          </li>
           <li class="nav-header">MASTER</li>
           <li class="nav-item">
             <a href="{{route('channel')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) >= 1 ? ( ( explode('.', Route::currentRouteName())[0] == 'channel' ) ? 'active' : '') : '' }}">
