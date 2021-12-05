@@ -37,7 +37,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/catalogue', 'SiteController@catalogue')->name('shop.catalogue');
     Route::get('/how-to-order', 'SiteController@howToOrder');
     Route::get('/faq', 'SiteController@faq');
-    Route::get('/size-recomendation', 'SiteController@sizeRecomendation');
+    Route::get('/size-recommendation', 'SiteController@sizeRecomendation');
     Route::get('/feedback', 'SiteController@feedback')->name('shop.feedback');
     Route::get('/feedback/send', 'SiteController@sendFeedback')->name('shop.feedback.add');
     Route::get('/feedback_idea/send', 'SiteController@sendFeedbackidea')->name('shop.feedback_idea.add');
@@ -204,6 +204,27 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/feedback_idea', 'FeedbackIdeaController@index')->name('feedback_idea');
         Route::delete('/feedback_idea/delete/{id}', 'FeedbackIdeaController@delete')->name('feedback_idea.delete');
+
+        Route::get('/setting/general', 'SettingController@index')->name('setting.general');
+        Route::post('/setting/general/size_recommendation', 'SettingController@size_recommendation')->name('setting.general.size_recommendation');
+
+        Route::get('/setting/order', 'SettingOrderController@index')->name('setting.order');
+        Route::post('/setting/order/edit/{id}', 'SettingOrderController@edit')->name('setting.order.edit');
+
+        Route::get('/setting/most_wanted', 'SettingMostWantedController@index')->name('setting.most_wanted');
+        Route::post('/setting/most_wanted/add', 'SettingMostWantedController@add')->name('setting.most_wanted.add');
+        Route::post('/setting/most_wanted/edit/{id}', 'SettingMostWantedController@edit')->name('setting.most_wanted.edit');
+        Route::delete('/setting/most_wanted/delete/{id}', 'SettingMostWantedController@delete')->name('setting.most_wanted.delete');
+        Route::post('/setting/most_wanted/increase/{id}', 'SettingMostWantedController@increasingOrder')->name('setting.most_wanted.increasing.edit');
+        Route::post('/setting/most_wanted/decrease/{id}', 'SettingMostWantedController@decreasingOrder')->name('setting.most_wanted.decreasing.edit');
+
+        Route::get('/setting/suggestion', 'SettingSuggestionController@index')->name('setting.suggestion');
+        Route::post('/setting/suggestion/add', 'SettingSuggestionController@add')->name('setting.suggestion.add');
+        Route::post('/setting/suggestion/edit/{id}', 'SettingSuggestionController@edit')->name('setting.suggestion.edit');
+        Route::delete('/setting/suggestion/delete/{id}', 'SettingSuggestionController@delete')->name('setting.suggestion.delete');
+        Route::post('/setting/suggestion/increase/{id}', 'SettingSuggestionController@increasingOrder')->name('setting.suggestion.increasing.edit');
+        Route::post('/setting/suggestion/decrease/{id}', 'SettingSuggestionController@decreasingOrder')->name('setting.suggestion.decreasing.edit');
+
 
         // Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
         // Route::get('/how-to-order', 'SiteController@howToOrder');

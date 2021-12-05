@@ -22,18 +22,11 @@ class FaqController extends Controller
     public function add()
     {
 
-        $lastFaq = Faq::orderBy('order', 'desc')->first();
-        if(!$lastFaq){
-            $lastOrder = 1;
-        }else{
-            $lastOrder = $lastFaq->order+1;
-        }
-
         
     	$data = [
             'title'=>request('title'), 
             'content'=>request('content'),
-            'order' => $lastOrder
+            'order' => Faq::max('order')+1
 
         ];
         $simpan = Faq::create($data);

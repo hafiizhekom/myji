@@ -11,7 +11,7 @@ class Promo extends Model
     use SoftDeletes;
 
     protected $table = 'promo';
-    protected $fillable = ['promo_name','fixed_amount','start_time','end_time','active'];
+    protected $fillable = ['promo_name','promo_code','fixed_amount','percentage_amount','start_time','end_time','active'];
     
     public function detail()
     {

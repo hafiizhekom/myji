@@ -195,7 +195,7 @@
     @endforeach
 
     <!-- Modal Delete-->
-    @foreach ($data['product'] as $key=>$value)
+    @foreach ($data['productDetail'] as $key=>$value)
     <div class="modal fade" id="delete-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">

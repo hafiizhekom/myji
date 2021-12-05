@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\ProductDetailImage;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
@@ -44,6 +45,13 @@ class ProductDetailController extends Controller
         ];
         $saveProductDetail = ProductDetail::create($dataDetail);
 
+        $dataDetailImage = [
+            'product_detail_id'=>$saveProductDetail->id,
+            'file'=>'default.jpg',
+            'main_image'=>1
+        ];
+        $simpanDetailImage = ProductDetailImage::create($dataDetailImage);
+
         return redirect()->route('product_detail', $id);
     }
 
@@ -72,12 +80,12 @@ class ProductDetailController extends Controller
     }
 
 
-    public function delete($id, Request $request)
+    public function delete($id,$iddetail, Request $request)
     {
-        $cabang = Product::findOrFail($id);
-        $cabang->delete();
+        $productDetail = ProductDetail::findOrFail($iddetail);
+        $productDetail->delete();
 
-        return redirect()->route('product');
+        return redirect()->route('product_detail', $id);
     }
 }
 

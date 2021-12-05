@@ -13,7 +13,7 @@
             <label>Customer</label>: {{$data['order']->customer->first_name}} {{$data['order']->customer->last_name}} ({{$data['order']->customer->email}})<br>
             <label>Discount Amount</label>: {{number_format($data['order']->discount_amount,0,',','.')}}<br>
             <label>Address Shipping</label>: {{$data['order']->address_shipping}}<br>
-            <label>Total Price</label>: {{number_format($data['order']->total_price,0,',','.')}}<br>
+            <label>Total Price (inc. Order Fee)</label>: {{number_format($data['order']->total_price,0,',','.')}}<br>
             <label>Order Date</label>: {{$data['order']->order_date}}<br>
             <label>Order Type</label>: {{$data['order']->type_order}}<br>
             @if($data['order']->type_order == "return")
@@ -102,13 +102,13 @@
                 });
 
                 $(".editprice").keyup(function(){
-                    var total_price = $(this).val() * $(".editquantity").val();
-                    $(".edittotalprice").val(total_price);
+                    var total_price = $(this).val() * $("#editquantity-"+$(this).data("id")).val();
+                    $("#edittotalprice-"+$(this).data("id")).val(total_price);
                 });
 
                 $(".editquantity").keyup(function(){
-                    var total_price = $(this).val() * $(".editprice").val();
-                    $(".edittotalprice").val(total_price);
+                    var total_price = $(this).val() * $("#editprice-"+$(this).data("id")).val();
+                    $("#edittotalprice-"+$(this).data("id")).val(total_price);
                 });
 
                 $('.custom-add-totalprice').change(function() {
@@ -121,9 +121,9 @@
 
                 $('.custom-edit-totalprice').change(function() {
                     if(this.checked) {
-                        $(".edittotalprice").attr("readonly", false); 
+                        $("#edittotalprice-"+$(this).data("id")).attr("readonly", false); 
                     }else{
-                        $(".edittotalprice").attr("readonly", true); 
+                        $("#edittotalprice-"+$(this).data("id")).attr("readonly", true); 
                     }
                 });
 
@@ -214,7 +214,7 @@
             <form class="form" action="{{route('refund.add')}}" method="post">
                 @csrf
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Refund/Return Order {{$value->order_name}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Refund/Return Order</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -230,7 +230,7 @@
 
                     <div class="form-group">
                         <label>Quantity</label>
-                        <input type="number" placeholder="Quantity" name="quantity" class="form-control" min="1" max="2" required>
+                        <input type="number" placeholder="Quantity" name="quantity" class="form-control" min="1" max="{{$value->quantity}}" required>
                     </div>
                     
                     <div class="form-group">
@@ -290,18 +290,18 @@
 
                     <div class="form-group">
                         <label>Quantity</label>
-                        <input type="number" min="0" class="form-control editquantity" name="quantity" placeholder="Quantity" value="{{$value->quantity}}" required>
+                        <input type="number" min="0" class="form-control editquantity" id="editquantity-{{$value->id}}" data-id="{{$value->id}}" name="quantity" placeholder="Quantity" value="{{$value->quantity}}" required>
                     </div>
 
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" min="0" class="form-control editprice" id="editprice-{{$value->id}}" name="price" placeholder="Price" value="{{$value->price}}" readonly required>
+                        <input type="number" min="0" class="form-control editprice" id="editprice-{{$value->id}}" data-id="{{$value->id}}" name="price" placeholder="Price" value="{{$value->price}}" readonly required>
                     </div>
 
                     <div class="form-group">
                         <label>Total Price</label>
-                        <input type="number" min="0" class="form-control edittotalprice" name="total_price" placeholder="Total Price" value="{{$value->total_price}}" readonly required>
-                        <input type="checkbox" class="custom-edit-totalprice"> Custom Total Price
+                        <input type="number" min="0" class="form-control edittotalprice" id="edittotalprice-{{$value->id}}" data-id="{{$value->id}}" name="total_price" placeholder="Total Price" value="{{$value->total_price}}" readonly required>
+                        <input type="checkbox" class="custom-edit-totalprice"  data-id="{{$value->id}}"> Custom Total Price
                     </div>
                 </div>
                 <div class="modal-footer">

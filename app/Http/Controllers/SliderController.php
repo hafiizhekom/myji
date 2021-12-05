@@ -23,7 +23,8 @@ class SliderController extends Controller
     public function add(Request $request)
     {
     	$data = [
-            'title'=>request('title')
+            'title'=>request('title'),
+            'order'=>Slider::max('order')+1
         ];
         $simpan = slider::create($data);
 

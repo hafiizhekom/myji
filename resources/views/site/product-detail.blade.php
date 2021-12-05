@@ -1,5 +1,5 @@
 @extends('layouts.application')
-@section('pagetitle', $data['title'])
+@section('pagetitle', $data['productDetail']->product->product_name."-".$data['productDetail']->product->color->color_name."-".$data['productDetail']->product->category->category_name)
 @section('content')
 <div class="container content">
         <div class="row mb-5">
@@ -33,13 +33,29 @@
                     <div class="col-lg-7 px-5">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h3 class="productDetail-detail-title">{{$data['productDetail']->product->product_name}} - {{$data['productDetail']->product->color->color_name}} - {{$data['productDetail']->product->category->category_name}}</h3>
+                                <h3 class="productDetail-detail-title">{{$data['productDetail']->product->product_name}} - {{$data['productDetail']->product->color->color_name}} - {{$data['productDetail']->product->category->category_name}} </h3>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12 d-flex">
-                                <div class="mr-5 productDetail-detail-price-container">
-                                    {{$data['productDetail']->size->size_name}}
+                            <div class="col-lg-12 mb-2 d-flex">
+                                <div class="mr-5 productDetail-detail-price-container" style="font-weight:bold;font-size:20px;">
+                                    @php
+                                        $promoTotal = 0;
+                                    @endphp
+                                    @foreach($data['promoDetail'] as $promoDetail)
+                                        @php
+                                            if($promoDetail->promo->fixed_amount){
+                                                $promoTotal = $promoTotal + $promoDetail->promo->fixed_amount;
+                                            }
+                                            
+                                            $promoTotal = $promoTotal + ( $data['productDetail']->price * $promoDetail->promo->percentage_amount /100 );
+                                        @endphp
+                                    @endforeach
+                                    @if($promoTotal != 0 )
+                                        <strike>{{rupiah($data['productDetail']->price)}}</strike> {{rupiah($data['productDetail']->price - $promoTotal)}} 
+                                    @else
+                                        {{rupiah($data['productDetail']->price)}}
+                                    @endif
                                     <!-- <span class="productDetail-detail-for-gender mr-2">MEN</span>
                                     <span class="productDetail-detail-productDetail-price"></span> -->
                                 </div>
@@ -48,10 +64,39 @@
                                     <span class="productDetail-detail-productDetail-price"></span>
                                 </div> -->
                             </div>
+                            <div class="col-lg-12 mb-2 d-flex">
+                                <div class="mr-5 productDetail-detail-price-container">
+                                    <span class="label-bold mr-2">Size</span>
+                                    <span class="productDetail-detail-productDetail-price">{{$data['productDetail']->size->size_name}}</span>
+                                </div>
+                                <!-- <div class="productDetail-detail-price-container">
+                                     <span class="productDetail-detail-for-gender mr-2">WOMEN</span>
+                                    <span class="productDetail-detail-productDetail-price"></span>
+                                </div> -->
+                            </div>
+                            <div class="col-lg-12 mb-2 d-flex">
+                                <div class="mr-5 productDetail-detail-price-container">
+                                    <span class="label-bold mr-2">Stock</span>
+                                    <span class="productDetail-detail-productDetail-price">{{$data['stock']}} 
+                                    @if($data['stock']<= 10)
+                                        <span class="badge badge-warning">Low Stock</span>
+                                    @endif
+                                    </span>
+                                    </h1>
+                                    
+                                    
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="row mt-3 mb-3">
                             <div class="col-lg-12">
-                                {!!$data['productDetail']->product->description!!}
+                                <div class="productDetail-detail-price-container">
+                                    <span class="label-bold mr-2">Description</span>
+                                    <span class="productDetail-detail-productDetail-price">
+                                        {!!$data['productDetail']->product->description!!}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="row mt-3 mb-3">
@@ -69,17 +114,35 @@
                                 {!! $data['productDetail']->description!!}
                             </div>
                         </div>
-                        <div class="row mt-3 mb-3">
-                            <div class="col-lg-12">
-                                <span class="productDetail-detail-sizechart-title">SIZE CHART</span>
-                            </div>
-                        </div>
-                        <div class="row mt-3 mb-3">
-                            <div class="col-lg-12">
-                                <img class="productDetail-detail-sizechart-image" src="{{asset('assets/images/size-chart.png')}}" />
-                            </div>
-                        </div>
 
+                        <div class="row mt-3 mb-3 productDetail-detail-description">
+                            
+                                @foreach($data['anotherProductSize'] as $detail)
+                                <div class="col-lg-12 mb-2">
+                                    @if($detail->stock)
+                                        <a class="btn btn-info btn-xs" href="{{url('/site')}}/product/{{$detail->id}}">{{$detail->size->size_name}}</a>
+                                        @if($detail->stock<=10)
+                                            <span class="badge badge-warning">Low Stock</span>
+                                        @endif
+                                    @else
+                                        <a class="btn btn-secondary btn-xs" disabled>{{$detail->size->size_name}}</a>
+                                    @endif
+                                </div>
+                                @endforeach
+                            
+                        </div>
+                        @if($data['productDetail']->product->chart_size_image)
+                            <div class="row mt-3 mb-3">
+                                <div class="col-lg-12">
+                                    <span class="productDetail-detail-sizechart-title">SIZE CHART</span>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-3">
+                                <div class="col-lg-12">
+                                    <img class="productDetail-detail-sizechart-image" src="{{asset('storage/charts/'. $data['productDetail']->product->chart_size_image)}}" />
+                                </div>
+                            </div>
+                        @endif
                        
                     </div>
                 </div>
@@ -109,14 +172,16 @@
                 @foreach($data['relateProducts'] as $i=>$relateItem)
                 <div class="col-md-3 col-sm-6 mb-4">
                     <!-- <div class="card mb-3 productDetail-card-alt"> -->
+                    <a href="{{url('site')}}/{{$relateItem->slug}}" class="link-non-underline">
                     <div class="card mb-3 product-card-alt">
                         <img src="{{asset('storage/products/'.$relateItem->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top product-image-250" alt="Story 1">
                         <div class="card-body">
-                            <p class="card-text text-center productDetail-card-productDetail-title"><a href="{{url('site')}}/{{$relateItem->slug}}">{{$relateItem->product_name}}</a></p>
+                            <p class="card-text text-center productDetail-card-productDetail-title">{{$relateItem->product_name}}</a></p>
                             <p class="card-text text-center productDetail-card-productDetail-price">{{rupiah($relateItem->men_price)}}</p>
                         
                         </div>
                     </div>
+                    </a>
                 </div>
                 
                 @endforeach
