@@ -4,6 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MYJI | @yield('pagetitle') @hasSection('subpagetitle') | @yield('subpagetitle') @endif</title>
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/assets/images/favicons/apple-touch-icon.png')}}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{asset('/assets/images/favicons/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('/assets/images/favicons/favicon-16x16.png')}}">
+  <link rel="manifest" href="{{asset('/assets/images/favicons/site.webmanifest')}}">
+  <link rel="mask-icon" href="{{asset('/assets/images/favicons/safari-pinned-tab.svg')}}" color="#f49102">
+  <meta name="msapplication-TileColor" content="#f49102">
+  <meta name="theme-color" content="#f49102">
  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -33,6 +42,7 @@
 
   <!-- jQuery -->
   <script src="{{asset('/assets/adminlte/plugins/jquery/jquery.min.js')}}"></script>
+  
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -93,7 +103,7 @@
   @yield('modals')
 
   
-  <!-- Control Sidebar -->
+  <!-- Control Sidebar --> 
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>

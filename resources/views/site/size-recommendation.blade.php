@@ -32,7 +32,8 @@
                 
                 <div class="row mb-5 justify-content-end">
                     <div class="col-lg-9 col-md-12 ">
-                        <form action="javascript:;" id="formMeasurement">
+                        <img src="{{asset('/storage/settings/size_recommendation/image.jpg')}}" width="100%" class="pull-right">
+                        <!-- <form action="javascript:;" id="formMeasurement">
                             <div class="row">
                                 <div class="col-lg-12 size-rec-content-head">
                                     <h5>Insert your mesasurements</h5>
@@ -70,7 +71,7 @@
                                 </div>
                             </div>
                             
-                        </form>
+                        </form> -->
                     </div>
                 </div>
 

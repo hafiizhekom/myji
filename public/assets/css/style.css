@@ -271,6 +271,7 @@ body {
 .content {
     padding-top: 130px;
     padding-bottom: 100px;
+    min-height: 800px !important;
 }
 
 #our-story {
@@ -869,6 +870,52 @@ h1.size-rec-title {
     height:350px;object-fit: cover;
 }
 
+.product-image-showcase{
+    height:550px;object-fit: cover;width: 100%;
+}
+
 .link-non-underline:hover{
     text-decoration: none;
+}
+
+.label-bold{
+    font-weight: bold;
+}
+
+.slick-prev:before, .slick-next:before{
+    color:red;
+}
+
+.filter-section{
+    display: none;
+}
+
+.close-filter-button{
+    display: none;
+}
+
+@media (max-width: 768px) {
+.sidebar{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top:2px solid #353b48;
+    padding-top: 20px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom:20px;
+    background-color: #f5f6fa;
+    position: fixed;
+    bottom:0;
+    left:0;
+    z-index: 1000;
+}
+.close-filter-button{
+    display: block;
+}
+
+
+.filter-section{
+    margin-bottom: 30px;
+    display: block;
+}
 }

@@ -1,5 +1,5 @@
 @extends('layouts.application_admin')
-@section('pagetitle', 'Feedback')
+@section('pagetitle', 'Feedback Idea')
 @section('content')
 
     <div id="toolbar">
@@ -11,7 +11,7 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="feedback" data-sortable="true">Feedback</th>
+            <th data-field="url" data-sortable="true">URL</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -19,7 +19,7 @@
             @foreach ($data['feedback'] as $key=>$value)
                 <tr>
                     <td>{{$value->id}}</td>
-                    <td>{{$value->feedback}}</td>
+                    <td>{{$value->url}}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -55,7 +55,7 @@
             </button>
             </div>
             <div class="modal-body">
-                <form class="form" action="{{route('feedback.delete', $value->id)}}" method="post">
+                <form class="form" action="{{route('feedback_idea.delete', $value->id)}}" method="post">
                     @csrf
                     {{ method_field ('DELETE') }}
                     <div class="btn-group" style="width: 100%;">

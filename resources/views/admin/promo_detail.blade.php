@@ -9,10 +9,11 @@
     <div class="card">
         <div class="card-body"> 
             <label>Promo Name</label>: {{$data['promo']->promo_name}}<br>
+            <label>Promo Code</label>: {{$data['promo']->promo_code}}<br>
             <label>Start Time</label>: {{$data['promo']->start_time}}<br>
             <label>End Time</label>: {{$data['promo']->end_time}}<br>
             <label>Fixed Amount</label>: {{number_format($data['promo']->fixed_amount,0,',','.')}}<br>
-            <label>Percentage Amount</label>: {{$data['promo']->percentage_amount}}<br>
+            <label>Percentage Amount</label>: {{$data['promo']->percentage_amount}}%<br>
             <label>Active</label>:
             @if($data['promo']->active)
                 <i class="fas fa-check"></i>
@@ -34,6 +35,7 @@
         <tr>
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="product" data-sortable="true">Product</th>
+            <th data-field="origin_price" data-sortable="true">Origin Price</th>
             <th data-field="final_price" data-sortable="true">Final Price</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
@@ -43,7 +45,8 @@
                 <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->productDetail->product->product_name}} {{$value->productDetail->size->size_name}} {{$value->productDetail->product->color->color_name}} {{$value->productDetail->product->category->category_name}}</td>
-                    <td>{{number_format($value->productDetail->price - $data['promo']->fixed_amount,0,',','.')}}</td>
+                    <td>{{number_format($value->productDetail->price ,0,',','.')}}</td>
+                    <td>{{number_format($value->productDetail->price - $data['promo']->fixed_amount - ($value->productDetail->price * $data['promo']->percentage_amount / 100) ,0,',','.')}}</td>
                     <td></td>
                 </tr>
             @endforeach

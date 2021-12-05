@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ProductDetail;
+use App\Models\SettingOrder;
  
 class OrderDetailController extends Controller
 {
@@ -73,8 +74,11 @@ class OrderDetailController extends Controller
     }
 
     private function updateOrderTotalPrice($id){
+        $settingOrder = SettingOrder::where('active',1)->first();
+
         $order = Order::where('id', $id)->first();
-        $newPrice = totalprice_order($order);
+        $newPrice = totalprice_order($order)+$settingOrder->order_fee;
+        
 
         $order = Order::find($id);
         $order->total_price = $newPrice;

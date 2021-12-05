@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Promo;
+use App\Models\PromoDetail;
  
 class PromoController extends Controller
 {
@@ -33,7 +34,9 @@ class PromoController extends Controller
         
     	$data = [
             'promo_name'=>request('promo_name'), 
+            'promo_code'=>request('promo_code'),
             'fixed_amount'=>request('fixed_amount'),
+            'percentage_amount'=>request('percentage_amount'),
             'start_time'=>$promo_date[0],
             'end_time'=>$promo_date[1],
             'active'=>request('active')
@@ -45,10 +48,18 @@ class PromoController extends Controller
 
     public function edit($id)
     {
+        $promo_date = request('promo_date');
+        $promo_date = explode("-", $promo_date);
+
         $promo = Promo::findOrFail($id);
        	$data = [ 
             'promo_name'=>request('promo_name'), 
-            'promo_code'=>request('promo_code')
+            'promo_code'=>request('promo_code'),
+            'fixed_amount'=>request('fixed_amount'),
+            'percentage_amount'=>request('percentage_amount'),
+            'start_time'=>$promo_date[0],
+            'end_time'=>$promo_date[1],
+            'active'=>request('active')
         ];
         
         $promo->update($data);
@@ -60,7 +71,9 @@ class PromoController extends Controller
     {
         $promo = Promo::findOrFail($id);
         $promo->delete();
-
+        $promoDetail = PromoDetail::where('promo_id', $id)->delete();
+        
+        
         return redirect()->route('promo');
     }
 }
