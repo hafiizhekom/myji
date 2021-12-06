@@ -11,7 +11,7 @@ use App\Models\Testimony;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
-use App\Models\FAQ;
+use App\Models\Faq;
 use App\Models\Feedback;
 use App\Models\FeedbackIdea;
 use App\Models\PromoDetail;
@@ -108,12 +108,15 @@ class SiteController extends Controller
     }
 
     public function productDetail(Request $r, $id){
+        
+        
+        
+        $productDetail = ProductDetail::has('productDetailImage')->where('id',$id)->first();
 
-        $productCounter = Product::findOrFail($id);
+        $productCounter = Product::findOrFail($productDetail->product_id);
         $productCounter->view = $productCounter->view+1;
         $productCounter->save();
 
-        $productDetail = ProductDetail::has('productDetailImage')->where('id',$id)->first();
         $promoDetail = PromoDetail::where('product_detail_id',$id)->get();
         $productDetailGallery= ProductDetailImage::where('main_image',0)->where('product_detail_id',$id)->get();
         $anotherProductSize = ProductDetail::has('productDetailImage')->where('product_id',$productDetail->product_id)->whereNotIn('id', [$id])->get();
@@ -122,7 +125,7 @@ class SiteController extends Controller
             $value->stock = $this->calc_stock($value->id);
         }
 
-
+        
         $product = Product::where('id',$productDetail->product_id)->has('detail.productDetailImage')->first();
         $category = $productDetail->category_id;
         $color = $product->color_id;
