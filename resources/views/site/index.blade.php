@@ -33,7 +33,7 @@
     </div>
 </section>
 
-<section id="our-story" class="section-scrollify">
+<section id="our-story" class="section-scrollify section-child">
     <div class="container">
 
         <div class="row">
@@ -136,7 +136,7 @@
 
 <!-- Our Most Wanted -->
 
-<section id="our-most-wanted" class="section-scrollify">
+<section id="our-most-wanted" class="section-scrollify section-child">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -174,7 +174,7 @@
 <!-- End Our Most Wanted -->
 
 <!-- Testimony -->
-<section id="testimony" class="section-scrollify">
+<section id="testimony" class="section-scrollify section-child">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 testimony-left">

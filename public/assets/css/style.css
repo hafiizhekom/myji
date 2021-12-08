@@ -894,14 +894,14 @@ h1.size-rec-title {
     display: none;
 }
 
-.section-scrollify{
+.section-child{
     padding-top: 10% !important;
 }
 
 @media (max-width: 768px) {
 
 #testimony {
-    padding-bottom: 100px  !important;
+    padding-bottom: 100px;
 }
 
 .testimony-right-slider-container{
@@ -913,7 +913,7 @@ h1.size-rec-title {
     padding-bottom: 3rem !important;
 }
 
-.section-scrollify{
+.section-child{
     padding-top: 100px !important;
 }
     
