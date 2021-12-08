@@ -33,7 +33,7 @@
     </div>
 </section>
 
-<section id="our-story" class="section-scrollify">
+<section id="our-story" class="section-scrollify section-child">
     <div class="container">
 
         <div class="row">
@@ -136,7 +136,7 @@
 
 <!-- Our Most Wanted -->
 
-<section id="our-most-wanted" class="section-scrollify">
+<section id="our-most-wanted" class="section-scrollify section-child">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -150,12 +150,12 @@
                 @foreach($data['mostWanted'] as $i=>$item)
                 <div class="col">
                     <div class="card mb-3 product-card-alt"> 
-                        @if(isset($item->detail->productDetailImage[0]->file))
-                            <img src="{{asset('storage/products/'.$item->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top mx-auto product-image-350" style='max-width:350px' alt="{{$item->product_name}}">
+                        @if(isset($item->detail[0]->image_file))
+                            <img src="{{asset('storage/products/'.$item->detail[0]->image_file)}}" width="100px" class="card-img-top mx-auto product-image-350" style='max-width:350px' alt="{{$item->product_name}}">
                         @endif
                         <div class="card-body">
                             <p class="card-text text-center product-card-product-title">{{$item->product_name}}</p>
-                            <p class="card-text text-center product-card-product-price">{{rupiah($item->detail->price)}}</p>
+                            <p class="card-text text-center product-card-product-price">{{rupiah($item->detail[0]->price)}}</p>
                         
                         </div>
                         <div class="card-footer d-flex justify-content-center">
@@ -174,7 +174,7 @@
 <!-- End Our Most Wanted -->
 
 <!-- Testimony -->
-<section id="testimony" class="section-scrollify">
+<section id="testimony" class="section-scrollify section-child">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 testimony-left">
@@ -218,4 +218,15 @@
 
 @section('additionalJs')
     <script type="text/javascript" src="{{asset('/assets/javascripts/jquery.scrollify.min.js')}}"></script>
+    <script>
+        $( ".card-testimony__scrollbar" )
+        .mouseover(function() {
+            // $( this ).find( "span" ).text( "mouse over x " + i );
+            $.scrollify.disable();
+        })
+        .mouseout(function() {
+            // console.log("mouse out");
+            $.scrollify.enable();
+        });
+    </script>
 @endsection

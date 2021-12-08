@@ -41,7 +41,8 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/feedback', 'SiteController@feedback')->name('shop.feedback');
     Route::get('/feedback/send', 'SiteController@sendFeedback')->name('shop.feedback.add');
     Route::get('/feedback_idea/send', 'SiteController@sendFeedbackidea')->name('shop.feedback_idea.add');
-    Route::get('/product/{id}', 'SiteController@productDetail');
+    // Route::get('/product/{id}', 'SiteController@productDetail');
+    Route::get('/product/{id}', 'SiteController@product');
 });
 
 Route::get('/test-queue', function () use ($router){

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Models\ProductDetailImage;
 use App\Models\Testimony;
 use App\Models\Color;
 use App\Models\Size;
@@ -34,9 +33,9 @@ class SiteController extends Controller
                 # code...
                 array_push($productMostWanted, $value->product->id);
             }
-            $mostWanted = Product::has('detail.productDetailImage')->whereIn('id', $productMostWanted)->orderBy('view','DESC')->limit(5)->get();
+            $mostWanted = Product::has('detail')->with('detail')->whereIn('id', $productMostWanted)->orderBy('view','DESC')->limit(5)->get();
         }else{
-            $mostWanted = Product::has('detail.productDetailImage')->orderBy('view','DESC')->limit(5)->get();
+            $mostWanted = Product::has('detail')->with('detail')->orderBy('view','DESC')->limit(5)->get();
         }
         
 
@@ -75,7 +74,7 @@ class SiteController extends Controller
         $color = Color::all();
         $category = Category::all();
 
-        $product = Product::has('detail.productDetailImage')->orderBy('created_at', 'DESC');
+        $product = Product::has('detail')->orderBy('created_at', 'DESC');
             
         
         if(count($colorParam)){
@@ -107,26 +106,64 @@ class SiteController extends Controller
         );
     }
 
+    public function product($id){
+
+        $product = Product::where('id',$id)->has('detail')->with('detail')->first();
+
+        foreach ($product->detail as $key => $value) {
+            # code...
+            $value->stock = $this->calc_stock($value->id);
+        }
+
+        $promoDetail = PromoDetail::where('product_detail_id',$id)->get();
+
+        $settingSuggestion = SettingSuggestion::all();
+        
+        if($settingSuggestion->count()){
+            $productSuggestion = array();
+            foreach ($settingSuggestion as $key => $value) {
+                # code...
+                array_push($productSuggestion, $value->product_id);
+            }
+            
+            $relateProducts = Product::where('id','<>', $id)->has('detail')->whereIn('id', $productSuggestion)->limit(5)->get();
+            
+        }else{
+            $relateProducts = Product::where('id','<>', $id)->has('detail')->limit(5)->get();
+            
+        }
+
+        
+        $data = [
+            'relateProducts' => $relateProducts,
+            'product' => $product,
+            'promoDetail' => $promoDetail,
+        ];
+        return view(
+            'site.product'
+            ,['data'=>$data]
+        );
+    }
+
     public function productDetail(Request $r, $id){
         
         
         
-        $productDetail = ProductDetail::has('productDetailImage')->where('id',$id)->first();
+        $productDetail = ProductDetail::where('id',$id)->first();
 
         $productCounter = Product::findOrFail($productDetail->product_id);
         $productCounter->view = $productCounter->view+1;
         $productCounter->save();
 
         $promoDetail = PromoDetail::where('product_detail_id',$id)->get();
-        $productDetailGallery= ProductDetailImage::where('main_image',0)->where('product_detail_id',$id)->get();
-        $anotherProductSize = ProductDetail::has('productDetailImage')->where('product_id',$productDetail->product_id)->whereNotIn('id', [$id])->get();
+        $anotherProductSize = ProductDetail::where('product_id',$productDetail->product_id)->whereNotIn('id', [$id])->get();
 
         foreach ($anotherProductSize as $key => $value) {
             $value->stock = $this->calc_stock($value->id);
         }
 
         
-        $product = Product::where('id',$productDetail->product_id)->has('detail.productDetailImage')->first();
+        $product = Product::where('id',$productDetail->product_id)->has('detail')->first();
         $category = $productDetail->category_id;
         $color = $product->color_id;
         $sizechart = $product->size_id;
@@ -137,10 +174,11 @@ class SiteController extends Controller
                 # code...
                 array_push($productSuggestion, $value->product->id);
             }
-            $relateProducts = Product::where('id','<>', $product->id)->has('detail.productDetailImage')->whereIn('id', $productSuggestion)->limit(5)->get();
+            $relateProducts = Product::where('id','<>', $product->id)->has('detail')->whereIn('id', $productSuggestion)->limit(5)->get();
         }else{
-            $relateProducts = Product::where('id','<>', $product->id)->has('detail.productDetailImage')->limit(5)->get();
+            $relateProducts = Product::where('id','<>', $product->id)->has('detail')->limit(5)->get();
         }
+        
         $data = [
             'title' => $product->seo_title ? $product->seo_title : $product->product_title,
             'category' => $category,
@@ -149,10 +187,8 @@ class SiteController extends Controller
             'sizechart' => $sizechart,
             'relateProducts' => $relateProducts,
             'productDetail' => $productDetail,
-            'productDetailGallery' => $productDetailGallery,
             'anotherProductSize' => $anotherProductSize,
             'stock' => $this->calc_stock($id)
-            
         ];
 
         return view(

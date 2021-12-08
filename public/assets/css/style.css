@@ -276,13 +276,13 @@ body {
 
 #our-story {
     background-color: #fcc349;
-    padding-top: 140px;
-    padding-bottom: 50px;
+    padding-top: 10%;
+    padding-bottom: 0px;
 }
 
 #our-story h1 {
     font-family: "Permanent Marker";
-    margin-bottom: 90px;
+    margin-bottom: 30px;
 }
 
 /* Our Story Cards */
@@ -340,21 +340,21 @@ body {
 /* Our Most Wanted */
 
 #our-most-wanted {
-    padding-top: 130px;
+    padding-top: 10%;
     padding-bottom: 60px;
 }
 
 #our-most-wanted h1 {
     font-family: "Permanent Marker";
     color: #f49102;
-    margin-bottom: 90px;
+    margin-bottom: 50px;
 }
 
 /* Our Most Wanted */
 
 #testimony {
     background-color: #229f77;
-    padding-top: 130px;
+    padding-top: 10%;
     padding-bottom: 60px;
     position: relative;
 }
@@ -362,7 +362,7 @@ body {
 #testimony h1 {
     font-family: "Permanent Marker";
     color: #ffffff;
-    margin-bottom: 90px;
+    margin-bottom: 50px;
 }
 
 .testimony-left {
@@ -894,7 +894,29 @@ h1.size-rec-title {
     display: none;
 }
 
+.section-child{
+    padding-top: 10% !important;
+}
+
 @media (max-width: 768px) {
+
+#testimony {
+    padding-bottom: 100px;
+}
+
+.testimony-right-slider-container{
+    padding-left:0px !important;
+    padding-right:0px !important;
+}
+
+.our-story-sub-heading{
+    padding-bottom: 3rem !important;
+}
+
+.section-child{
+    padding-top: 100px !important;
+}
+    
 .sidebar{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -918,4 +940,20 @@ h1.size-rec-title {
     margin-bottom: 30px;
     display: block;
 }
+
+.product-image-showcase{
+    height:300px;object-fit: cover;width: 100%;
+}
+
+.productDetail-detail-title{
+    margin-top:30px;
+}
+
+.flex-size-container{
+    flex-direction: column;
+}
+}
+
+.productDetail-detail-sizechart-image{
+    width: 100%;
 }

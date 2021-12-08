@@ -43,10 +43,14 @@ class ProductController extends Controller
          
         if(!request('description')){
             $data['description']="";
+        }else{
+            $data['description']=request('description');
         }
                 
     	
         $simpan = Product::create($data);
+
+
 
 
         $file = [];
@@ -68,23 +72,6 @@ class ProductController extends Controller
             $file['chart_size_image']=$newNameImage;
         }
 
-        $dataDetail = [
-            'product_id'=>$simpan->id,
-            'size_id'=>Size::first()->id, 
-            'price'=>0,
-            'yard_per_piece'=>0,
-            'shopee_link'=>'',
-            'whatsapp_link'=>''
-        ];
-        $simpanDetail = ProductDetail::create($dataDetail);
-
-        $dataDetailImage = [
-            'product_detail_id'=>$simpanDetail->id,
-            'file'=>'default.jpg',
-            'main_image'=>1
-        ];
-        $simpanDetailImage = ProductDetailImage::create($dataDetailImage);
-
 
 
         $simpan->update($file);
@@ -103,6 +90,8 @@ class ProductController extends Controller
 
         if(!request('description')){
             $data['description']="";
+        }else{
+            $data['description']=request('description');
         }
 
         if($request->hasfile('image')) 

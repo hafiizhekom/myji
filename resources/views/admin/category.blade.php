@@ -42,6 +42,17 @@
                     '</a>'
                 ].join('');
             }
+
+            $(function(){
+                $('input[name=category_code]').keypress(function(e){
+                    var txt = String.fromCharCode(e.which);
+                    console.log(txt + ' : ' + e.which);
+                    if(!txt.match(/[A-Za-z0-9+_.]/)) 
+                    {
+                        return false;
+                    }
+                });
+            });
         </script>
    
 @endsection

@@ -80,34 +80,35 @@
                         $promoTotal = 0;
                     @endphp
                     @if($item->detail)
-
-                        @foreach($item->detail->promoDetail as $promoDetail)
+                        @foreach($item->detail[0]->promoDetail as $promoDetail)
                             @php
+
+                                
                                 if($promoDetail->promo->fixed_amount){
                                     $promoTotal = $promoTotal + $promoDetail->promo->fixed_amount;
                                 }
                                 
-                                $promoTotal = $promoTotal + ( $item->detail->price * $promoDetail->promo->percentage_amount /100 );
+                                $promoTotal = $promoTotal + ( $item->detail[0]->price * $promoDetail->promo->percentage_amount /100 );
                             @endphp
                         @endforeach
-                    @endif
+                    
 
                     <div class="col-sm-6 col-xs-12 col-md-4 col-lg-4 mb-4">
-                        <a href="{{url('/site')}}/product/{{$item->detail->id}}" class="link-non-underline">
+                        <a href="{{url('/site')}}/product/{{$item->id}}" class="link-non-underline">
                         <div class="card mb-3 product-card-alt">
-                            @if(isset($item->detail->productDetailImage[0]->file))
-                                <img src="{{asset('storage/products/'.$item->detail->productDetailImage[0]->file)}}" width="100px" class="card-img-top product-image-250" alt="{{$item->product_name}}">
+                            @if(isset($item->detail[0]->image_file))
+                                <img src="{{asset('storage/products/'.$item->detail[0]->image_file)}}" width="100px" class="card-img-top product-image-250" alt="{{$item->product_name}}">
                             @endif
                             <div class="card-body">
                                 
                                     <p class="card-text text-center product-card-product-title">{{$item->product_name}} {{$item->color->color_name}} {{$item->category->category_name}}</p>
                                 
-                            @if(isset($item->detail->price))
+                            @if(isset($item->detail[0]->price))
                                 <p class="card-text text-center product-card-product-price">
                                     @if($promoTotal != 0 )
-                                        <strike>{{rupiah($item->detail->price)}}</strike> {{rupiah($item->detail->price - $promoTotal)}} 
+                                        <strike>{{rupiah($item->detail[0]->price)}}</strike> {{rupiah($item->detail[0]->price - $promoTotal)}} 
                                     @else
-                                        {{rupiah($item->detail->price)}}
+                                        {{rupiah($item->detail[0]->price)}}
                                     @endif
                                 </p>
                             @endif
@@ -115,6 +116,7 @@
                         </div>
                         </a>
                     </div>
+                    @endif
                 @endforeach
                     
                     
@@ -175,6 +177,9 @@
             var color = [];
             var category = [];
             var urlHome = "{{route('shop.catalogue')}}";
+
+
+            $(".sidebar").hide();
 
             $(".filter-button").click(function() {
                 $(".sidebar").show();
