@@ -389,7 +389,7 @@ body {
 
 .card-testimony__scrollbar {
     max-height: 600px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .card-testimony__scrollbar img {
@@ -894,7 +894,29 @@ h1.size-rec-title {
     display: none;
 }
 
+.section-scrollify{
+    padding-top: 10% !important;
+}
+
 @media (max-width: 768px) {
+
+#testimony {
+    padding-bottom: 100px  !important;
+}
+
+.testimony-right-slider-container{
+    padding-left:0px !important;
+    padding-right:0px !important;
+}
+
+.our-story-sub-heading{
+    padding-bottom: 3rem !important;
+}
+
+.section-scrollify{
+    padding-top: 100px !important;
+}
+    
 .sidebar{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
