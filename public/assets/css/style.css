@@ -276,13 +276,13 @@ body {
 
 #our-story {
     background-color: #fcc349;
-    padding-top: 140px;
-    padding-bottom: 50px;
+    padding-top: 10%;
+    padding-bottom: 0px;
 }
 
 #our-story h1 {
     font-family: "Permanent Marker";
-    margin-bottom: 90px;
+    margin-bottom: 30px;
 }
 
 /* Our Story Cards */
@@ -340,21 +340,21 @@ body {
 /* Our Most Wanted */
 
 #our-most-wanted {
-    padding-top: 130px;
+    padding-top: 10%;
     padding-bottom: 60px;
 }
 
 #our-most-wanted h1 {
     font-family: "Permanent Marker";
     color: #f49102;
-    margin-bottom: 90px;
+    margin-bottom: 50px;
 }
 
 /* Our Most Wanted */
 
 #testimony {
     background-color: #229f77;
-    padding-top: 130px;
+    padding-top: 10%;
     padding-bottom: 60px;
     position: relative;
 }
@@ -362,7 +362,7 @@ body {
 #testimony h1 {
     font-family: "Permanent Marker";
     color: #ffffff;
-    margin-bottom: 90px;
+    margin-bottom: 50px;
 }
 
 .testimony-left {
