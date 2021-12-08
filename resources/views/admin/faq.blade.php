@@ -135,7 +135,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" name="faq_name" placeholder="Faq Name" value="{{$value->title}}">
+                        <input type="text" class="form-control" name="title" placeholder="Title" value="{{$value->title}}">
                     </div>
 
                     <div class="form-group">

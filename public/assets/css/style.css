@@ -389,7 +389,7 @@ body {
 
 .card-testimony__scrollbar {
     max-height: 600px;
-    overflow: auto;
+    overflow: scroll;
 }
 
 .card-testimony__scrollbar img {
@@ -918,4 +918,20 @@ h1.size-rec-title {
     margin-bottom: 30px;
     display: block;
 }
+
+.product-image-showcase{
+    height:300px;object-fit: cover;width: 100%;
+}
+
+.productDetail-detail-title{
+    margin-top:30px;
+}
+
+.flex-size-container{
+    flex-direction: column;
+}
+}
+
+.productDetail-detail-sizechart-image{
+    width: 100%;
 }

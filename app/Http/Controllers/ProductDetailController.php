@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Models\ProductDetailImage;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Category;
@@ -45,12 +44,19 @@ class ProductDetailController extends Controller
         ];
         $saveProductDetail = ProductDetail::create($dataDetail);
 
-        $dataDetailImage = [
-            'product_detail_id'=>$saveProductDetail->id,
-            'file'=>'default.jpg',
-            'main_image'=>1
+        $product = Product::find($id);
+        $image = request('image');
+        $ext =  $image->getClientOriginalExtension();
+        $newNameImage = $product->product_code.'-'.$saveProductDetail->id.'.'.$ext;
+        Storage::disk('public')->putFileAs('products', $image, $newNameImage);
+
+        $dataDetail = [
+            'image_file'=>$newNameImage
         ];
-        $simpanDetailImage = ProductDetailImage::create($dataDetailImage);
+        $saveProductDetail->update($dataDetail);
+
+
+        
 
         return redirect()->route('product_detail', $id);
     }
@@ -70,6 +76,15 @@ class ProductDetailController extends Controller
             'shopee_link'=>request('shopee_link'),
         ];
         
+        $product = Product::find($id);
+        if(Request::has('image')){
+            $image = request('image');
+            $ext =  request('image')->getClientOriginalExtension();
+            $newNameImage = $product->product_code.'-'.$iddetail.'.'.$ext;
+
+            Storage::disk('public')->putFileAs('products', $image, $newNameImage);
+            $dataDetail['image_file'] = $newNameImage;
+        }
 
         $productDetail = ProductDetail::findOrFail($iddetail);
         
