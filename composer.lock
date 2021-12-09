@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15a62d468fa80ee064de9f20a5bfd5a0",
+    "content-hash": "805d6bbaa15b349fc4adaa096130141d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6974,16 +6974,16 @@
         },
         {
             "name": "kitloong/laravel-migrations-generator",
-            "version": "v4.5.1",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kitloong/laravel-migrations-generator.git",
-                "reference": "65a6a2f6b9811f343da1092be75c450b51293e7c"
+                "reference": "836f6342af64c45ffaa213497b057becbbfa6987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/65a6a2f6b9811f343da1092be75c450b51293e7c",
-                "reference": "65a6a2f6b9811f343da1092be75c450b51293e7c",
+                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/836f6342af64c45ffaa213497b057becbbfa6987",
+                "reference": "836f6342af64c45ffaa213497b057becbbfa6987",
                 "shasum": ""
             },
             "require": {
@@ -6993,23 +6993,24 @@
             },
             "require-dev": {
                 "ext-pdo": "*",
+                "friendsofphp/php-cs-fixer": "^2.19.0|^3.1",
                 "mockery/mockery": "^1.0",
+                "nunomaduro/larastan": "^0.4|^0.5|^0.6|^0.7",
                 "orchestra/testbench": "^3.6|^4.0|^5.0|^6.0",
+                "phpmd/phpmd": "^2.10",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "KitLoong\\MigrationsGenerator\\MigrationsGeneratorServiceProvider"
+                        "MigrationsGenerator\\MigrationsGeneratorServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "KitLoong\\MigrationsGenerator\\": "src/KitLoong/MigrationsGenerator",
-                    "Xethron\\MigrationsGenerator\\": "src/Xethron/MigrationsGenerator",
-                    "Way\\Generators\\": "src/Way/Generators"
+                    "MigrationsGenerator\\": "src/MigrationsGenerator"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -7033,7 +7034,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kitloong/laravel-migrations-generator/issues",
-                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v4.5.1"
+                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v5.1.0"
             },
             "funding": [
                 {
@@ -7041,7 +7042,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-08-31T13:55:56+00:00"
+            "time": "2021-11-04T06:42:15+00:00"
         },
         {
             "name": "laravel/sail",
