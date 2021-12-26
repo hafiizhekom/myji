@@ -17,7 +17,7 @@ class CreateProductTable extends Migration
             $table->integer('id', true);
             $table->string('product_code');
             $table->string('product_name');
-            $table->text('description')->default('');
+            $table->text('description')->nullable();
             $table->integer('category_id');
             $table->integer('color_id');
             $table->string('chart_size_image', 100)->nullable();

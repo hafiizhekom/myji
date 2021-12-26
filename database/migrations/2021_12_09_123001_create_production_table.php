@@ -24,7 +24,7 @@ class CreateProductionTable extends Migration
             $table->date('actual_date')->nullable();
             $table->date('defect_date')->nullable();
             $table->boolean('actual_complete')->default(false);
-            $table->text('reason_defect')->default('');
+            $table->text('reason_defect')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
             $table->softDeletes();
