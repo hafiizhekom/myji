@@ -46,6 +46,7 @@ class SiteController extends Controller
             'mostWanted' =>$mostWanted,
             'testimonies' => $testimonies
         ];
+        
         return view(
             'site.index'
             ,['data'=>$data]

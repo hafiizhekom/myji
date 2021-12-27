@@ -139,7 +139,9 @@
 
             $.scrollify({
                 section : ".section-scrollify",
-                interstitialSection:"#footer-home"
+                interstitialSection:"#footer-home",
+                scrollSpeed: 1100,
+                // offset : 30,
             });
 
             @yield('js')

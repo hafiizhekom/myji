@@ -26,8 +26,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-
 // Route::get('site/',function(){
 // //     return redirect('/site');
 // // });
@@ -62,6 +60,10 @@ Route::get('/test-queue', function () use ($router){
     return '5 Jobs dispatched!';
 
 });
+
+Route::get('phpmyinfo', function () {
+    phpinfo(); 
+})->name('phpmyinfo');
 
 Route::get('/mail', 'HomeController@sendEmail');
 Route::get('/mail-queue', 'HomeController@sendEmailQueue');
@@ -237,3 +239,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
