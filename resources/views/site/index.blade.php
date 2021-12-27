@@ -1,7 +1,7 @@
 @extends('layouts.application')
 @section('pagetitle', 'Home')
 @section('content')
-<section id="jumbotron" class="section-scrollify">
+<section id="jumbotron" class="section-scrollify section-main">
     <div id="banner" class="carousel slide h-100" data-ride="carousel">            
         <!-- Indicators -->
         <ul class="carousel-indicators">
@@ -44,10 +44,10 @@
 
         <!-- Carousel Mobile -->
         <div class="d-md-none">
-            <div id="myCarousel-our-story-card" class="carousel slide" data-ride="carousel">
+            <div id="myCarousel-our-story-card" class="carousel-story slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="col-md carousel-item carousel-item--padding active">
-                        <div class="card mb-3 our-story-card">
+                        <div class="card our-story-card">
                             <img src="{{asset('/assets/images/stories/story_1.png')}}" width="100px" class="card-img-top" alt="Story 1">
                             <div class="card-body d-flex align-content-center flex-wrap">
                                 <p class="card-text text-center">Started from our interest in finding outstanding shirt</p>
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="col-md carousel-item carousel-item--padding">
-                        <div class="card mb-3 our-story-card">
+                        <div class="card our-story-card">
                             <img src="{{asset('/assets/images/stories/story_2.png')}}" width="100px" class="card-img-top" alt="Story 2">  
                             <div class="card-body d-flex align-content-center flex-wrap">
                                 <p class="card-text text-center">Then we created our own shirt from a mixture of trend + festive wild ideas + fashion</p>
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="col-md carousel-item carousel-item--padding">
-                        <div class="card mb-3 our-story-card">
+                        <div class="card our-story-card">
                             <img src="{{asset('/assets/images/stories/story_3.png')}}" width="100px" class="card-img-top" alt="Story 3">  
                             <div class="card-body d-flex align-content-center flex-wrap">
                                 <p class="card-text text-center">Woohoo! Our creation finaly made it into life, call it, Myji!</p>
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="col-md carousel-item carousel-item--padding">
-                        <div class="card mb-3 our-story-card">
+                        <div class="card our-story-card">
                             <img src="{{asset('/assets/images/stories/story_4.png')}}" width="100px" class="card-img-top" alt="Story 4">  
                             <div class="card-body d-flex align-content-center flex-wrap">
                                 <p class="card-text text-center">Finally we created a shirt that we really love, and people love it too!</p>

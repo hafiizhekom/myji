@@ -1,1 +1,4 @@
 .env
+.editorconfig
+vendor/
+node_modules/

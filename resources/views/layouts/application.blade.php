@@ -82,7 +82,7 @@
 
 
         $(document).ready(function () {
-            $('.carousel').carousel()
+            $('.carousel').carousel();
             $(document).scroll(function () {
                 if(window.location.pathname === '/site'){
                     var $nav = $(".navbar.fixed-top");
@@ -102,6 +102,11 @@
                 }    
             });
 
+            $('.carousel-story').carousel({
+                autoplay: true,
+                autoplaySpeed: 400,
+            });
+            
             $('.carousel-slick').slick({
                 dots: true,
                 infinite: true,
@@ -139,7 +144,9 @@
 
             $.scrollify({
                 section : ".section-scrollify",
-                interstitialSection:"#footer-home"
+                interstitialSection:"#footer-home",
+                scrollSpeed: 1100,
+                offset : 30,
             });
 
             @yield('js')

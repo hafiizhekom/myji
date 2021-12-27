@@ -187,7 +187,7 @@ abstract class AbstractConnection extends AbstractChannel
         $channel_rpc_timeout = 0.0
     ) {
         if (is_null($io)) {
-            throw new \InvalidArgumentException('"io" can not be null');
+            throw new \InvalidArgumentException('Argument $io cannot be null');
         }
 
         // save the params for the use of __clone
@@ -337,11 +337,15 @@ abstract class AbstractConnection extends AbstractChannel
     }
 
     /**
-     * @param int $sec
+     * @param int|null $sec
      * @param int $usec
-     * @return mixed
+     * @return int
+     * @throws AMQPIOException
+     * @throws AMQPRuntimeException
+     * @throws AMQPConnectionClosedException
+     * @throws AMQPRuntimeException
      */
-    public function select($sec, $usec = 0)
+    public function select(?int $sec, int $usec = 0): int
     {
         try {
             return $this->io->select($sec, $usec);
@@ -413,7 +417,7 @@ abstract class AbstractConnection extends AbstractChannel
 
     /**
      * @return int
-     * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
+     * @throws AMQPRuntimeException
      */
     public function get_free_channel_id()
     {
@@ -562,7 +566,7 @@ abstract class AbstractConnection extends AbstractChannel
      * @return array
      * @throws \Exception
      * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
-     * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
+     * @throws AMQPRuntimeException
      */
     protected function wait_frame($timeout = 0)
     {
@@ -1025,7 +1029,7 @@ abstract class AbstractConnection extends AbstractChannel
     /**
      * Get the connection blocked state.
      * @return bool
-     * @since v2.12.0
+     * @since 2.12.0
      */
     public function isBlocked()
     {
