@@ -82,6 +82,15 @@ body {
 
 /* Desktop Version */
 @media (min-width: 992px) {
+
+    .sidebar {
+        position: relative;
+    }
+    
+    .filter-section {
+        display: none;
+    }
+
     .navbar {
         background: none;
         padding-bottom: 20px !important;
@@ -186,6 +195,26 @@ body {
 @media (max-width: 992px) and (min-width: 768px){
     .section-child {
         padding-top: 25vh !important;
+    }
+
+    .filter-section {
+        margin-bottom: 30px;
+        display: block;
+    }
+
+    .sidebar {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-top: 2px solid #353b48;
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        background-color: #f5f6fa;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
     }
 }
 
@@ -315,9 +344,7 @@ body {
 
 /* Sidebar */
 
-.sidebar {
-    position: relative;
-}
+
 
 .sidebar-item {
     width: 100%;
@@ -965,10 +992,6 @@ h1.size-rec-title {
 .slick-prev:before,
 .slick-next:before {
     color: red;
-}
-
-.filter-section {
-    display: none;
 }
 
 .close-filter-button {

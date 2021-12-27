@@ -44,7 +44,7 @@
 
         <!-- Carousel Mobile -->
         <div class="d-md-none">
-            <div id="myCarousel-our-story-card" class="carousel slide" data-ride="carousel">
+            <div id="myCarousel-our-story-card" class="carousel-story slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="col-md carousel-item carousel-item--padding active">
                         <div class="card our-story-card">

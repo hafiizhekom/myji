@@ -72,6 +72,7 @@
             <div class="col-12 filter-section" >
                 <button class="btn btn-block btn-secondary filter-button">Filter</button>
             </div>
+            
             <div class="col-lg-9 col-md-12">
                 <div class="row">
 
