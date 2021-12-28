@@ -161,7 +161,7 @@
 
     <div class="modal fade" id="image-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <img src="{{asset('/storage/testimonies/'.$value->image)}}" width="100%">
+            <img src="{{asset('/storage/sliders/'.$value->image)}}" width="100%">
         </div>
     </div>
 
