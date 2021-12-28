@@ -1,0 +1,1 @@
+[28-Dec-2021 12:48:35 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.0.13". You are running 8.0.11. in /home/shopmyji/public_html/vendor/composer/platform_check.php on line 24
