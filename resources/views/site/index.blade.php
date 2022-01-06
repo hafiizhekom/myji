@@ -159,7 +159,7 @@
                         
                         </div>
                         <div class="card-footer d-flex justify-content-center">
-                            <a href="#" class="btn button-primary">Shop Now</a>
+                            <a href="{{url('/site')}}/product/{{$item->id}}" class="btn button-primary">Shop Now</a>
                         </div>
                     </div>
                 </div>                        

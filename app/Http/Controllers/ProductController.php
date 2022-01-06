@@ -119,8 +119,11 @@ class ProductController extends Controller
 
     public function delete($id, Request $request)
     {
-        $cabang = Product::findOrFail($id);
-        $cabang->delete();
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        $product_detail = ProductDetail::where('product_id', $id);
+        $product_detail->delete();
 
         return redirect()->route('product');
     }
