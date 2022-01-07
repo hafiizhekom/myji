@@ -213,6 +213,15 @@
               </p>
             </a>
           </li>
+          <li class="nav-header">AUTH</li>
+          <li class="nav-item">
+            <a href="{{route('user')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) >= 1 ? ( ( explode('.', Route::currentRouteName())[0] == 'user' ) ? 'active' : '') : '' }}">
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                User
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
