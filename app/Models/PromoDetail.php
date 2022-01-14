@@ -15,11 +15,11 @@ class PromoDetail extends Model
     
     public function promo()
     {
-        return $this->belongsTo('App\Models\Promo', 'promo_id');
+        return $this->belongsTo('App\Models\Promo', 'promo_id')->withTrashed();
     }
 
     public function productDetail()
     {
-        return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id');
+        return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id')->withTrashed();
     }
 }

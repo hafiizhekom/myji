@@ -15,7 +15,7 @@ class Refund extends Model
 
     public function orderDetail()
     {
-        return $this->belongsTo('App\Models\OrderDetail');
+        return $this->belongsTo('App\Models\OrderDetail')->withTrashed();
     }
  
 }

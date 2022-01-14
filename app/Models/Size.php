@@ -14,6 +14,6 @@ class Size extends Model
 
     public function productDetail()
     {
-        return $this->hasMany('App\Models\ProductDetail');
+        return $this->hasMany('App\Models\ProductDetail')->withTrashed();
     }
 }

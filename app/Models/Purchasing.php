@@ -15,6 +15,6 @@ class Purchasing extends Model
 
     public function production()
     {
-        return $this->hasOne('App\Models\Production');
+        return $this->hasOne('App\Models\Production')->withTrashed();
     }
 }

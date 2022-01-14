@@ -15,6 +15,6 @@ class Promo extends Model
     
     public function detail()
     {
-        return $this->hasMany('App\Models\PromoDetail');
+        return $this->hasMany('App\Models\PromoDetail')->withTrashed();
     }
 }

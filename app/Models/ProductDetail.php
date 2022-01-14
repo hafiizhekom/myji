@@ -15,22 +15,22 @@ class ProductDetail extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\Models\Product', 'product_id');
+        return $this->belongsTo('App\Models\Product', 'product_id')->withTrashed();
     }
     
     public function size()
     {
-        return $this->belongsTo('App\Models\Size', 'size_id');
+        return $this->belongsTo('App\Models\Size', 'size_id')->withTrashed();
     }
 
 
     public function production()
     {
-        return $this->hasMany('App\Models\Production');
+        return $this->hasMany('App\Models\Production')->withTrashed();
     }
 
     public function promoDetail()
     {
-        return $this->hasMany('App\Models\PromoDetail');
+        return $this->hasMany('App\Models\PromoDetail')->withTrashed();
     }
 }
