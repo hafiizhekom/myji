@@ -19,6 +19,7 @@
             <th data-field="product_size" data-sortable="true">Size</th>
             <th data-field="product_price" data-sortable="true">Price</th>
             <th data-field="product_yard" data-sortable="true">Yard/Piece</th>
+            <th data-field="image" data-sortable="true">Image</th>
             <th data-field="whatsapp_link" data-sortable="true">Whatsapp Link</th>
             <th data-field="shopee_link" data-sortable="true">Shopee Link</th>
             <th data-formatter="TableActions">Action</th>
@@ -41,6 +42,11 @@
                     </td>
                     <td>
                         {{$value->yard_per_piece}}
+                    </td>
+                    <td>
+                        @if($value->image_file)
+                            <a href="#" data-toggle="modal" data-target="#image-{{$value->id}}"><img src="{{asset('/storage/products/'.$value->image_file)}}" width="100px"></a>
+                        @endif
                     </td>
                     <td>
                         @if($value->whatsapp_link)
@@ -70,9 +76,6 @@
             
             function TableActions (value, row, index) {
                 return [
-                    '<a class="text-info" href="/admin/product/image/',row.id,'">',
-                    '<i class="fas fa-images"></i>',
-                    '</a> ',
                     '<a class="text-warning" href="#" data-toggle="modal" data-target="#edit-',row.id,'">',
                     '<i class="fas fa-edit"></i>',
                     '</a> ',
@@ -80,7 +83,32 @@
                     '<i class="fas fa-trash"></i>',
                     '</a>'
                 ].join('');
-            }
+            }            
+
+            $(document).ready(function() {
+                $("input[type=file]").change(function(){
+                    var oImg=new Image();
+                    var avail = false;
+                    for( i=0; i < this.files.length; i++ ){
+                        
+                        oImg.src=URL.createObjectURL( this.files[i] );
+                        oImg.onload=function(){
+                            var width=oImg.naturalWidth;
+                            var height=oImg.naturalHeight;
+                            var ratio = oImg.width/oImg.height;
+                            
+                            if(Math.round(ratio * 100) / 100 >= 0.60 && Math.round(ratio * 100) / 100 <= 0.80){
+                                
+                            }else{
+                                alert('Image ratio must be 2 (width) : 3 (height) or 3 (width) : 4 (height)');  
+                                $("input[type=file]").val(''); 
+                                return;
+                            }
+                           
+                        };
+                    }
+                });
+            });
         </script>
    
 @endsection
@@ -127,6 +155,11 @@
                     <div class="form-group">
                         <label>Shopee Link</label>
                         <input type="text" class="form-control" name="shopee_link" placeholder="Shopee Link" value="" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image</label><br>
+                        <input type="file" accept="image/*" name="image" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -184,6 +217,11 @@
                         <label>Shopee Link</label>
                         <input type="text" class="form-control" name="shopee_link" placeholder="Shopee Link" value="{{$value->shopee_link}}" required>
                     </div>
+
+                    <div class="form-group">
+                        <label>Image</label><br>
+                        <input type="file" accept="image/*" name="image">
+                    </div>
                 </div>
                 <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
@@ -195,7 +233,7 @@
     @endforeach
 
     <!-- Modal Delete-->
-    @foreach ($data['product'] as $key=>$value)
+    @foreach ($data['productDetail'] as $key=>$value)
     <div class="modal fade" id="delete-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -26,8 +26,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-
 // Route::get('site/',function(){
 // //     return redirect('/site');
 // // });
@@ -37,36 +35,24 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/catalogue', 'SiteController@catalogue')->name('shop.catalogue');
     Route::get('/how-to-order', 'SiteController@howToOrder');
     Route::get('/faq', 'SiteController@faq');
-    Route::get('/size-recomendation', 'SiteController@sizeRecomendation');
+    Route::get('/size-recommendation', 'SiteController@sizeRecomendation');
     Route::get('/feedback', 'SiteController@feedback')->name('shop.feedback');
     Route::get('/feedback/send', 'SiteController@sendFeedback')->name('shop.feedback.add');
-    Route::get('/product/{id}', 'SiteController@productDetail');
+    Route::get('/feedback_idea/send', 'SiteController@sendFeedbackidea')->name('shop.feedback_idea.add');
+    // Route::get('/product/{id}', 'SiteController@productDetail');
+    Route::get('/product/{id}', 'SiteController@product');
 });
 
-Route::get('/test-queue', function () use ($router){
-    
-    for ($i = 0; $i < 5; $i++) {
-        // dispatch(new App\Jobs\ProcessEmail($i));
-        echo $i;
-        echo "<br>";
-        ProcessQueue::dispatch($i)->delay(now()->addMinutes(1))->onConnection('rabbitmq');
-        echo "<br>";
-    }
-    
-    // dispatch(new ProcessHelloWorld("Hello world dari Serverless ID!"));
 
-    echo "<br>";
-    echo "<br>";
-    return '5 Jobs dispatched!';
+Route::get('phpmyinfo', function () {
+    phpinfo(); 
+})->name('phpmyinfo');
 
-});
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
 
-Route::get('/mail', 'HomeController@sendEmail');
-Route::get('/mail-queue', 'HomeController@sendEmailQueue');
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['verified','auth'])->group(function () {
 
     Route::group(['prefix' => 'admin'], function(){
         Route::get('/', 'DashboardController@index');
@@ -77,6 +63,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/report/production/estimation', 'ReportController@production_estimation')->name('report.production.estimation');
         Route::get('/report/production', 'ReportController@production')->name('report.production');
         Route::get('/report/stock/{id}', 'ReportController@stock_flow')->name('report.stock_flow');
+
+        Route::get('/user', 'UserController@index')->name('user');
+        Route::post('/user/add', 'UserController@add')->name('user.add');
+        Route::post('/user/edit/{id}', 'UserController@edit')->name('user.edit');
+        Route::post('/user/change_password/{id}', 'UserController@change_password')->name('user.change_password');
+        Route::delete('/user/delete/{id}', 'UserController@delete')->name('user.delete');
     
         Route::get('/promo', 'PromoController@index')->name('promo');
         Route::post('/promo/add', 'PromoController@add')->name('promo.add');
@@ -201,6 +193,30 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/feedback', 'FeedbackController@index')->name('feedback');
         Route::delete('/feedback/delete/{id}', 'FeedbackController@delete')->name('feedback.delete');
 
+        Route::get('/feedback_idea', 'FeedbackIdeaController@index')->name('feedback_idea');
+        Route::delete('/feedback_idea/delete/{id}', 'FeedbackIdeaController@delete')->name('feedback_idea.delete');
+
+        Route::get('/setting/general', 'SettingController@index')->name('setting.general');
+        Route::post('/setting/general/size_recommendation', 'SettingController@size_recommendation')->name('setting.general.size_recommendation');
+
+        Route::get('/setting/order', 'SettingOrderController@index')->name('setting.order');
+        Route::post('/setting/order/edit/{id}', 'SettingOrderController@edit')->name('setting.order.edit');
+
+        Route::get('/setting/most_wanted', 'SettingMostWantedController@index')->name('setting.most_wanted');
+        Route::post('/setting/most_wanted/add', 'SettingMostWantedController@add')->name('setting.most_wanted.add');
+        Route::post('/setting/most_wanted/edit/{id}', 'SettingMostWantedController@edit')->name('setting.most_wanted.edit');
+        Route::delete('/setting/most_wanted/delete/{id}', 'SettingMostWantedController@delete')->name('setting.most_wanted.delete');
+        Route::post('/setting/most_wanted/increase/{id}', 'SettingMostWantedController@increasingOrder')->name('setting.most_wanted.increasing.edit');
+        Route::post('/setting/most_wanted/decrease/{id}', 'SettingMostWantedController@decreasingOrder')->name('setting.most_wanted.decreasing.edit');
+
+        Route::get('/setting/suggestion', 'SettingSuggestionController@index')->name('setting.suggestion');
+        Route::post('/setting/suggestion/add', 'SettingSuggestionController@add')->name('setting.suggestion.add');
+        Route::post('/setting/suggestion/edit/{id}', 'SettingSuggestionController@edit')->name('setting.suggestion.edit');
+        Route::delete('/setting/suggestion/delete/{id}', 'SettingSuggestionController@delete')->name('setting.suggestion.delete');
+        Route::post('/setting/suggestion/increase/{id}', 'SettingSuggestionController@increasingOrder')->name('setting.suggestion.increasing.edit');
+        Route::post('/setting/suggestion/decrease/{id}', 'SettingSuggestionController@decreasingOrder')->name('setting.suggestion.decreasing.edit');
+
+
         // Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
         // Route::get('/how-to-order', 'SiteController@howToOrder');
         // Route::get('/faq', 'SiteController@faq');
@@ -211,3 +227,22 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::get('/test-queue', function () use ($router){
+    
+    for ($i = 0; $i < 5; $i++) {
+        // dispatch(new App\Jobs\ProcessEmail($i));
+        echo $i;
+        echo "<br>";
+        ProcessQueue::dispatch($i)->delay(now()->addMinutes(1))->onConnection('rabbitmq');
+        echo "<br>";
+    }
+    
+    // dispatch(new ProcessHelloWorld("Hello world dari Serverless ID!"));
+
+    echo "<br>";
+    echo "<br>";
+    return '5 Jobs dispatched!';
+
+});
+Route::get('/mail', 'HomeController@sendEmail');
+Route::get('/mail-queue', 'HomeController@sendEmailQueue');

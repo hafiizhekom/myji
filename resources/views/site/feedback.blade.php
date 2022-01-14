@@ -42,7 +42,8 @@
 
                 <div class="row">
                     <div class="col-lg-12 mt-5">
-                        <form action="javascript:;">
+                        <form action="{{route('shop.feedback_idea.add')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-12 feedback-content-head">
                                     <h5>Propose Design</h5>
@@ -52,10 +53,10 @@
                         
                             <div class="row my-3">
                                 <div class="col-lg-8 col-md-12 mb-3">
-                                    <input type="text" class="feedback-input" id="" name="feedback-input-design" />
+                                    <input type="text" class="feedback-input" id="" name="url" placeholder="https://www.yoursite.com/yourdesign" />
                                 </div>
                                 <div class="col-lg-4 col-md-12">
-                                    <input type="submit" value="UPLOAD" class="btn button-primary float-right">
+                                    <input type="submit" value="Submit" class="btn button-primary float-right">
                                 </div>
                             </div>
                             <div class="row">

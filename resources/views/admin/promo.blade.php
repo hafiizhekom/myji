@@ -13,7 +13,9 @@
         <tr>
             <th data-field="id" data-visible="false">ID</th>
             <th data-field="promo_name" data-sortable="true">Promo Name</th>
+            <th data-field="promo_code" data-sortable="true">Promo Code</th>
             <th data-field="fixed_amount" data-sortable="true">Fixed Amount</th>
+            <th data-field="percentage_amount" data-sortable="true">Percentage Amount</th>
             <th data-field="start_time" data-sortable="true">Start Time</th>
             <th data-field="end_time" data-sortable="true">End Time</th>
             <th data-field="active" data-sortable="true">Active</th>
@@ -25,7 +27,9 @@
                 <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->promo_name}}</td>
+                    <td>{{$value->promo_code}}</td>
                     <td>{{$value->fixed_amount}}</td>
+                    <td>{{$value->percentage_amount}}</td>
                     <td>{{$value->start_time}}</td>
                     <td>{{$value->end_time}}</td>
                     <td>
@@ -86,7 +90,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Promo Name</label>
-                        <input type="text" class="form-control" name="promo_name" placeholder="Promo Name" value="">
+                        <input type="text" class="form-control" name="promo_name" placeholder="Promo Name" value="" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Promo Code</label>
+                        <input type="text" class="form-control" name="promo_code" placeholder="Promo Code" value="" required>
                     </div>
 
                     <div class="form-group">
@@ -95,8 +104,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Percentage Amount</label>
+                        <input type="number" class="form-control" name="percentage_amount" placeholder="Percentage Amount" min="0" max="100" value="">
+                    </div>
+
+                    <div class="form-group">
                         <label>Promo Date</label>
-                        <input type="text" class="form-control" name="promo_date"  placeholder="Promo Date" value="">
+                        <input type="text" class="form-control" name="promo_date"  placeholder="Promo Date" value="" required>
                     </div>
 
                     <div class="form-group">
@@ -132,7 +146,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Promo Name</label>
-                        <input type="text" class="form-control" name="promo_name" placeholder="Promo Name" value="{{$value->promo_name}}">
+                        <input type="text" class="form-control" name="promo_name" placeholder="Promo Name" value="{{$value->promo_name}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Promo Code</label>
+                        <input type="text" class="form-control" name="promo_code" placeholder="Promo Code" value="{{$value->promo_code}}" required>
                     </div>
 
                     <div class="form-group">
@@ -141,8 +160,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Percentage Amount</label>
+                        <input type="number" class="form-control" name="percentage_amount" placeholder="Percentage Amount" min="0" max="100" value="{{$value->percentage_amount}}">
+                    </div>
+
+                    <div class="form-group">
                         <label>Promo Date</label>
-                        <input type="text" class="form-control" name="promo_date"  placeholder="Promo Date" value="{{$value->promo_date}}">
+                        <input type="text" class="form-control" name="promo_date"  placeholder="Promo Date" value="{{$value->promo_date}}" required>
                     </div>
 
                     <div class="form-group">

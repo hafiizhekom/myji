@@ -15,17 +15,17 @@ class Order extends Model
 
     public function channel()
     {
-        return $this->belongsTo('App\Models\Channel');
+        return $this->belongsTo('App\Models\Channel')->withTrashed();
     }
 
     public function customer()
     {
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Customer')->withTrashed();
     }
 
     public function detail()
     {
-        return $this->hasMany('App\Models\OrderDetail');
+        return $this->hasMany('App\Models\OrderDetail')->withTrashed();
     }
 
 }

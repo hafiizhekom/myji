@@ -15,7 +15,12 @@ class Customer extends Model
 
     public function order()
     {
-        return $this->hasOne('App\Models\Order');
+        return $this->hasMany('App\Models\Order')->withTrashed();
+    }
+
+    public function endorse()
+    {
+        return $this->hasMany('App\Models\Endorse')->withTrashed();
     }
 
 }

@@ -24,7 +24,6 @@ class SizeController extends Controller
     	$data = [
             'size_name'=>request('size_name'), 
             'size_code'=>request('size_code'),
-            'point'=>request('point'),
         ];
         $simpan = Size::create($data);
         return redirect()->route('size');
@@ -36,7 +35,6 @@ class SizeController extends Controller
        	$data = [ 
             'size_name'=>request('size_name'), 
             'size_code'=>request('size_code'),
-            'point'=>request('point'),
         ];
         
         $cabang->update($data);

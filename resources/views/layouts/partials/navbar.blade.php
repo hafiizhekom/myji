@@ -10,7 +10,7 @@
                     <a class="nav-link" href="{{url('/site/catalogue')}}">Catalogue<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('/site/size-recomendation')}}">Size Recomendation</a>
+                    <a class="nav-link" href="{{url('/site/size-recommendation')}}">Size Recommendation</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/site/how-to-order')}}">How To Order</a>

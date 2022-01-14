@@ -21,19 +21,19 @@
                         </div>
 
                         <div class="d-lg-none">
-                            <img src="assets/images/logo_white.svg" alt="" width="40" height="40">
+                            <img src="{{asset('/assets/images/logo_white.svg')}}" alt="" width="40" height="40">
                         </div>    
                     </div>
-                    <div class="col mt-0">
+                    <div class="col mt-auto mt-lg-0">
                         <div class="row pt-4">
-                            <a href="#" class="col">
-                                <img src="/assets/images/footer_ig-white.svg" alt="">
+                            <a href="#" class="col-4">
+                                <img src="{{asset('/assets/images/footer_ig-white.svg')}}" alt="">
                             </a>
-                            <a href="#" class="col">
-                                <img src="/assets/images/footer_shopee-white.svg" alt="">
+                            <a href="#" class="col-4">
+                                <img src="{{asset('/assets/images/footer_shopee-white.svg')}}" alt="">
                             </a>
-                            <a href="#" class="col">
-                                <img src="/assets/images/footer_wa-white.svg" alt="">
+                            <a href="#" class="col-4">
+                                <img src="{{asset('/assets/images/footer_wa-white.svg')}}" alt="">
                             </a>
                         </div>
                     </div>

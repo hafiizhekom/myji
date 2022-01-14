@@ -3,7 +3,6 @@
 @section('content')
 
     <div id="toolbar">
-        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
     </div>
 
     <table data-toggle="table" data-pagination="true"
@@ -12,8 +11,7 @@
         <thead>
         <tr>
             <th data-field="id" data-visible="false">ID</th>
-            <th data-field="name" data-sortable="true">Feedback</th>
-            <th data-field="code" data-sortable="true">IP Address</th>
+            <th data-field="feedback" data-sortable="true">Feedback</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -22,7 +20,6 @@
                 <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->feedback}}</td>
-                    <td>{{$value->ip_address}}</td>
                     <td></td>
                 </tr>
             @endforeach

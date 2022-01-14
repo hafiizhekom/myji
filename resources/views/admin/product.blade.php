@@ -20,6 +20,7 @@
             <th data-field="product_color" data-sortable="true">Color</th>
             <th data-field="product_category" data-sortable="true">Category</th>
             <th data-field="image_production" data-sortable="true" data-visible="true">Image Production</th>
+            <th data-field="image_chart" data-sortable="true" data-visible="true">Image Chart Size</th>
             <th data-formatter="TableActions">Action</th>
         </tr>
         </thead>
@@ -53,6 +54,11 @@
                             <a href="#" data-toggle="modal" data-target="#image-{{$value->id}}"><img src="{{asset('/storage/productions/'.$value->image_file)}}" width="100px"></a>
                         @endif
                     </td>
+                    <td>
+                        @if($value->chart_size_image)
+                            <a href="#" data-toggle="modal" data-target="#image-{{$value->id}}"><img src="{{asset('/storage/charts/'.$value->chart_size_image)}}" width="100px"></a>
+                        @endif
+                    </td>
                     <td></td>
                 </tr>
             @endforeach
@@ -74,7 +80,7 @@
             
 
             $(document).ready(function() {
-                $("input[type=file]").change(function(){
+                $("input[name=image]").change(function(){
                     var oImg=new Image();
                     var avail = false;
                     for( i=0; i < this.files.length; i++ ){
@@ -85,11 +91,11 @@
                             var height=oImg.naturalHeight;
                             var ratio = oImg.width/oImg.height;
                             
-                            if(Math.round(ratio * 100) / 100 >= 0.60 && Math.round(ratio * 100) / 100 <= 0.80){
+                            if(width == height){
                                 
                             }else{
-                                alert('Image ratio must be 2 (width) : 3 (height) or 3 (width) : 4 (height)');  
-                                $("input[type=file]").val(''); 
+                                alert('Image ratio must be 1 (width) : 1 (height)');  
+                                $("input[name=image]").val(''); 
                                 return;
                             }
                            
@@ -164,6 +170,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Image for Chart Size</label><br>
+                        <input type="file" accept="image/*" name="chart_size" required>
+                    </div>
+
+                    <div class="form-group">
                         <label>Image for Production</label><br>
                         <input type="file" accept="image/*" name="image" required>
                     </div>
@@ -232,7 +243,11 @@
                         </select>
                     </div>
 
-                    
+                    <div class="form-group">
+                        <label>Image for Chart Size</label><br>
+                        <input type="file" accept="image/*" name="chart_size">
+                    </div>
+
                     <div class="form-group">
                         <label>Image for Production</label><br>
                         <input type="file" accept="image/*" name="image">

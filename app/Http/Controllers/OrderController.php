@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\ProductDetail;
 use App\Models\Channel;
 use App\Models\Customer;
  

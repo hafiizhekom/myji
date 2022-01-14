@@ -22,6 +22,11 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/slick.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/slick-theme.css')}}"/>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('/assets/adminlte/plugins/fontawesome-free/css/all.min.css')}}">
+
+    
+
     @yield('additionalCss')
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/assets/images/favicons/apple-touch-icon.png')}}">
@@ -67,20 +72,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{asset('/assets/javascripts/slick.min.js')}}"></script>
 
-    {{-- <script type="text/javascript" src="{{asset('/assets/javascripts/jquery.scrollify.min.js')}}"></script> --}}
+    
+
+    
 
     @yield('additionalJs')
 
     <script>
+
+
         $(document).ready(function () {
-            $('.carousel').carousel()
+            $('.carousel').carousel();
             $(document).scroll(function () {
                 if(window.location.pathname === '/site'){
                     var $nav = $(".navbar.fixed-top");
                     
                     if($(this).scrollTop() < $("#our-story").height())  $nav.css("background", "none")
                     if($(this).scrollTop() + 100 > $("#our-story").offset().top) $nav.css("background", "#FCC349")
-                    if($(this).scrollTop() + 100 > $("#our-most-wanted").offset().top) $nav.css("background", "#fff")
+                    if($(this).scrollTop() + 100 > $("#our-most-wanted").offset().top) $nav.css("background", "transparent")
                     if($(this).scrollTop() + 100 > $("#testimony").offset().top) $nav.css("background", "#229F77")   
 
                     var btnBack = $('#backToTopLink-wrapper')[0];
@@ -93,32 +102,41 @@
                 }    
             });
 
+            $('.carousel-story').carousel({
+                autoplay: true,
+                autoplaySpeed: 400,
+            });
+            
             $('.carousel-slick').slick({
+                dots: true,
                 infinite: true,
-                slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToShow: 5,
+                slidesToScroll: 5,
                 autoplay: true,
                 autoplaySpeed: 2000,
                 responsive: [
                     {
                     breakpoint: 1024,
                     settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        arrows:false
                     }
                     },
                     {
                     breakpoint: 600,
                     settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows:false
                     }
                     },
                     {
                     breakpoint: 480,
                     settings: {
                         slidesToShow: 1,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        arrows:false
                     }
                     }
                 ]
@@ -126,7 +144,9 @@
 
             $.scrollify({
                 section : ".section-scrollify",
-                interstitialSection:"#footer-home"
+                interstitialSection:"#footer-home",
+                scrollSpeed: 1100,
+                offset : 30,
             });
 
             @yield('js')

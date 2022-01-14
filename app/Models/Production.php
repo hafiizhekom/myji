@@ -15,11 +15,11 @@ class Production extends Model
 
     public function purchasing()
     {
-        return $this->belongsTo('App\Models\Purchasing', 'purchasing_id');
+        return $this->belongsTo('App\Models\Purchasing', 'purchasing_id')->withTrashed();
     }
 
     public function productDetail()
     {
-        return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id');
+        return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id')->withTrashed();
     }
 }

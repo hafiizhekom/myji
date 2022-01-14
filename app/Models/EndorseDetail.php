@@ -16,16 +16,16 @@ class EndorseDetail extends Model
 
     public function productDetail() 
     {
-        return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id');
+        return $this->belongsTo('App\Models\ProductDetail', 'product_detail_id')->withTrashed();
     }
 
     public function endorse()
     {
-        return $this->belongsTo('App\Models\Endorse', 'endorse_id');
+        return $this->belongsTo('App\Models\Endorse', 'endorse_id')->withTrashed();
     }
 
     public function refund()
     {
-        return $this->hasOne('App\Models\Refund');
+        return $this->hasOne('App\Models\Refund')->withTrashed();
     }
 }
