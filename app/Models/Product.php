@@ -15,7 +15,7 @@ class Product extends Model
 
     public function detail()
     {
-        return $this->hasMany('App\Models\ProductDetail')->withTrashed();
+        return $this->hasMany('App\Models\ProductDetail');
     }
 
     public function color()
