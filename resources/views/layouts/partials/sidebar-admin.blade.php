@@ -213,6 +213,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('setting.size_chart')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) > 1 ? ( (explode('.', Route::currentRouteName())[0] == 'setting' && explode('.', Route::currentRouteName())[1] == 'size_chart' ) ? 'active' : '') : '' }}">
+              <i class="nav-icon fas fa-adjust"></i> 
+              <p>
+                Size Chart
+              </p>
+            </a>
+          </li>
           <li class="nav-header">AUTH</li>
           <li class="nav-item">
             <a href="{{route('user')}}" class="nav-link {{ count( explode('.', Route::currentRouteName() ) ) >= 1 ? ( ( explode('.', Route::currentRouteName())[0] == 'user' ) ? 'active' : '') : '' }}">

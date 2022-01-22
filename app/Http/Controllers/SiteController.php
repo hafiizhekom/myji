@@ -18,6 +18,7 @@ use App\Models\Production;
 use App\Models\OrderDetail;
 use App\Models\EndorseDetail;
 use App\Models\SettingMostWanted;
+use App\Models\SettingSizeChart;
 use App\Models\SettingSuggestion;
 use Session;
  
@@ -213,7 +214,7 @@ class SiteController extends Controller
     }
 
     public function sizeRecomendation(){
-        $size= Size::orderBy('point', 'desc')->get();
+        $size= SettingSizeChart::orderBy('order', 'desc')->get();
         $measurement = [];
         foreach ($size as $key => $value) {
             $measurement[$key]['code']=$value->size_code;
@@ -221,7 +222,7 @@ class SiteController extends Controller
         }
 
         
-        return view('site.size-recommendation', ['measurement'=>$measurement]);
+        return view('site.size-recommendation', ['size'=>$size]);
     }
 
     public function feedback(){

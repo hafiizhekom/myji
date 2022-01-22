@@ -216,6 +216,12 @@ Route::middleware(['verified','auth'])->group(function () {
         Route::post('/setting/suggestion/increase/{id}', 'SettingSuggestionController@increasingOrder')->name('setting.suggestion.increasing.edit');
         Route::post('/setting/suggestion/decrease/{id}', 'SettingSuggestionController@decreasingOrder')->name('setting.suggestion.decreasing.edit');
 
+        Route::get('/setting/size_chart', 'SettingSizeChartController@index')->name('setting.size_chart');
+        Route::post('/setting/size_chart/add', 'SettingSizeChartController@add')->name('setting.size_chart.add');
+        Route::delete('/setting/size_chart/delete/{id}', 'SettingSizeChartController@delete')->name('setting.size_chart.delete');
+        Route::post('/setting/size_chart/increase/{id}', 'SettingSizeChartController@increasingOrder')->name('setting.size_chart.increasing.edit');
+        Route::post('/setting/size_chart/decrease/{id}', 'SettingSizeChartController@decreasingOrder')->name('setting.size_chart.decreasing.edit');
+
 
         // Route::get('/catalogue', 'SiteController@catalogue')->name('catalogue');
         // Route::get('/how-to-order', 'SiteController@howToOrder');
