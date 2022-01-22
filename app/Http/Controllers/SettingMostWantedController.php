@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SettingMostWanted;
 use App\Models\Product;
- 
+  
 class SettingMostWantedController extends Controller
 {
     public function index(){
