@@ -3,7 +3,7 @@
 @section('content')
 <div class="container content">
         <div class="row mb-5">
-            <div class="col-lg-12 col-md-12"> 
+            <div class="col-lg-12 col-md-12">
                 <div class="row">
                     <div class="col-lg-5 px-5">
                         <div class = "productDetail-imgs">
@@ -23,7 +23,7 @@
                                 </a>
                               </div>
                             @endforeach
-                              
+
                             </div>
                         </div>
                         <div id="zoomedImg">
@@ -48,12 +48,12 @@
                                             if($promoDetail->promo->fixed_amount){
                                                 $promoTotal = $promoTotal + $promoDetail->promo->fixed_amount;
                                             }
-                                            
+
                                             $promoTotal = $promoTotal + ( $data['productDetail']->price * $promoDetail->promo->percentage_amount /100 );
                                         @endphp
                                     @endforeach
                                     @if($promoTotal != 0 )
-                                        <strike>{{rupiah($data['productDetail']->price)}}</strike> {{rupiah($data['productDetail']->price - $promoTotal)}} 
+                                        <strike>{{rupiah($data['productDetail']->price)}}</strike> {{rupiah($data['productDetail']->price - $promoTotal)}}
                                     @else
                                         {{rupiah($data['productDetail']->price)}}
                                     @endif
@@ -78,7 +78,7 @@
                             <div class="col-lg-12 mb-2 d-flex">
                                 <div class="mr-5 productDetail-detail-price-container">
                                     <span class="label-bold mr-2">Stock</span>
-                                    <span class="productDetail-detail-productDetail-price">{{$data['stock']}} 
+                                    <span class="productDetail-detail-productDetail-price">{{$data['stock']}}
                                     @if(!$data['stock'])
                                         <span class="badge badge-secondary">Out of Stock</span>
                                     @else
@@ -86,16 +86,16 @@
                                             <span class="badge badge-warning">Low Stock</span>
                                         @endif
                                     @endif
-                                        
-                                    
+
+
                                     </span>
                                     </h1>
-                                    
-                                    
+
+
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row mt-3 mb-3">
                             <div class="col-lg-12">
                                 <div class="productDetail-detail-price-container">
@@ -112,7 +112,7 @@
                                     <a href="{{url(env('SHOPEE_LINK')).$data['productDetail']->shopee_link}}" target="_blank" class="btn button-primary button-shop">Shop at Shopee</a>
                                 </div>
                                 <div>
-                                    <a href="{{url(env('WHATSAPP_LINK')).$data['productDetail']->shopee_link}}" target="_blank" class="btn button-secondary button-shop">Shop Via Whatsapp</a>
+                                    <a href="{{url(env('WHATSAPP_LINK')).$data['productDetail']->product->product_name}}%2C%20apakah%20masih%20ready%3F" target="_blank" class="btn button-secondary button-shop">Shop Via Whatsapp</a>
                                 </div>
                             </div>
                         </div>
@@ -126,12 +126,12 @@
                             <div class="col-lg-12 mb-2">
                                 <div class="d-flex">
                                     @foreach($data['anotherProductSize'] as $detail)
-                                    
-                                        
+
+
                                         @if($detail->stock)
                                             <div>
                                             <a class="btn btn-info btn-xs ml-1 mr-1" href="{{url('/site')}}/product/{{$detail->id}}">{{$detail->size->size_name}}</a>
-                                            
+
                                             @if($detail->stock<=10)
                                                 <span class="badge badge-warning">Low Stock</span>
                                             @endif
@@ -141,8 +141,8 @@
                                             <a class="btn btn-secondary btn-xs ml-1 mr-1" disabled>{{$detail->size->size_name}}</a>
                                             </div>
                                         @endif
-                                        
-                                    
+
+
                                     @endforeach
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                         @endif
-                       
+
                     </div>
                 </div>
             </div>
@@ -171,9 +171,9 @@
                     All Product
                 </a>
             </div>
-            
+
         </div>
-        
+
     </div>
 
     <section id="may-also-like" class="">
@@ -194,12 +194,12 @@
                         <div class="card-body">
                             <p class="card-text text-center productDetail-card-productDetail-title">{{$relateItem->product_name}}</a></p>
                             <p class="card-text text-center productDetail-card-productDetail-price">{{rupiah($relateItem->price)}}</p>
-                        
+
                         </div>
                     </div>
                     </a>
                 </div>
-                
+
                 @endforeach
             </div>
         </div>
@@ -225,7 +225,7 @@
 @section('additionalJs')
 <script src="{{asset('/assets/javascripts/productDetail-image.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-image-zoom/js-image-zoom.min.js"></script>
-    
+
 <script>
     $( document ).ready(function() {
         var showcase =  $('.product-image-showcase').attr('src');
