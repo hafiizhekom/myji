@@ -148,7 +148,7 @@
                                         <a href="{{url(env('SHOPEE_LINK')).$value->shopee_link}}" target="_blank" class="btn button-primary button-shop">Shop at Shopee</a>
                                     </div>
                                     <div>
-                                        <a href="{{url(env('WHATSAPP_LINK')).$value->shopee_link}}" target="_blank" class="btn button-secondary button-shop">Shop Via Whatsapp</a>
+                                        <a href="{{url(env('WHATSAPP_LINK')).$value->whatsapp_link}}" target="_blank" class="btn button-secondary button-shop">Shop Via Whatsapp</a>
                                     </div>
                                 </div>
                             </div>
