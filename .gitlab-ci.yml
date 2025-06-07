@@ -9,13 +9,13 @@ mirror_to_github:
     - git config --global user.email "${GITHUB_EMAIL}"
     - git clone --mirror "${CI_REPOSITORY_URL}" repo
     - cd repo
-    - git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
+    - git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/myji.git
     - git push --mirror github
     - |
       curl -X PATCH \
         -H "Authorization: token ${GITHUB_TOKEN}" \
         -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME} \
+        https://api.github.com/repos/${GITHUB_USERNAME}/myji \
         -d '{"default_branch":"master"}'
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push"'
