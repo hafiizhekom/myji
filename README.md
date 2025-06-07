@@ -1,6 +1,6 @@
 # MyJI Laravel Project
 
-Aplikasi web berbasis [Laravel](https://laravel.com/) untuk manajemen user, data, dan berbagai fitur modern.
+Aplikasi web berbasis [Laravel](https://laravel.com/) untuk e-commerce.
 
 ## Fitur
 
